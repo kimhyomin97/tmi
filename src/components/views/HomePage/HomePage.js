@@ -1,8 +1,12 @@
+import './public/HomePage.css';
+
 function HomePage(){
     return (
         <>
-        <div> Hello </div>
-        <div> Project TMI</div>
+        <body>
+            <div> Hello </div>
+            <div> Project TMI</div>
+        </body>
         </>
     )
 }

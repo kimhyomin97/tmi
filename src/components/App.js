@@ -1,32 +1,19 @@
-import logo from '../logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import {BrowserRouter, Route} from 'react-router-dom';
+
 import HomePage from './views/HomePage/HomePage.js';
 import Header from './views/Header/Header.js';
+import LandingPage from './views/LandingPage/LandingPage';
 
 function App() {
   return (
     <>
+    <BrowserRouter>
       <Header />
-      <HomePage />
+      <Route exact path ="/" component={LandingPage} />
+      <Route exact path ="/homepage" component = {HomePage} />
+    </BrowserRouter>
     </>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Project TMI
-    //     </a>
-    //   </header>
-    // </div>
-
-    
   );
 }
 
