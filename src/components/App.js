@@ -1,10 +1,14 @@
 import logo from '../logo.svg';
 import './App.css';
 import HomePage from './views/HomePage/HomePage.js';
+import Header from './views/Header/Header.js';
 
 function App() {
   return (
-    <HomePage />
+    <>
+      <Header />
+      <HomePage />
+    </>
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
@@ -21,6 +25,8 @@ function App() {
     //     </a>
     //   </header>
     // </div>
+
+    
   );
 }
 
