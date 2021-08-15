@@ -1,9 +1,22 @@
 header {
-    height : 100px;
-    /* background-color : #323232; */
+    height : 60px;
+    background-color : #323232;
 }
 
-.menu {
+.header_logo{
+    font-size: 40px;
+}
+
+.header_item_wrap {
+    display: flex;
+    float: right;
+}
+
+.header_item {
+    padding: 10px;
+}
+
+/* .menu {
     position: absolute;
     top: 0;
     right: 0;
@@ -78,4 +91,4 @@ header {
   .burger-check:checked~.burger-icon:not(.steps) .burger-sticks:before,
   .burger-check:checked~.burger-icon:not(.steps) .burger-sticks:after {
     top: 0;
-  }
+  } */
