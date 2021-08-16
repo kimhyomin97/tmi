@@ -5,13 +5,13 @@ function Header() {
       <>
         <header>
           {/* 헤더 선택적으로 나오게 수정 */}
-          <a className="header_logo">TMI</a>
+          <a className="header_logo" href="/">TMI</a>
           <div className="header_item_wrap">
             <div className="header_item">
                 Header
             </div>
             <div className="header_item">
-                menu1
+                <a href="/mappage">MapPage</a>
             </div>
             <div className="header_item">
                 menu2
