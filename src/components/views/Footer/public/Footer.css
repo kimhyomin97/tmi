@@ -3,3 +3,8 @@
     border-top: 1px solid;
     padding-top: 10px;
 }
+
+.footer_wrap ul{
+    list-style: none;
+    /* padding-left: 0px; */
+}
