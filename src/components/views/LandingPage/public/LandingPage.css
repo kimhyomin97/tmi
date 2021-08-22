@@ -14,21 +14,40 @@ a:visited {
 }
 
 .slide_wrap{
-    width: 100%;
     height: 500px;
     display: flex;
 }
 
-.slide_content{
+/* .slide_content {
+    width: 100px;
+} */
+
+.slide_box{
     width: 100%;
-    /* display: flex; */
+    list-style: none;
+    padding-left: 0;
+    display: flex;
 }
 
 .slide_content{
-    background:black;
-    font-size: 100px;
+    /* width: 100px; */
+    width: 100%;
+    border: 1px solid;
 }
 
-.slide_wrap:nth-child(1){
-    background: black;
+.slide_box :nth-child(1){
+    background:#faa;
 }
+
+.slide_box :nth-child(2){
+    background:#afa;
+}
+
+.slide_box :nth-child(3){
+    background:#aaf;
+}
+
+.slide_box :nth-child(4){
+    background:#faf;
+}
+
