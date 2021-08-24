@@ -6,6 +6,7 @@ import Header from './views/Header/Header';
 import LandingPage from './views/LandingPage/LandingPage';
 import MapPage from './views/MapPage/MapPage';
 import Footer from './views/Footer/Footer';
+import WordPage from './views/WordPage/WordPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route exact path ="/" component={LandingPage} />
       <Route exact path ="/homepage" component = {HomePage} />
       <Route exact path ="/mappage" component = {MapPage} />
+      <Route exact path ="/word" component = {WordPage} />
       <Footer />
     </BrowserRouter>
     </>

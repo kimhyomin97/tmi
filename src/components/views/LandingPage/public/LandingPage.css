@@ -15,6 +15,7 @@ a:visited {
 
 .slide_wrap{
     height: 500px;
+    overflow-x: hidden;
 }
 
 .slide_wrap ul{
