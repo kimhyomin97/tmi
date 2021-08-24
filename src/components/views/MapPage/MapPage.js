@@ -7,6 +7,27 @@ function MapPage(){
         <div className="mappage_wrap">
             <div>This is MapPage</div>
             <Map></Map>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
+            <div>tap</div>
         </div>
         </>
     )
