@@ -20,7 +20,7 @@ function Header() {
 
   return (
       <>
-        <header>
+        <header className="header_wrap">
           {/* 헤더 선택적으로 나오게 수정 */}
           <a className="header_logo" href="/">TMI</a>
           <div className="header_item_wrap">
