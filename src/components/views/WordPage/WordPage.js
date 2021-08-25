@@ -7,13 +7,21 @@ function WordPage(){
     const openModal = () => {
         setShowModal(!showModal);
     }
+    
     return(
         <>
         <body>
             {showModal ?
-                <div>modal_close</div>
+                <>
+                <div className="modal_bg">
+                    <div className="modal_wrap">
+                        modal_open
+                    <div onClick={() => {openModal()}}>close</div>
+                    </div>
+                </div>
+                </>
                 :
-                <div>modal_open</div>
+                <div className="modal_close">modal_close</div>
             }
             <div onClick={()=>{openModal()}}>단어 공부하기1</div>
             <a onClick={()=>{openModal()}}>단어 공부하기2</a><br/>
