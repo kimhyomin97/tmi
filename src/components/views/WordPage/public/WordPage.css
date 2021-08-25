@@ -1,0 +1,12 @@
+.word_button{
+    border: 1px solid skyblue;
+    background-color: white;
+    color: skyblue;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.word_button:hover{
+    color:white;
+    background-color: skyblue;
+}
