@@ -206,6 +206,7 @@
   width:100px;
   height:100%;
   background: #323232;
+  z-index: 1;
 }
 
 .header_menu_close{

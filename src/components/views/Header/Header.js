@@ -56,14 +56,14 @@ function Header() {
             <div style="width: 200px"></div>
           </div> */}
         </header>
-        {/* {trigger ?
+        {trigger ?
           <div className="header_menu header_menu_close"></div>
           :
           <div className="header_menu header_menu_open">menu_open</div>
-        } */}
-        <div className = {trigger ? "header_menu header_menu_close" : "header_menu header_menu_open"}>
+        }
+        {/* <div className = {trigger ? "header_menu header_menu_close" : "header_menu header_menu_open"}>
           menu_open
-        </div>
+        </div> */}
       </>
   );
 }
