@@ -31,7 +31,10 @@ function Header() {
                 <a href="/mappage">MapPage</a>
             </div>
             <div className="header_item">
-                <a href="/word">word</a>
+                <a href="/word">Word</a>
+            </div>
+            <div className="header_item">
+                <a href="/trend">Trend</a>
             </div>
             {trigger ? 
               <div className="header_item header_icon">
