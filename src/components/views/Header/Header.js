@@ -66,7 +66,7 @@ function Header() {
           <div class="menu">
             <div style="width: 200px"></div>
           </div> */}
-        </header>
+        {/* </header> */}
         {trigger ?
           <div className="header_menu header_menu_close"></div>
           :
@@ -75,6 +75,8 @@ function Header() {
         {/* <div className = {trigger ? "header_menu header_menu_close" : "header_menu header_menu_open"}>
           menu_open
         </div> */}
+        {/* menu_open의 길이가 짧은것은 페이지내의 컨텐츠가 적어서 body가 짧아졌기 때문 */}
+        </header>
       </>
   );
 }
