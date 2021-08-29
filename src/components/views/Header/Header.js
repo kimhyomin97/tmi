@@ -27,6 +27,11 @@ function Header() {
             <div className="header_item">
                 <a href="/homepage">Homepage</a>
             </div>
+            {/* <a href="/mappage">
+              <div className="header_item">
+                  MapPage
+              </div>
+            </a> */}
             <div className="header_item">
                 <a href="/mappage">MapPage</a>
             </div>
@@ -35,6 +40,9 @@ function Header() {
             </div>
             <div className="header_item">
                 <a href="/trend">Trend</a>
+            </div>
+            <div className="header_item">
+                <a href="/study">Study</a>
             </div>
             {trigger ? 
               <div className="header_item header_icon">

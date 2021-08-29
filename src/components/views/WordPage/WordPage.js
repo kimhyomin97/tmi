@@ -1,4 +1,5 @@
-import { useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react"
 import './public/WordPage.css';
 import WordQuiz from "./WordQuiz";
 
@@ -8,6 +9,12 @@ function WordPage(){
     const openModal = () => {
         setShowModal(!showModal);
     }
+    useEffect(() => {
+        axios.get('https://infuser.odcloud.kr/oas/docs?namespace=15053640/v1')
+        .then(res => {
+            console.log(res.data);
+        })
+    })
     
     return(
         <>
@@ -34,6 +41,7 @@ function WordPage(){
             <div onClick={()=>{openModal()}}>단어 공부하기1</div>
             <a onClick={()=>{openModal()}}>단어 공부하기2</a><br/>
             <button className = "word_button" onClick={()=>{openModal()}}>단어 공부하기3</button>
+            
             <div>temp</div><br/>
             <div>temp</div><br/>
             <div>temp</div><br/>
