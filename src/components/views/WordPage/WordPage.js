@@ -5,7 +5,7 @@ import WordQuiz from "./WordQuiz";
 
 function WordPage(){
     const [showModal, setShowModal] = useState(false);
-
+    const [text, setText] = useState([]);
     const openModal = () => {
         setShowModal(!showModal);
     }
@@ -15,6 +15,14 @@ function WordPage(){
             console.log(res.data);
         })
     })
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/word')
+        .then(res => {
+            console.log(res);
+            setText(res.data.body);
+            // setText(res);
+        })
+    }, [])
     
     return(
         <>
@@ -41,7 +49,7 @@ function WordPage(){
             <div onClick={()=>{openModal()}}>단어 공부하기1</div>
             <a onClick={()=>{openModal()}}>단어 공부하기2</a><br/>
             <button className = "word_button" onClick={()=>{openModal()}}>단어 공부하기3</button>
-            
+            <div>{text}</div>
             <div>temp</div><br/>
             <div>temp</div><br/>
             <div>temp</div><br/>
