@@ -16,6 +16,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// 공공 인공지능 api gson 환경설정
+	implementation 'com.google.code.gson:gson:2.8.8'
+	//
 }
 
 test {
