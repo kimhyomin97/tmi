@@ -22,7 +22,6 @@ public class ProjectTmiApplication {
 	@GetMapping("/wordtest")
 	public String word() {
 		String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU";
-
-		String accessKey = ""
+		return "hello this is test";
 	}
 }
