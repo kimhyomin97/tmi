@@ -23,6 +23,15 @@ function StudyPage(){
             });
     }, [])
 
+    useEffect(() => {
+        fetch('/wordtest')
+            .then(response => response.text())
+            .then(message => {
+                // setMessage(message);
+                console.log(message);
+            });
+    }, [])
+
     return(
         <>
         <div>Study Page</div>

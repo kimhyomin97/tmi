@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @SpringBootApplication
 @RestController
 public class ProjectTmiApplication {
@@ -18,4 +19,10 @@ public class ProjectTmiApplication {
 		return "이건 REACT, Spring 연동 테스트.";
 	}
 
+	@GetMapping("/wordtest")
+	public String word() {
+		String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU";
+
+		String accessKey = ""
+	}
 }
