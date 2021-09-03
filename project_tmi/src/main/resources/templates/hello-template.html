@@ -1,0 +1,8 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello ' + ${name}" >hello! empty</p>
+<!--hello! empty 는 없어도 되는데,
+    타임리프의 장점이 파일을 서버없이 직접 열어도 껍데기를 볼 수 있다
+    만약 템플릿엔진으로 동작하면 empty부분이 th내용으로 치환된다 (즉, 서버를 돌면 치환되는 역역이다)-->
+</body>
+</html>
