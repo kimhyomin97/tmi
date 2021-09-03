@@ -41,4 +41,10 @@ public class MemoryMemberRepository implements MemberRepository {
         return new ArrayList<>(store.values()); // 멤버들이 쭉 반환된다
     }
     // 잘 동작하는지 확인하는건 테스트케이스 작성하는것
+
+
+    public void clearStore(){
+        store.clear();
+        // 스토어를 싹 비워준다.
+    }
 }
