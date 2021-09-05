@@ -49,8 +49,10 @@ public class WiseNLUExample {
     }
     @GetMapping("/test")
     @ResponseBody
-    public String test(Model model){
+    public List<Morpheme> test(Model model){
         List<Morpheme> temp = null;
+        List<Morpheme> morphemes = null;
+
         model.addAttribute("data","test!!");
         System.out.println("hello this is test");
         // 언어 분석 기술 문어/구어 중 한가지만 선택해 사용
@@ -58,7 +60,7 @@ public class WiseNLUExample {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU";
         // 언어 분석 기술(구어)
         // String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU_spoken";
-        String accessKey = "YOUR-KEY";   // 발급받은 API Key
+        String accessKey = "YOUR_KEY";   // 발급받은 API Key
         String analysisCode = "ner";        // 언어 분석 코드
         String text = "";           // 분석할 텍스트 데이터
         Gson gson = new Gson();
@@ -112,8 +114,8 @@ public class WiseNLUExample {
             if (responseCode != 200) {
                 // 오류 내용 출력
                 System.out.println("[error] " + responBodyJson);
-                return "테스트 ing";
-//                return temp;
+//                return "테스트 ing";
+                return temp;
             }
 
             responeBody = gson.fromJson(responBodyJson, Map.class);
@@ -126,8 +128,8 @@ public class WiseNLUExample {
 
                 // 오류 내용 출력
                 System.out.println("[error] " + responeBody.get("result"));
-                return "테스트 ing";
-//                return temp;
+//                return "테스트 ing";
+                return temp;
             }
 
             // 분석 결과 활용
@@ -136,7 +138,7 @@ public class WiseNLUExample {
 
             Map<String, Morpheme> morphemesMap = new HashMap<String, Morpheme>();
             Map<String, NameEntity> nameEntitiesMap = new HashMap<String, NameEntity>();
-            List<Morpheme> morphemes = null;
+//            List<Morpheme> morphemes = null;
             List<NameEntity> nameEntities = null;
 
             for (Map<String, Object> sentence : sentences) {
@@ -219,8 +221,8 @@ public class WiseNLUExample {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        return morphemes;
-        return "test done";
+        return morphemes;
+//        return "test done";
     }
 //    static public void main(String[] args) {
 //        // 언어 분석 기술 문어/구어 중 한가지만 선택해 사용
