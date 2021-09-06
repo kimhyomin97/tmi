@@ -11,8 +11,21 @@ function Map(){
             center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
             level: 3 //지도의 레벨(확대, 축소 정도)
         };
+        option.center = new kakao.maps.LatLng(37.5663795479871, 127.045325760782); // 성동구 마장동으로 위치 변경
         var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
 
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        var callback = function(result, status){
+            if(status === kakao.maps.services.Status.OK){
+                console.log(result);
+            }
+        };
+        
+        geocoder.addressSearch('성동구 마장동', callback);
+        // 성동구 마장동
+        // x: "127.045325760782"
+        // y: "37.5663795479871"
     }, [])
     
 
