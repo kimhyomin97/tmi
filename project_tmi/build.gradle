@@ -20,6 +20,10 @@ dependencies {
 	// 공공 인공지능 api gson 환경설정
 	implementation 'com.google.code.gson:gson:2.8.8'
 	//
+
+	// 웹 소켓
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	//
 }
 
 test {
