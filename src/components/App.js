@@ -25,7 +25,7 @@ function App() {
       <Route exact path ="/word" component = {WordPage} />
       <Route exact path ="/trend" component = {TrendPage} />
       <Route exact path ="/study" component = {StudyPage} />
-      {/* <Route exact path ="/chat" component = {ChatPage} /> */}
+      <Route exact path ="/chat" component = {ChatPage} />
       <Footer />
     </BrowserRouter>
     </>
