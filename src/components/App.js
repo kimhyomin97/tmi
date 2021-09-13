@@ -14,7 +14,7 @@ import StudyPage from './views/StudyPage/StudyPage';
 import ChatPage from './views/ChatPage/ChatPage';
 
 function App() {
-  console.log(firebase);
+  // console.log(firebase);
   return (
     <>
     <BrowserRouter>

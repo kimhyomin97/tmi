@@ -6,6 +6,7 @@ function HomePage(){
         <div className = "homepage_body">
             <div className = "test"> Hello </div>
             <div> Project TMI </div>
+            <div>firebase test</div>
         </div>
         </>
     )
