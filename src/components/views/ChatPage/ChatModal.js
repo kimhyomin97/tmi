@@ -54,6 +54,7 @@ function ChatModal(props) {
             <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()} />
         </List>
         </>
+        // 이부분 지우고 실시간 채팅으로 바꿔주는 작업부터 하면 된다
     )
 }
 export default ChatModal;
