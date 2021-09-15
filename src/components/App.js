@@ -12,13 +12,15 @@ import WordPage from './views/WordPage/WordPage';
 import TrendPage from './views/TrendPage/TrendPage';
 import StudyPage from './views/StudyPage/StudyPage';
 import ChatPage from './views/ChatPage/ChatPage';
+import Header_test from './views/Header/Header_test.js';
 
 function App() {
   // console.log(firebase);
   return (
     <>
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
+      <Header_test/>
       <Route exact path ="/" component={LandingPage} />
       <Route exact path ="/homepage" component = {HomePage} />
       <Route exact path ="/mappage" component = {MapPage} />
