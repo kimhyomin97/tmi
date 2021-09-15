@@ -99,20 +99,21 @@ function ChatPage() {
                 </FormControl>
             </form>
             
-            {/* <ul>
+            <ul>
                 {
-                    messages.map(message => (
-                        <ChatModal message={message}/>
+                    messages.map(({ id, message }) => (
+                        // <ChatModal message={message}/>
+                        <Message key={id} username={username} message={message} />
                     ))
                 }
-            </ul> */}
-            <FlipMove>
+            </ul>
+            {/* <FlipMove>
                 {
                     messages.map(({id, message}) => (
                         <Message key={id} username={username} message={message} />
                     ))
                 }
-            </FlipMove>
+            </FlipMove> */}
         </div>
         {/* DB test
          <div>
