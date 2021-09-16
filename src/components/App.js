@@ -13,6 +13,9 @@ import TrendPage from './views/TrendPage/TrendPage';
 import StudyPage from './views/StudyPage/StudyPage';
 import ChatPage from './views/ChatPage/ChatPage';
 import Header_test from './views/Header/Header_test.js';
+import ListPage from './views/ListPage/ListPage.js';
+import UploadPage from './views/UploadPage/UploadPage.js';
+import DetailPage from './views/DetailPage/DetailPage.js';
 
 function App() {
   // console.log(firebase);
@@ -28,6 +31,9 @@ function App() {
       <Route exact path ="/trend" component = {TrendPage} />
       <Route exact path ="/study" component = {StudyPage} />
       <Route exact path ="/chat" component = {ChatPage} />
+      <Route exact path ="/list" component = {ListPage} />
+      <Route exact path ="/upload" component = {UploadPage} />
+      <Route exact path ="/detail" component = {DetailPage} />
       <Footer />
     </BrowserRouter>
     </>
