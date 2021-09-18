@@ -1,12 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const {kakao} = window;
 
 function UploadPage(){
+    useEffect(() => {
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var option = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            level: 4 //지도의 레벨(확대, 축소 정도)
+        };
+        option.center = new kakao.maps.LatLng(37.5663795479871, 127.045325760782); // 성동구 마장동으로 위치 변경
+        var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
+
+        var geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch('성동구 마장동', callback);
+        console.log(geocoder);
+
+        var callback = function(result, status){
+            if(status === kakao.maps.services.Status.OK){
+                console.log(result);
+            }
+        };
+        
+        // 성동구 마장동
+        // x: "127.045325760782"
+        // y: "37.5663795479871"
+        var places = new kakao.maps.services.Places();
+
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                // console.log(result);
+                console.log(result)
+            }
+        };
+
+        places.keywordSearch('판교 치킨', callback);
+    }, [])
+
+    
+
+
     const [name, setName] = useState("");
     const [foodtype, setFoodtype] = useState();
     const [price, setPrice] = useState();
     const [location, setLocation] = useState();
     const [destination, setDestination] = useState();
     const [count, setCount] = useState();
+    const [send, setSend] = useState(0);
 
     const inputName = (e) => {
         setName(e.target.value);
@@ -14,6 +54,9 @@ function UploadPage(){
     const inputPrice = (e) => {
         setPrice(e.target.value);
     }
+    useEffect(() => {
+        // 이부분에서 파이어베이스 데이터베이스에 등록하는 코드 작성
+    }, [send])
 
     return (
         <>
@@ -33,6 +76,9 @@ function UploadPage(){
         <div>.</div>
         <div>뭐있을까 고민해봐야겠다</div>
         <div>여기서 입력하면 데이터베이스에 등록</div>
+        <button onClick={() => setSend(send+1)}>입력</button>
+        <div id="map" style={{width:"400px", height:"400px"}}></div>
+        맵 뿌려놓고 마크찍으면 해당 좌표 리턴해주는 로직 만들면 될듯
         </>
     )
 }
