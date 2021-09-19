@@ -56,6 +56,9 @@ function UploadPage(){
     }
     useEffect(() => {
         // 이부분에서 파이어베이스 데이터베이스에 등록하는 코드 작성
+        console.log(name);
+        console.log(foodtype);
+        console.log(price);
     }, [send])
 
     return (
