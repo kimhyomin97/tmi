@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
+import { List } from "@material-ui/core";
 
 function ListPage(){
     const [foods, setFoods] = useState([]);
@@ -15,7 +16,7 @@ function ListPage(){
     }, [])
     const [type, setType] = useState("전체");
     const types = ["전체", "한식", "중식", "일식"];
-    console.log(type);
+    console.log(foods);
     return(
         <>
         <div>test</div>
@@ -24,7 +25,9 @@ function ListPage(){
         {types.map(item => {
             return(
                 <>
-                <a onClick={() => setType(item)}> {item} </a>
+                <List>
+                    <a onClick={() => setType(item)}> {item} </a>
+                </List>
                 </>
             )
         })}
@@ -33,7 +36,9 @@ function ListPage(){
             foods?.map(item => {
                 return(
                     <>
-                    <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                    <a href={`/detail/${item.id}`}>
+                        <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                    </a>
                     </>
                 )
             })

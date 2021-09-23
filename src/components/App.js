@@ -33,7 +33,7 @@ function App() {
       <Route exact path ="/chat" component = {ChatPage} />
       <Route exact path ="/list" component = {ListPage} />
       <Route exact path ="/upload" component = {UploadPage} />
-      <Route exact path ="/detail" component = {DetailPage} />
+      <Route exact path ="/detail/:foodid" component = {DetailPage} />
       <Footer />
     </BrowserRouter>
     </>
