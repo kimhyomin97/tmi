@@ -23,10 +23,16 @@ function DetailPage(props){
     }, [])
 
     console.log(food);
-    console.log(food.data);
+    // console.log(food.data);
     
     return (
         <>
+        <div>{food.data.name}</div>
+        <div>{food.data.type}</div>
+        <div>{food.data.price}</div>
+        <div>{food.data.location}</div>
+        <div>신청하기 버튼</div>
+        <br/>
         <div>DetailPage</div>
         <div>데이터베이스에 등록된 음식들 가져와서 뿌려준다</div>
         <div>음식 종류별로 카테고리 만들어서 클릭하면 해당 음식들만 쭉 나오게 하면 좋을듯</div>
