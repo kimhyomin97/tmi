@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
-import { List } from "@material-ui/core";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 
 function ListPage(){
     const [foods, setFoods] = useState([]);
@@ -22,15 +22,18 @@ function ListPage(){
         <div>test</div>
         <a href="/upload"><button>만들기</button></a>
         <a href="/detail"><button>목록</button></a>
+        <List>
         {types.map(item => {
             return(
                 <>
-                <List>
-                    <a onClick={() => setType(item)}> {item} </a>
-                </List>
+                <ListItem button onClick={() => setType(item)}>
+                    <ListItemText primary={item} />
+                    {/* <a onClick={() => setType(item)}> {item} </a> */}
+                </ListItem>
                 </>
             )
         })}
+        </List>
         {
             type=="전체" ? 
             foods?.map(item => {
@@ -53,6 +56,9 @@ function ListPage(){
                 }
             })
         }
+        계획 <br/>
+        1. <br/>
+        2. <br/>
         </>
     )
 }

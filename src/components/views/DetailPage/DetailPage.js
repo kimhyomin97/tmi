@@ -22,15 +22,15 @@ function DetailPage(props){
         })
     }, [])
 
-    console.log(food);
+    // console.log(food);
     // console.log(food.data);
     
     return (
         <>
-        <div>{food.data.name}</div>
-        <div>{food.data.type}</div>
-        <div>{food.data.price}</div>
-        <div>{food.data.location}</div>
+        <div>{food?.data.name}</div>
+        <div>{food?.data.type}</div>
+        <div>{food?.data.price}</div>
+        <div>{food?.data.location}</div>
         <div>신청하기 버튼</div>
         <br/>
         <div>DetailPage</div>
