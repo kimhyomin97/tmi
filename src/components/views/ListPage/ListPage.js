@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
 import { List, ListItem, ListItemText } from "@material-ui/core";
+import { FontDownloadSharp } from "@material-ui/icons";
 
 const { kakao } = window;
 
@@ -34,7 +35,7 @@ function ListPage(){
             if(status === kakao.maps.services.Status.OK){
                 // console.log(result);
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+                
                 var marker = new kakao.maps.Marker({
                     map: map,
                     position: coords
@@ -42,7 +43,20 @@ function ListPage(){
                 map.setCenter(coords);
             }
         };
-        
+        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+ 
+        foods.map(item => {
+            // console.log(item.data.location);
+            var imageSize = new kakao.maps.Size(24, 35);
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+            var marker = new kakao.maps.Marker({
+                map : map,
+                position : item.data.location,
+                title : item.data.name,
+                image : markerImage,
+            })
+        })
+
         geocoder.addressSearch(curlocation, callback);
         var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
         // 성동구 마장동
@@ -52,7 +66,7 @@ function ListPage(){
 
     const [type, setType] = useState("전체");
     const types = ["전체", "한식", "중식", "일식"];
-    console.log(foods);
+    // console.log(foods);
 
     const inputCurlocation = (e) => {
         setCurlocation(e.target.value);
