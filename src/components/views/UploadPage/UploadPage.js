@@ -55,13 +55,13 @@ function UploadPage(){
                     position: coords
                 });
 
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">여기</div>'
-                });
-                infowindow.open(map, marker);
+                // var infowindow = new kakao.maps.InfoWindow({
+                //     content: '<div style="width:150px;text-align:center;padding:6px 0;">여기</div>'
+                // });
+                // infowindow.open(map, marker);
 
                 map.setCenter(coords);
-                // marker.setDraggable(true);
+                marker.setDraggable(true);
             }
         };
         geocoder.addressSearch(location, callback);

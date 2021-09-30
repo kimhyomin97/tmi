@@ -28,37 +28,34 @@ function ListPage(){
             level: 4 //지도의 레벨(확대, 축소 정도)
         };
         option.center = new kakao.maps.LatLng(37.5663795479871, 127.045325760782); // 성동구 마장동으로 위치 변경
+        var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
         
         var geocoder = new kakao.maps.services.Geocoder();
 
         var callback = function(result, status){
             if(status === kakao.maps.services.Status.OK){
-                // console.log(result);
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-                map.setCenter(coords);
+                // console.log(result[0].x);
+                option.center = new kakao.maps.LatLng(result[0].y, result[0].x);
+                map = new kakao.maps.Map(container, option);
             }
         };
-        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
- 
-        foods.map(item => {
-            // console.log(item.data.location);
-            var imageSize = new kakao.maps.Size(24, 35);
-            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-            var marker = new kakao.maps.Marker({
-                map : map,
-                position : item.data.location,
-                title : item.data.name,
-                image : markerImage,
-            })
-        })
-
         geocoder.addressSearch(curlocation, callback);
-        var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
+
+        foods.map(item => {
+            // console.log(item);
+            var callback_mk = function(result, status){
+                if(status === kakao.maps.services.Status.OK){
+                    var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    var marker = new kakao.maps.Marker({
+                        position: markerPosition
+                    });
+                    marker.setMap(map);
+                }
+            };
+            geocoder.addressSearch(item.data.location, callback_mk);
+        })
+        // 마커 보이기, 숨기기 버튼 구현하면 된다
+
         // 성동구 마장동
         // x: "127.045325760782"
         // y: "37.5663795479871"
@@ -67,6 +64,31 @@ function ListPage(){
     const [type, setType] = useState("전체");
     const types = ["전체", "한식", "중식", "일식"];
     // console.log(foods);
+
+    const viewMarker = () => {
+        // var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        // var option = { //지도를 생성할 때 필요한 기본 옵션
+        //     center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+        //     level: 4 //지도의 레벨(확대, 축소 정도)
+        // };
+        // option.center = new kakao.maps.LatLng(37.5663795479871, 127.045325760782); // 성동구 마장동으로 위치 변경
+        // var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
+        
+        // var geocoder = new kakao.maps.services.Geocoder();
+        // foods.map(item => {
+        //     // console.log(item);
+        //     var callback_mk = function(result, status){
+        //         if(status === kakao.maps.services.Status.OK){
+        //             var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+        //             var marker = new kakao.maps.Marker({
+        //                 position: markerPosition
+        //             });
+        //             marker.setMap(map);
+        //         }
+        //     };
+        //     geocoder.addressSearch(item.data.location, callback_mk);
+        // })
+    }
 
     const inputCurlocation = (e) => {
         setCurlocation(e.target.value);

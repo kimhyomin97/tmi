@@ -37,7 +37,15 @@ function DetailPage(props){
 
         var callback = function(result, status){
             if(status === kakao.maps.services.Status.OK){
-                console.log(result);
+                // console.log(result[0].y);
+                // console.log(result[0].x);
+                var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // var markerPosition = new kakao.maps.LatLng(37.5663795479871, 127.045325760782);
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition
+                });
+
+                marker.setMap(map);
             }
         };
         
