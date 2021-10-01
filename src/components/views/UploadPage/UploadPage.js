@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 // import db from "../../firebase";
 import db from "../../firebase";
 import firebase from 'firebase';
+import { ContactsOutlined } from "@material-ui/icons";
 // import firebase from '../../firebase';
 
 const {kakao} = window;
@@ -26,12 +27,15 @@ function UploadPage(){
     const inputLocation = (e) => {
         setLocation(e.target.value);
     }
-
+    
+    const [test, setTest] = useState(0);
+    
     useEffect(() => {
         // 필요한거 : 지명 검색하면 해당위치로 지도 이동
         // 마크 띄워주고 이 위치가 맞는지 확인
         // 해당위치가 맞다면 해당위치 좌표 저장 -> 디비에 저장
 
+        
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션
             center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
@@ -47,26 +51,33 @@ function UploadPage(){
                 // console.log(result[0].y);
                 // option.center = new kakao.maps.LatLng(result[0].y, result[0].x); // 성동구 마장동으로 위치 변경
                 // var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
-                setPosition({y: result[0].y,x: result[0].x});
+                // setPosition({y: result[0].y,x: result[0].x});
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
                 var marker = new kakao.maps.Marker({
                     map: map,
                     position: coords
                 });
 
+
                 // var infowindow = new kakao.maps.InfoWindow({
                 //     content: '<div style="width:150px;text-align:center;padding:6px 0;">여기</div>'
                 // });
                 // infowindow.open(map, marker);
-
-                map.setCenter(coords);
+                // map.setCenter(coords);
                 marker.setDraggable(true);
+                setPosition({y: marker.getPosition().Ma, x: marker.getPosition().La})
+                console.log(marker.getPosition());
+                // 세종로 2511
+                // La : 127.29100269804199
+                // Ma : 36.61169462015369
+                // console.log(coords);
             }
         };
         geocoder.addressSearch(location, callback);
         var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
-        
+
+        // var coords = new kakao.maps.LatLng(position.y, position.x);
+        // map.setCenter(coords);
         
         // geocoder.addressSearch('성동구 마장동', function(result, status) {
 
@@ -90,25 +101,14 @@ function UploadPage(){
         //         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         //         map.setCenter(coords);
         //     } 
-        // });  
-
-        
+        // });
 
         // 성동구 마장동
         // x: "127.045325760782"
         // y: "37.5663795479871"
-        var places = new kakao.maps.services.Places();
-
-        // var callback = function(result, status) {
-        //     if (status === kakao.maps.services.Status.OK) {
-        //         // console.log(result);
-        //         console.log(result)
-        //     }
-        // };
-
-        // places.keywordSearch('판교 치킨', callback);
+        // var places = new kakao.maps.services.Places();
     }, [search])
-
+    
     useEffect(() => {
         // 이부분에서 파이어베이스 데이터베이스에 등록하는 코드 작성
         
@@ -186,8 +186,11 @@ function UploadPage(){
         <div>여기서 입력하면 데이터베이스에 등록</div>
         {/* <button onClick={() => setSend(send+1)}>입력</button> */}
         <button onClick={sendInfo}>전송</button>
+        <button onClick={() => setTest(test+1)}>테스트</button>
         <div id="map" style={{width:"400px", height:"400px"}}></div>
         맵 뿌려놓고 마크찍으면 해당 좌표 리턴해주는 로직 만들면 될듯
+        <div>좌표 : {position.x}</div>
+        <div>좌표 : {position.y}</div>
         </>
     )
 }
