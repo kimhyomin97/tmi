@@ -6,6 +6,8 @@ const { kakao } = window;
 
 function Map(props){
     console.log(props);
+    // props로 리스트를 전달받아서 마커를 띄우는 방법 해보자
+    
     useEffect(() => {
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션

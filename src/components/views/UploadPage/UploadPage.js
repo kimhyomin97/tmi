@@ -12,7 +12,7 @@ function UploadPage(){
     const [foodtype, setFoodtype] = useState("");
     const [price, setPrice] = useState("");
     const [location, setLocation] = useState("");
-    const [position, setPosition] = useState({});
+    const [position, setPosition] = useState({La : 127.29100269804199, Ma : 36.61169462015369});
     const [search, setSearch] = useState(0);
     const [destination, setDestination] = useState();
     const [count, setCount] = useState();
@@ -38,7 +38,7 @@ function UploadPage(){
         
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션
-            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            center: new kakao.maps.LatLng(36.61169462015369, 127.29100269804199), //지도의 중심좌표.
             level: 4 //지도의 레벨(확대, 축소 정도)
         };
         // option.center = new kakao.maps.LatLng(37.5663795479871, 127.045325760782); // 성동구 마장동으로 위치 변경
@@ -57,16 +57,18 @@ function UploadPage(){
                     map: map,
                     position: coords
                 });
-
+                marker.setDraggable(true);
+                kakao.maps.event.addListener(marker, 'dragend', function() {
+                    setPosition({y: marker.getPosition().Ma, x: marker.getPosition().La})
+                });
+                // console.log(marker.getPosition());
 
                 // var infowindow = new kakao.maps.InfoWindow({
                 //     content: '<div style="width:150px;text-align:center;padding:6px 0;">여기</div>'
                 // });
                 // infowindow.open(map, marker);
-                // map.setCenter(coords);
-                marker.setDraggable(true);
-                setPosition({y: marker.getPosition().Ma, x: marker.getPosition().La})
-                console.log(marker.getPosition());
+                map.setCenter(coords);
+                
                 // 세종로 2511
                 // La : 127.29100269804199
                 // Ma : 36.61169462015369
@@ -151,16 +153,40 @@ function UploadPage(){
             type: foodtype,
             price: price,
             location: location,
-            // position: position,
+            position: position,
             // message: input,
             // username: username,
-            // timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         console.log(name);
         console.log(foodtype);
         console.log(price);
         console.log(location);
         alert("전송완료");
+    }
+    
+    const markertest = (e) => {
+        // console.log(e);
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var option = { //지도를 생성할 때 필요한 기본 옵션
+            // center: new kakao.maps.LatLng(36.61169462015369, 127.29100269804199), //지도의 중심좌표.
+            center: new kakao.maps.LatLng(position.Ma, position.La), //지도의 중심좌표.
+            level: 4 //지도의 레벨(확대, 축소 정도)
+        };
+        var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
+        // var coords = new kakao.maps.LatLng(36.6116, 127.2910);
+        // var coords = new kakao.maps.LatLng(marker.getPosition().Ma, marker.getPosition().La);
+        var coords = new kakao.maps.LatLng(position.Ma, position.La);
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+        marker.setDraggable(true);
+        setPosition({La: marker.getPosition().La, Ma: marker.getPosition().Ma});
+        console.log(marker.getPosition());
+        // 이부분 문제 : 테스트 버튼을 누를때마다 지도가 생성된다
+        // 즉, container, option, map, coords, marker 등 한곳에 정의하는 것이 필요하다
+        // 컴포넌트로 나눠서 해결하면 좋을듯
     }
 
     return (
@@ -186,7 +212,8 @@ function UploadPage(){
         <div>여기서 입력하면 데이터베이스에 등록</div>
         {/* <button onClick={() => setSend(send+1)}>입력</button> */}
         <button onClick={sendInfo}>전송</button>
-        <button onClick={() => setTest(test+1)}>테스트</button>
+        {/* <button onClick={() => setTest(test+1)}>테스트</button> */}
+        {/* <button onClick={markertest}>테스트</button> */}
         <div id="map" style={{width:"400px", height:"400px"}}></div>
         맵 뿌려놓고 마크찍으면 해당 좌표 리턴해주는 로직 만들면 될듯
         <div>좌표 : {position.x}</div>
