@@ -41,25 +41,35 @@ function ListPage(){
         };
         geocoder.addressSearch(curlocation, callback);
 
+        // foods.map(item => {
+        //     // console.log(item);
+        //     var callback_mk = function(result, status){
+        //         if(status === kakao.maps.services.Status.OK){
+        //             var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+        //             var marker = new kakao.maps.Marker({
+        //                 position: markerPosition
+        //             });
+        //             marker.setMap(map);
+        //         }
+        //     };
+        //     geocoder.addressSearch(item.data.location, callback_mk);
+        // })
+        // // 마커 보이기, 숨기기 버튼 구현하면 된다
+
         foods.map(item => {
-            // console.log(item);
-            var callback_mk = function(result, status){
-                if(status === kakao.maps.services.Status.OK){
-                    var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
-                    var marker = new kakao.maps.Marker({
-                        position: markerPosition
-                    });
-                    marker.setMap(map);
-                }
-            };
-            geocoder.addressSearch(item.data.location, callback_mk);
+            // console.log(item.data.position.y, item.data.position.x);
+            // console.log(item.data.position.x);
+            var marker = new kakao.maps.Marker({
+                // map: map,
+                position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
+            })
+            marker.setMap(map);
         })
-        // 마커 보이기, 숨기기 버튼 구현하면 된다
 
         // 성동구 마장동
         // x: "127.045325760782"
         // y: "37.5663795479871"
-    }, [])
+    }, [search])
 
     const [type, setType] = useState("전체");
     const types = ["전체", "한식", "중식", "일식"];
