@@ -59,7 +59,7 @@ function ListPage(){
         // 성동구 마장동
         // x: "127.045325760782"
         // y: "37.5663795479871"
-    }, [search])
+    }, [])
 
     const [type, setType] = useState("전체");
     const types = ["전체", "한식", "중식", "일식"];
