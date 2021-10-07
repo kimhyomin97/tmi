@@ -3,7 +3,9 @@ import db from "../../firebase";
 import firebase from 'firebase';
 import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
 import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
+import food_img from "./public/food.png";
 
+// import LunchDiningIcon from '@mui/icons-material/LunchDining';
 // import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 // import List from '@material-ui/core/List';
 // import ListItem from '@material-ui/core/ListItem';
@@ -207,6 +209,7 @@ function ListPage(){
                             primary={item.data.name}
                             secondary={item.data.location, item.data.price, item.data.type}
                          /> */}
+                        <img src={food_img}/>
                         <a href={`/detail/${item.id}`}>
                             <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
                         </a>
