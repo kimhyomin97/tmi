@@ -209,7 +209,7 @@ function ListPage(){
                             primary={item.data.name}
                             secondary={item.data.location, item.data.price, item.data.type}
                          /> */}
-                        <img src={food_img}/>
+                        
                         <a href={`/detail/${item.id}`}>
                             <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
                         </a>
