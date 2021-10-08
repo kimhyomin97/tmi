@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
-import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
+import "./public/ListPage.css";
+import { List, ListItem, ListItemText, Divider, ListItemSecondaryAction } from "@material-ui/core";
 import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
 import food_img from "./public/food.png";
 
@@ -67,11 +68,21 @@ function ListPage(){
 
     const setMarker = () => {
         foods.map(item => {
+            // var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+            var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
+            var iwRemoveable = true;
+            var infowindow = new kakao.maps.InfoWindow({
+                content : iwContent,
+                removable : iwRemoveable
+            });
             var marker = new kakao.maps.Marker({
                 map: map,
                 position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
             })
         // marker.setMap(map);
+            kakao.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+            })
         })
     }
 
@@ -209,7 +220,7 @@ function ListPage(){
                             primary={item.data.name}
                             secondary={item.data.location, item.data.price, item.data.type}
                          /> */}
-                        
+                        <img src={food_img} class="food_img"/>
                         <a href={`/detail/${item.id}`}>
                             <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
                         </a>
