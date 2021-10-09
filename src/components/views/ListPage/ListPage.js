@@ -68,13 +68,15 @@ function ListPage(){
 
     const setMarker = () => {
         foods.map(item => {
-            // var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
-            var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
+            // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+            // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
             var iwRemoveable = true;
             var infowindow = new kakao.maps.InfoWindow({
                 content : iwContent,
                 removable : iwRemoveable
             });
+            console.log(item);
             var marker = new kakao.maps.Marker({
                 map: map,
                 position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
