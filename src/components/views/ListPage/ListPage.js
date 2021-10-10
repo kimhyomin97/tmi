@@ -7,6 +7,7 @@ import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
 // import { bibimbap } from "./public";
 // import bibimbap from "./public/bibimbap.png"
 import {한식, 패스트푸드, 중식, 치킨, 일식, 피자, 분식} from './public/image_export';
+import { MarkEmailReadSharp } from "@mui/icons-material";
 
 // import LunchDiningIcon from '@mui/icons-material/LunchDining';
 // import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
@@ -25,11 +26,13 @@ function ListPage(){
     const [curlocation, setCurlocation] = useState();
     const [foods, setFoods] = useState([]);
     const [search, setSearch] = useState(0);
-    const [map, setMap] = useState(null);
+    const [map, setMaps] = useState(null);
     // 이런 방식으로 map을 저장해보는 방법
     // const [container, setContainer] = useState(null);
-    // const [marker, setMarker] = useState([]);
-    var markers = [];
+    const [markers, setMarkers] = useState([]);
+    // var markers = [];
+    const [isVisible, setIsVisible] = useState(false);
+    var temps = [];
 
     useEffect(() => {
         db.collection('food')
@@ -48,8 +51,33 @@ function ListPage(){
         };
         // option.center = new kakao.maps.LatLng(37.5663795479871, 127.045325760782); // 성동구 마장동으로 위치 변경
         // var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
-        setMap(new kakao.maps.Map(container, option));
+        setMaps(new kakao.maps.Map(container, option));        
     }, [])
+
+    useEffect(() => {
+        foods.map(item => {
+            // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+            // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
+            var iwRemoveable = true;
+            var infowindow = new kakao.maps.InfoWindow({
+                content : iwContent,
+                removable : iwRemoveable
+            });
+            var marker = new kakao.maps.Marker({
+                // map: map,
+                position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
+            })
+            // marker.setMap(map);
+            // isVisible && marker.setMap(map);
+            // console.log(marker);
+            setMarkers([...markers, marker]);
+            temps.push(marker);
+            kakao.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+            })
+        })
+    }, [foods])
     const setCenter = () => {
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션
@@ -69,25 +97,49 @@ function ListPage(){
     }
 
     const setMarker = () => {
-        foods.map(item => {
-            // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-            var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
-            // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
-            var iwRemoveable = true;
-            var infowindow = new kakao.maps.InfoWindow({
-                content : iwContent,
-                removable : iwRemoveable
-            });
+        // foods.map(item => {
+        //     // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        //     var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+        //     // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
+        //     var iwRemoveable = true;
+        //     var infowindow = new kakao.maps.InfoWindow({
+        //         content : iwContent,
+        //         removable : iwRemoveable
+        //     });
+        //     var marker = new kakao.maps.Marker({
+        //         // map: map,
+        //         position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
+        //     })
+        //     // marker.setMap(map);
+        //     // isVisible && marker.setMap(map);
+        //     setMarkers([...markers, marker]);
+        //     kakao.maps.event.addListener(marker, 'click', function() {
+        //         infowindow.open(map, marker);
+        //     })
+        // })
+
+        // console.log(markers);
+        // markers.map(item => {
+        //     // console.log(item);
+        //     item.setMap(map);
+        // })
+        console.log(temps);
+        temps.map(item => {
             console.log(item);
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
-            })
-        // marker.setMap(map);
-            kakao.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map, marker);
-            })
         })
+        // 이부분 마커를 state에 저장해놓고, 출력하고 지우는 기능부터 하면 된다
+    }
+    const test = () => {
+        setIsVisible(true);
+        // markers.map(item => {
+        //     item.setMap(map);
+        //     // console.log(item);
+        //     // console.log(map);
+        // })
+    }
+    const test2 = () => {
+        setIsVisible(false);
+        console.log(isVisible);
     }
 
     useEffect(() => {
@@ -143,7 +195,7 @@ function ListPage(){
     }, [search])
 
     const [type, setType] = useState("전체");
-    const types = ["전체", "한식", "중식", "일식"];
+    const types = ["전체", "한식", "중식", "일식", "치킨", "피자", "패스트푸드", "분식"];
     // console.log(foods);
 
     const viewMarker = () => {
@@ -175,12 +227,6 @@ function ListPage(){
         setCurlocation(e.target.value);
     }
 
-    const test = () => {
-        return(
-            <div>test</div>
-        )
-    }
-
     const style = {
         width: '100%',
         maxWidth: 360,
@@ -193,7 +239,7 @@ function ListPage(){
         <div>test</div>
         <a href="/upload"><button>만들기</button></a>
         <a href="/detail"><button>목록</button></a>
-        <List>
+        <List className="list_types">
         {types.map(item => {
             return(
                 <>
@@ -209,7 +255,8 @@ function ListPage(){
         <button onClick={() => setSearch(search+1)}>입력</button>
         <button onClick={() => setCenter()}>이동</button>
         <button onClick={() => setMarker()}>마커표시</button>
-        
+        <button onClick={() => test()}>테스트</button>
+        <button onClick={() => test2()}>테스트2</button>
         <div id="map" style={{width:"600px", height:"400px"}}></div>
         <List sx={style} component="nav" aria-label="mailbox folders">
         {
@@ -217,17 +264,8 @@ function ListPage(){
             foods?.map(item => {
                 return(
                     <>
-                    {/* <a href={`/detail/${item.id}`}>
-                        <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
-                    </a> */}
                     <ListItem>
-                        {/* <ListItemText
-                            primary={item.data.name}
-                            secondary={item.data.location, item.data.price, item.data.type}
-                         /> */}
-                        {/* <ListItemIcon> */}
-                            <img src={한식} class="food_img"/>
-                        {/* </ListItemIcon> */}
+                        <img src={한식} class="food_img"/>
                         <ListItemText>
                             <a href={`/detail/${item.id}`}>
                                 <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
@@ -253,7 +291,7 @@ function ListPage(){
         계획 <br/>
         1. <br/>
         2. <br/>
-        <button onClick={() => test()}>테스트</button>
+        
         </>
     )
 }

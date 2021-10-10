@@ -6,3 +6,8 @@
 .list_item_text{
     padding-left: 10px;
 }
+
+.list_types{
+    display: flex;
+    /* flex-direction: row; */
+}
