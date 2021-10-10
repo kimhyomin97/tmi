@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
 import "./public/ListPage.css";
-import { List, ListItem, ListItemText, Divider, ListItemSecondaryAction } from "@material-ui/core";
+import { List, ListItem, ListItemText, ListItemIcon, Divider, ListItemSecondaryAction } from "@material-ui/core";
 import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
-import food_img from "./public/food.png";
+// import { bibimbap } from "./public";
+// import bibimbap from "./public/bibimbap.png"
+import {bibimbap, burer, dimsum, fried_chicken, noodles} from './public/image_export';
 
 // import LunchDiningIcon from '@mui/icons-material/LunchDining';
 // import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
@@ -184,7 +186,8 @@ function ListPage(){
         maxWidth: 360,
         bgcolor: 'background.paper',
     };
-
+    // 아이콘 : https://www.flaticon.com/premium-icon/pizza_2454219?term=pizza&related_id=2454219
+    // 피자, 분식 다운받아야 된다
     return(
         <>
         <div>test</div>
@@ -217,15 +220,19 @@ function ListPage(){
                     {/* <a href={`/detail/${item.id}`}>
                         <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
                     </a> */}
-                    <ListItem button>
+                    <ListItem>
                         {/* <ListItemText
                             primary={item.data.name}
                             secondary={item.data.location, item.data.price, item.data.type}
                          /> */}
-                        <img src={food_img} class="food_img"/>
-                        <a href={`/detail/${item.id}`}>
-                            <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
-                        </a>
+                        {/* <ListItemIcon> */}
+                            <img src={bibimbap} class="food_img"/>
+                        {/* </ListItemIcon> */}
+                        <ListItemText>
+                            <a href={`/detail/${item.id}`}>
+                                <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                            </a>
+                        </ListItemText>
                     </ListItem>
                     <Divider />
                     </>
