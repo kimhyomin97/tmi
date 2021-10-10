@@ -6,7 +6,7 @@ import { List, ListItem, ListItemText, ListItemIcon, Divider, ListItemSecondaryA
 import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
 // import { bibimbap } from "./public";
 // import bibimbap from "./public/bibimbap.png"
-import {bibimbap, burer, dimsum, fried_chicken, noodles} from './public/image_export';
+import {한식, 패스트푸드, 중식, 치킨, 일식, 피자, 분식} from './public/image_export';
 
 // import LunchDiningIcon from '@mui/icons-material/LunchDining';
 // import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
@@ -226,7 +226,7 @@ function ListPage(){
                             secondary={item.data.location, item.data.price, item.data.type}
                          /> */}
                         {/* <ListItemIcon> */}
-                            <img src={bibimbap} class="food_img"/>
+                            <img src={한식} class="food_img"/>
                         {/* </ListItemIcon> */}
                         <ListItemText>
                             <a href={`/detail/${item.id}`}>

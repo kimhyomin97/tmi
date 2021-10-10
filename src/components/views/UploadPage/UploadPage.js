@@ -198,6 +198,10 @@ function UploadPage(){
         <input type="radio" value="한식" name = "foodtype" onClick={() => setFoodtype("한식")}/>한식
         <input type="radio" value="중식" name = "foodtype" onClick={() => setFoodtype("중식")}/>중식
         <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("일식")}/>일식
+        <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("치킨")}/>치킨
+        <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("피자")}/>피자
+        <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("패스트푸드")}/>패스트푸드
+        <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
         <div>변경 : {foodtype}</div>
         <label>가격 : </label><input type = "text" value={price} onChange={inputPrice} />
         <div>변경 : {price}</div>
