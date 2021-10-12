@@ -97,36 +97,36 @@ function ListPage(){
     }
 
     const setMarker = () => {
-        // foods.map(item => {
-        //     // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        //     var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
-        //     // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
-        //     var iwRemoveable = true;
-        //     var infowindow = new kakao.maps.InfoWindow({
-        //         content : iwContent,
-        //         removable : iwRemoveable
-        //     });
-        //     var marker = new kakao.maps.Marker({
-        //         // map: map,
-        //         position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
-        //     })
-        //     // marker.setMap(map);
-        //     // isVisible && marker.setMap(map);
-        //     setMarkers([...markers, marker]);
-        //     kakao.maps.event.addListener(marker, 'click', function() {
-        //         infowindow.open(map, marker);
-        //     })
-        // })
+        foods.map(item => {
+            // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+            // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
+            var iwRemoveable = true;
+            var infowindow = new kakao.maps.InfoWindow({
+                content : iwContent,
+                removable : iwRemoveable
+            });
+            var marker = new kakao.maps.Marker({
+                // map: map,
+                position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
+            })
+            marker.setMap(map);
+            // isVisible && marker.setMap(map);
+            setMarkers([...markers, marker]);
+            kakao.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+            })
+        })
 
         // console.log(markers);
         // markers.map(item => {
         //     // console.log(item);
         //     item.setMap(map);
         // })
-        console.log(temps);
-        temps.map(item => {
-            console.log(item);
-        })
+        // console.log(temps);
+        // temps.map(item => {
+        //     console.log(item);
+        // })
         // 이부분 마커를 state에 저장해놓고, 출력하고 지우는 기능부터 하면 된다
     }
     const test = () => {
