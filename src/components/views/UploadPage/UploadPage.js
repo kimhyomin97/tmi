@@ -207,6 +207,8 @@ function UploadPage(){
         <div>변경 : {price}</div>
         <label>위치 : </label><input type = "text" value={location} onChange={inputLocation} />
         <div>변경 : {location}</div>
+        <label>세부위치 : </label><input type = "text" />
+        {/* 세부위치는 DetailPage에서 노출되지 않도록 한다 */}
         <button onClick={() => setSearch(search+1)}>검색</button>
         <div>## 이부분은 지도에서 마커찍어가지고 해당 좌표값 가져오도록 수정해야된다</div>
         <div>수령장소 : </div> ## 이부분도 마찬가지로 마커찍어야되지만 위치와 수령장소 하나로 통일가능할듯

@@ -60,10 +60,10 @@ function DetailPage(props){
     
     return (
         <>
-        <div>{food?.data.name}</div>
-        <div>{food?.data.type}</div>
-        <div>{food?.data.price}</div>
-        <div>{food?.data.location}</div>
+        <div>이름 : {food?.data.name}</div>
+        <div>종류 : {food?.data.type}</div>
+        <div>가격 : {food?.data.price}</div>
+        <div>위치 : {food?.data.location}</div>
         <div>신청하기 버튼</div>
         <br/>
         <div>DetailPage</div>
@@ -71,6 +71,7 @@ function DetailPage(props){
         <div>음식 종류별로 카테고리 만들어서 클릭하면 해당 음식들만 쭉 나오게 하면 좋을듯</div>
         <div>지도에 뿌려주는 방법은 조금 나중에 생각해보자</div>
         <div id="map" style={{width:"600px", height:"400px"}}></div>
+        <div>실시간 채팅?</div>
         </>
     )
 }

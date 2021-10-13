@@ -262,10 +262,12 @@ function ListPage(){
         {
             type=="전체" ? 
             foods?.map(item => {
+                console.log(item.data.type);
                 return(
                     <>
                     <ListItem>
-                        <img src={한식} class="food_img"/>
+                        <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
+                        {/* <img src={한식} class="food_img"/> */}
                         <ListItemText>
                             <a href={`/detail/${item.id}`}>
                                 <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
