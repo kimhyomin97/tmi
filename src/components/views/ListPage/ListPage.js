@@ -38,7 +38,7 @@ function ListPage(){
         db.collection('food')
         .orderBy('name', 'desc')
         .onSnapshot(data => {
-            // setMessages(data.docs.map(doc => ({id: doc.id, message: doc.data() })))
+            // setMessages(data2VDFY.docs.map(doc => ({id: doc.id, message: doc.data() })))
             // setFoods(data.docs.map(doc => ({name: doc.name, location: doc.location, price: doc.price, type: doc.type})))
             setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })))
         })
@@ -127,6 +127,7 @@ function ListPage(){
         // temps.map(item => {
         //     console.log(item);
         // })
+        
         // 이부분 마커를 state에 저장해놓고, 출력하고 지우는 기능부터 하면 된다
     }
     const test = () => {
