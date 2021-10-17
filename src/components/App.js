@@ -16,6 +16,7 @@ import Header_test from './views/Header/Header_test.js';
 import ListPage from './views/ListPage/ListPage.js';
 import UploadPage from './views/UploadPage/UploadPage.js';
 import DetailPage from './views/DetailPage/DetailPage.js';
+import LoginPage from './views/LoginPage/LoginPage.js';
 
 function App() {
   // console.log(firebase);
@@ -24,7 +25,8 @@ function App() {
     <BrowserRouter>
       {/* <Header /> */}
       <Header_test/>
-      <Route exact path ="/" component={LandingPage} />
+      {/* <Route exact path ="/" component={LandingPage} /> */}
+      <Route exact path ="/" component = {LoginPage} />
       <Route exact path ="/homepage" component = {HomePage} />
       <Route exact path ="/mappage" component = {MapPage} />
       <Route exact path ="/word" component = {WordPage} />

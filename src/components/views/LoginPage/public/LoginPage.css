@@ -1,0 +1,14 @@
+.modal_bt{
+    font-size: 30px;
+    text-align: center;
+}
+
+#kakao_login_bt{
+    border: 0;
+    outline: 0;
+}
+
+.kakao_login_bt_wrap{
+    margin: 0 auto;
+    text-align: center;
+}
