@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,8 +20,12 @@ import MailIcon from '@material-ui/icons/Mail';
 
 import { useStyles } from './public/styles';
 import './public/Header.css';
+import { AlignHorizontalLeftRounded } from '@mui/icons-material';
 
-export default function Header_test() {
+import { withRouter } from 'react-router-dom';
+import LoginPage from '../LoginPage/LoginPage';
+
+function Header_test({history}) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -34,6 +38,67 @@ export default function Header_test() {
     setOpen(false);
   };
 
+  const kakao_logout = () => {
+    if(window.Kakao.Auth.getAccessToken()){
+      window.Kakao.Auth.logout(() => {
+        setLogin(false);
+        alert("로그아웃 성공");
+        localStorage.clear();
+        history.push("/");
+      })
+    }
+    else{
+      alert("로그아웃 상황");
+    }
+    // window.Kakao.Auth.logout(function() {
+    //   console.log
+    // })
+
+    // window.Kakao.API.request({
+    //   success: function(res) {
+    //     console.log(res);
+    //   }
+    // })
+  }
+  const [login, setLogin] = useState(false);
+  const move_login = () => {
+    // return(
+      <LoginPage></LoginPage>
+    // )
+  }
+  const [user_account, setUser_account] = useState({});
+  useEffect(() => {
+    window.Kakao.API.request({
+      url: '/v2/user/me',
+      success: function({ kakao_account }){
+        // const { age_range, profile } = kakao_account;
+        setUser_account(kakao_account);
+      }
+    })
+  // }, [login]);
+  }, []);
+  
+  const view_info = () => {
+    window.Kakao.API.request({
+      url: '/v2/user/me',
+      success: function({ kakao_account }){
+        const { age_range, profile } = kakao_account;
+        console.log(age_range);
+        console.log(`responsed img: ${profile.profile_image_url}`);
+        console.log("성공");
+        console.log(kakao_account);
+        // console.log(res);
+      },
+      fail: function(error){
+        console.log("실패");
+        console.log(error);
+      }
+    })
+  }
+  const [loginModal, setLoginModal] = useState(false);
+  
+  // console.log(localStorage.Kakao_token);
+  // console.log(user_account);
   return (
       <>
       <div className={classes.root}>
@@ -122,8 +187,41 @@ export default function Header_test() {
               </ListItem>
             ))}
           </List>
+          {/* 이부분 페이지 이동시 초기화되는 문제가 발생... 
+              페이지 이동시에도 카카오 로그인 유지되는 방안 생각해야됨
+              토큰을 활용한 방법을 생각해봐야 될듯
+          */}
+          {
+            // !login ?
+            // 페이지 이동시 로그인은 유지되지만 로그인 정보가 문제...
+            !localStorage.Kakao_token ? 
+            <List>
+              <div className="header_item">
+                <a onClick={() => setLoginModal(true)}>로그인</a>
+              </div>
+              {loginModal ?
+                <LoginPage
+                  login={login}
+                  setLogin={setLogin}
+                ></LoginPage>
+                :
+                <></>
+              }
+            </List>
+            :
+            <List>
+              <div className="header_item">{user_account?.profile?.nickname} 님 안녕하세요</div>
+              <div className="header_item">
+                <a onClick={kakao_logout}>로그아웃</a>
+              </div>
+            </List>
+          }
+          <List>
+          </List>
         </Drawer>
       </div>
       </>
   );
 }
+
+export default withRouter(Header_test);

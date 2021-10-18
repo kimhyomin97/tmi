@@ -53,7 +53,9 @@ function ListPage(){
         // var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
         setMaps(new kakao.maps.Map(container, option));        
     }, [])
-
+    console.log(localStorage);
+    // 여기까지 진행
+    // 밥먹고와서 카카오 로그아웃 살펴보면 될듯
     useEffect(() => {
         foods.map(item => {
             // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
