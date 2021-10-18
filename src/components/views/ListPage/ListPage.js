@@ -40,8 +40,9 @@ function ListPage(){
         .onSnapshot(data => {
             // setMessages(data2VDFY.docs.map(doc => ({id: doc.id, message: doc.data() })))
             // setFoods(data.docs.map(doc => ({name: doc.name, location: doc.location, price: doc.price, type: doc.type})))
-            setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })))
+            setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })));
         })
+        console.log(foods);
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         // setContainer(document.getElementById('map'));
         var option = { //지도를 생성할 때 필요한 기본 옵션
@@ -53,9 +54,11 @@ function ListPage(){
         // var map = new kakao.maps.Map(container, option); //지도 생성 및 객체 리턴
         setMaps(new kakao.maps.Map(container, option));        
     }, [])
-    console.log(localStorage);
+    // console.log(localStorage);
     // 여기까지 진행
     // 밥먹고와서 카카오 로그아웃 살펴보면 될듯
+
+    
     useEffect(() => {
         foods.map(item => {
             // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
@@ -97,7 +100,6 @@ function ListPage(){
         }
         geocoder.addressSearch(curlocation, callback);
     }
-
     const setMarker = () => {
         foods.map(item => {
             // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
