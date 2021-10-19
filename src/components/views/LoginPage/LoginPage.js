@@ -56,7 +56,7 @@ const move_login = () => {
     // }
 }
 
-function LoginPage(){
+function LoginPage({history}){
     useEffect(() => {
         // window.Kakao.init("%REACT_APP_KAKAOMAP_API%");
         // kakao.inInitialized();
@@ -72,6 +72,8 @@ function LoginPage(){
             window.Kakao.Auth.createLoginButton({
                 container: "#kakao_login_bt",
                 success: (auth) => {
+                    alert('로그인 성공');
+                    history.push("/list");
                     kakao.API.request({
                         url: "/",
                         fail: (err) => {
