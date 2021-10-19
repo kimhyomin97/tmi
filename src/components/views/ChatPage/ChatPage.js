@@ -55,7 +55,8 @@ function ChatPage(props){
     }, [hostid]);
     // hostid에 맞게 채팅 검색해서 갖고오는거 완료
     // ui에 맞게 채팅 띄워주는거 구현하면 된다
-    
+    // async, await 비동기 방법 생각해보면 좋을듯
+
 // console.log(props.match.params.hostid);
 // 1954835786 
     return(
