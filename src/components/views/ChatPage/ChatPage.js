@@ -58,7 +58,9 @@ function ChatPage(props){
     // async, await 비동기 방법 생각해보면 좋을듯
 
 // console.log(props.match.params.hostid);
-// 1954835786 
+// 1954835786 : 메인아이디
+
+// 1956411418 : 대학아이디
     return(
         <>
         {myid}
