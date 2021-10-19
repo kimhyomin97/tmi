@@ -17,6 +17,8 @@ function UploadPage(){
     const [destination, setDestination] = useState();
     const [count, setCount] = useState();
     const [send, setSend] = useState(0);
+    const [kakaoid, setKakaoid] = useState();
+    const [username, setUsername] = useState();
 
     const inputName = (e) => {
         setName(e.target.value);
@@ -154,6 +156,8 @@ function UploadPage(){
             price: price,
             location: location,
             position: position,
+            username: username,
+            kakaoid: kakaoid,
             // message: input,
             // username: username,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -164,7 +168,26 @@ function UploadPage(){
         console.log(location);
         alert("전송완료");
     }
-    
+    const [user_account, setUser_account] = useState({});
+    useEffect(() => {
+        window.Kakao.API.request({
+            url: '/v2/user/me',
+            // success: function({ kakao_account }){
+            // // const { age_range, profile } = kakao_account;
+            // setUser_account(kakao_account);
+            // }
+            success: function(res){
+                // console.log(res);
+                // console.log(res.id);
+                // console.log(res.kakao_account.profile.nickname);
+                setKakaoid(res.id);
+                setUsername(res.kakao_account.profile.nickname);
+            }
+        })
+    // }, [login]);
+    }, []);
+
+    // console.log(localStorage);
     const markertest = (e) => {
         // console.log(e);
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
