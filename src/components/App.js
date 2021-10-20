@@ -38,6 +38,7 @@ function App() {
       <Route exact path ="/detail/:foodid" component = {DetailPage} />
       <Footer />
     </BrowserRouter>
+    <div>this is app</div>h
     </>
   );
 }

@@ -23,38 +23,29 @@ function LandingPage(){
 
     // window.onload = function() {slide()};
 
+    // return(
+    //     <>
+    //     <div className="landingpage_wrap">
+    //         <a href="/homepage">MOVE</a><br/>
+    //         <Slide/>
+    //         <div className="slide_wrap">
+    //             <ul className="slide_box">
+    //                 <li className="slide_content">slide1</li>
+    //                 <li className="slide_content">slide2</li>
+    //                 <li className="slide_content">slide3</li>
+    //                 <li className="slide_content">slide4</li>
+    //             </ul>
+    //             {/* <div calssName="slide_content">slide1</div>
+    //             <div calssName="slide_content">slide2</div>
+    //             <div calssName="slide_content">slide3</div>
+    //             <div calssName="slide_content">slide4</div> */}
+    //         </div>
+    //     </div>
+    //     </>
+    // )
     return(
         <>
-        <div className="landingpage_wrap">
-            <a href="/homepage">MOVE</a><br/>
-            {/* This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/>
-            This is Lading Page <br/> */}
-            <Slide/>
-            <div className="slide_wrap">
-                <ul className="slide_box">
-                    <li className="slide_content">slide1</li>
-                    <li className="slide_content">slide2</li>
-                    <li className="slide_content">slide3</li>
-                    <li className="slide_content">slide4</li>
-                </ul>
-                {/* <div calssName="slide_content">slide1</div>
-                <div calssName="slide_content">slide2</div>
-                <div calssName="slide_content">slide3</div>
-                <div calssName="slide_content">slide4</div> */}
-            </div>
-        </div>
+        <div>this is landing page</div>
         </>
     )
 }
