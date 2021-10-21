@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import firebase from './firebase.js';
 
 
@@ -25,17 +25,19 @@ function App() {
     <BrowserRouter>
       {/* <Header /> */}
       <Header_test/>
-      <Route exact path ="/" component={LandingPage} />
-      <Route exact path ="/login" component = {LoginPage} />
-      <Route exact path ="/homepage" component = {HomePage} />
-      <Route exact path ="/mappage" component = {MapPage} />
-      <Route exact path ="/word" component = {WordPage} />
-      <Route exact path ="/trend" component = {TrendPage} />
-      <Route exact path ="/study" component = {StudyPage} />
-      <Route exact path ="/chat/:hostid" component = {ChatPage} />
-      <Route exact path ="/list" component = {ListPage} />
-      <Route exact path ="/upload" component = {UploadPage} />
-      <Route exact path ="/detail/:foodid" component = {DetailPage} />
+      <Switch>
+        <Route exact path ="/" component={LandingPage} />
+        <Route exact path ="/login" component = {LoginPage} />
+        <Route exact path ="/homepage" component = {HomePage} />
+        <Route exact path ="/mappage" component = {MapPage} />
+        <Route exact path ="/word" component = {WordPage} />
+        <Route exact path ="/trend" component = {TrendPage} />
+        <Route exact path ="/study" component = {StudyPage} />
+        <Route exact path ="/chat/:hostid" component = {ChatPage} />
+        <Route exact path ="/list" component = {ListPage} />
+        <Route exact path ="/upload" component = {UploadPage} />
+        <Route exact path ="/detail/:foodid" component = {DetailPage} />
+      </Switch>
       <Footer />
     </BrowserRouter>
     <div>this is app</div>h
