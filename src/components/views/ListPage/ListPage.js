@@ -42,7 +42,6 @@ function ListPage(){
             // setFoods(data.docs.map(doc => ({name: doc.name, location: doc.location, price: doc.price, type: doc.type})))
             setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })));
         })
-        console.log(foods);
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         // setContainer(document.getElementById('map'));
         var option = { //지도를 생성할 때 필요한 기본 옵션

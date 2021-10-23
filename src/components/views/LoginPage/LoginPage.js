@@ -161,7 +161,7 @@ function LoginPage(props, {history}){
                 if(res.access_token){
                     alert("로그인 성공");
                     props.setLogin(true);
-                    // history.push("/list");
+                    // history.push("/");
                 }
             },
             fail: err =>{

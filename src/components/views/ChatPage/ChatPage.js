@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import {forwardRef, useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
+import { FormControl, Button, Input, InputLabel, Card, CardContent, Typography} from '@material-ui/core';
+
 
 function ChatPage(props){
+
     const [myid, setMyid] = useState();
     // const [myname, setMyname] = useState();
     const [hostid, setHostid] = useState();
@@ -40,19 +43,21 @@ function ChatPage(props){
     useEffect(() => {
         if(hostid != undefined){
         db.collection('messages')
-            .where('hostid', '==', hostid)
+            // .where('hostid', '==', hostid)
+            .where('hostid', 'in', [hostid, myid])
             .get()
             .then((querySnapshot) => {
                 // console.log(querySnapshot);
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.id, " => ", doc.data());
-                });
+                // querySnapshot.forEach((doc) => {
+                //     console.log(doc.id, " => ", doc.data());
+                // });
+                setMessages(querySnapshot.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
             })
             .catch((error) =>{
                 console.log("Error getting documents: ", error);
             });
         }
-    }, [hostid]);
+    }, [myid]);
     // hostid에 맞게 채팅 검색해서 갖고오는거 완료
     // ui에 맞게 채팅 띄워주는거 구현하면 된다
     // async, await 비동기 방법 생각해보면 좋을듯
@@ -60,12 +65,56 @@ function ChatPage(props){
 // console.log(props.match.params.hostid);
 // 1954835786 : 메인아이디
 
+// 1956417402 : lgs 테스트 아이디
+
 // 1956411418 : 대학아이디
+
+    // const Message = forwardRef(({ message, username }, ref) => {
+    //     const isUser = username === message.username;
+
+    //     return (
+    //         // <div ref={ref} className={`message ${isUser && 'msg_user'}`}>
+    //         <div ref={ref} className="TEST">
+    //             <Card className = {isUser ? "msg_user_card" : "msg_guest_card"}>
+    //                 <CardContent>
+    //                     <Typography color="white" variant="h5" component="h2" >
+    //                         {!isUser && `${message.username || 'Unknown User'}: `} {message.message}
+    //                     </Typography>
+    //                 </CardContent>
+    //             </Card>
+    //         </div>
+    //     )
+    // })
+    const Message = forwardRef(({userid, message }, ref) => {
+        // const isUser = username === message.username;
+        const isUser = userid === myid;
+
+        return (
+            // <div ref={ref} className={`message ${isUser && 'msg_user'}`}>
+            <div ref={ref} className="TEST">
+                <Card className = {"msg_user_card"}>
+                    <CardContent>
+                        <Typography color="white" variant="h5" component="h2" >
+                            {!isUser && `${message.username || '작성자'}: `} {message}
+                            {/* {message.message} */}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </div>
+        )
+    })
+
     return(
         <>
         {myid}
         <br/>
         {hostid}
+        <br/>
+        {
+            messages.map(item => (
+                <Message userid={item.id} message={item.message} />
+            ))
+        }
         {/* 두개의 id값으로 채팅 주고받으면 된다 */}
         <div>test</div>
         <div>hi</div>
