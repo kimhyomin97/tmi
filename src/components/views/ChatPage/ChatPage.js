@@ -85,9 +85,25 @@ function ChatPage(props){
     //         </div>
     //     )
     // })
-    const Message = forwardRef(({userid, message }, ref) => {
+    // 메세지 전송
+    const [input, setInput] = useState("");
+    const sendMessage = (e) => {
+        e.preventDefault();
+        db.collection('messages').add({
+            id: hostid+myid,
+            message: input,
+            hostid: hostid,
+            myid: myid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        // 메세지 화면에 세팅
+        setMessages([...messages, {id: myid, message: input}]);
+        setInput("");
+    }
+    
+    const Message = forwardRef(({username, message }, ref) => {
         // const isUser = username === message.username;
-        const isUser = userid === myid;
+        const isUser = username === hostid;
 
         return (
             // <div ref={ref} className={`message ${isUser && 'msg_user'}`}>
@@ -104,17 +120,30 @@ function ChatPage(props){
         )
     })
 
+    // 채팅이 실시간 적용이 안된다...
     return(
         <>
         {myid}
         <br/>
         {hostid}
         <br/>
-        {
-            messages.map(item => (
-                <Message userid={item.id} message={item.message} />
-            ))
-        }
+        
+        <form className="app_from">
+            <FormControl>
+                <InputLabel> 메세지를 입력하세요.</InputLabel>
+                <Input value={input} onChange={e => {setInput(e.target.value)}} />
+                <Button disabled = {!input} variant="contained" color="primary" type="submit" onClick={sendMessage} >
+                    전송
+                </Button>
+            </FormControl>
+        </form>
+        <ul>
+            {
+                messages.map(({id, message}) => (
+                    <Message key={id} username={myid} message={message} />
+                ))
+            }
+        </ul>
         {/* 두개의 id값으로 채팅 주고받으면 된다 */}
         <div>test</div>
         <div>hi</div>

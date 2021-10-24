@@ -2,7 +2,8 @@
 import React, { Button, List, ListItem, ListItemAvatar, ListItemText, Modal} from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import db from '../../firebase';
+// import db from '../../firebase';
+import db from '../../../firebase';
 import {makeStyles} from '@material-ui/core';
 import { useState } from 'react';
 
