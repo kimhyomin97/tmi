@@ -44,7 +44,7 @@ function ChatPage(props){
         if(hostid != undefined){
         db.collection('messages')
             // .where('hostid', '==', hostid)
-            .where('hostid', 'in', [hostid, myid])
+            .where('hostid', '==', hostid)
             .get()
             .then((querySnapshot) => {
                 // console.log(querySnapshot);
@@ -90,7 +90,6 @@ function ChatPage(props){
     const sendMessage = (e) => {
         e.preventDefault();
         db.collection('messages').add({
-            id: hostid+myid,
             message: input,
             hostid: hostid,
             myid: myid,

@@ -35,7 +35,7 @@ function App() {
         <Route exact path ="/trend" component = {TrendPage} />
         <Route exact path ="/study" component = {StudyPage} />
         <Route exact path ="/chat/:hostid" component = {ChatPage} />
-        {/* <Route exact path ="/chat" component = {ChatPage_old} /> */}
+        <Route exact path ="/oldchat" component = {ChatPage_old} />
         <Route exact path ="/list" component = {ListPage} />
         <Route exact path ="/upload" component = {UploadPage} />
         <Route exact path ="/detail/:foodid" component = {DetailPage} />
