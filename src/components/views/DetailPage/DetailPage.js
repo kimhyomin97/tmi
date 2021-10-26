@@ -6,6 +6,15 @@ import ChatPage from "../ChatPage/ChatPage";
 const { kakao } = window;
 
 function DetailPage(props){
+    const [myid, setMyid] = useState();
+    useEffect(() => {
+        window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res){
+                setMyid(res.id);
+            }
+        })
+    }, []);
     // console.log(props.match.params.foodid);
     const [food, setFood] = useState();
     useEffect(() => {
@@ -57,6 +66,7 @@ function DetailPage(props){
 
     // console.log(food);
     // console.log(food.data);
+    const idinfo = food?.data.kakaoid + '+' + myid;
     return (
         <>
         <div>이름 : {food?.data.name}</div>
@@ -71,7 +81,8 @@ function DetailPage(props){
         <div>지도에 뿌려주는 방법은 조금 나중에 생각해보자</div>
         <div id="map" style={{width:"600px", height:"400px"}}></div>
         <div>실시간 채팅?</div>
-        <a href={`/chat/${food?.data.kakaoid}`}>채팅하기</a>
+        {/* <a href={`/chat/${food?.data.kakaoid}`}>채팅하기</a> */}
+        <a href={`/chat/${idinfo}`}>채팅하기</a>
         {/* 버튼 클릭으로 url을 변경해서 이동하는 방법으로 해야될듯
             + props를 어떻게 넘겨주는지 고민해봐야 된다
         */}

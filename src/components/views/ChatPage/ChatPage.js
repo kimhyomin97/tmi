@@ -9,7 +9,11 @@ function ChatPage(props){
     const [myid, setMyid] = useState();
     // const [myname, setMyname] = useState();
     const [hostid, setHostid] = useState();
-
+    const [guestid, setGuestid] = useState();
+    useEffect(() => {
+        setHostid(props?.match.params.hostid.split('+')[0]);
+        setGuestid(props?.match.params.hostid.split('+')[1]);
+    }, [])
     const [messages, setMessages] = useState([]);
     useEffect(() => {
         window.Kakao.API.request({
@@ -28,11 +32,11 @@ function ChatPage(props){
                 // setMyname(res.kakao_account.profile.nickname);
             }
         })
-        setHostid(props.match.params.hostid);
-        const loadData = async () => {
-            // setHostid(props.match.params.hostid); 
+        // setHostid(props.match.params.hostid);
+        // const loadData = async () => {
+        //     // setHostid(props.match.params.hostid); 
             
-        }
+        // }
         // db.collection('messages')
         // .orderBy('timestamp', 'desc')
         // .onSnapshot(data => {
@@ -40,27 +44,30 @@ function ChatPage(props){
         //     console.log(data);
         // })
     }, []);
-    useEffect(() => {
-        if(hostid != undefined){
-        db.collection('messages')
-            // .where('hostid', '==', hostid)
-            .where('hostid', '==', hostid)
-            .get()
-            .then((querySnapshot) => {
-                // console.log(querySnapshot);
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.id, " => ", doc.data());
-                });
-                setMessages(querySnapshot.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
-            })
-            .catch((error) =>{
-                console.log("Error getting documents: ", error);
-            });
-        }
-    }, [myid]);
-    // hostid에 맞게 채팅 검색해서 갖고오는거 완료
-    // ui에 맞게 채팅 띄워주는거 구현하면 된다
-    // async, await 비동기 방법 생각해보면 좋을듯
+
+    // useEffect(() => {
+    //     if(hostid != undefined){
+    //     db.collection('messages')
+    //         // .where('hostid', '==', hostid)
+    //         .where('hostid', '==', hostid)
+    //         .where('guestid', '==', guestid)
+    //         .orderBy('timestamp', 'desc')
+    //         .get()
+    //         .then((querySnapshot) => {
+    //             // console.log(querySnapshot);
+    //             querySnapshot.forEach((doc) => {
+    //                 console.log(doc.id, " => ", doc.data());
+    //             });
+    //             setMessages(querySnapshot.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
+    //         })
+    //         .catch((error) =>{
+    //             console.log("Error getting documents: ", error);
+    //         });
+    //     }
+    // }, [myid]);
+    // // hostid에 맞게 채팅 검색해서 갖고오는거 완료
+    // // ui에 맞게 채팅 띄워주는거 구현하면 된다
+    // // async, await 비동기 방법 생각해보면 좋을듯
 
 // console.log(props.match.params.hostid);
 // 1954835786 : 메인아이디
@@ -85,6 +92,24 @@ function ChatPage(props){
     //         </div>
     //     )
     // })
+
+    const [sender, setSender] = useState();
+    const [receiver, setReceiver] = useState();
+
+    useEffect(() => {
+        window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res){
+                setSender(res.id);
+            }
+        })
+        props.match.params.hostid.split('+').map(item => {
+            if(item != sender) setReceiver(item);
+        })
+    }, []);
+    // console.log("sender : " + sender);
+    // console.log("receiver : " + receiver);
+
     // 메세지 전송
     const [input, setInput] = useState("");
     const sendMessage = (e) => {
@@ -92,7 +117,8 @@ function ChatPage(props){
         db.collection('messages').add({
             message: input,
             hostid: hostid,
-            guestid: myid,
+            guestid: guestid,
+            myid: myid,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         // 메세지 화면에 세팅
@@ -122,11 +148,12 @@ function ChatPage(props){
     // 채팅이 실시간 적용이 안된다...
     return(
         <>
-        {myid}
-        <br/>
         {hostid}
         <br/>
-        
+        {/* {myid} */}
+        {guestid}
+        <br/>
+
         <form className="app_from">
             <FormControl>
                 <InputLabel> 메세지를 입력하세요.</InputLabel>
