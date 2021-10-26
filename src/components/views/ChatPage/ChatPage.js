@@ -48,9 +48,9 @@ function ChatPage(props){
             .get()
             .then((querySnapshot) => {
                 // console.log(querySnapshot);
-                // querySnapshot.forEach((doc) => {
-                //     console.log(doc.id, " => ", doc.data());
-                // });
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, " => ", doc.data());
+                });
                 setMessages(querySnapshot.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
             })
             .catch((error) =>{
@@ -92,7 +92,7 @@ function ChatPage(props){
         db.collection('messages').add({
             message: input,
             hostid: hostid,
-            myid: myid,
+            guestid: myid,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         // 메세지 화면에 세팅
