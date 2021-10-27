@@ -93,6 +93,9 @@ function ChatPage(props){
     //     )
     // })
 
+
+    
+    // sender, receiver로 해본 테스트
     const [sender, setSender] = useState();
     const [receiver, setReceiver] = useState();
 
@@ -100,32 +103,92 @@ function ChatPage(props){
         window.Kakao.API.request({
             url: '/v2/user/me',
             success: function(res){
-                setSender(res.id);
+                setSender(String(res.id));
             }
         })
         props.match.params.hostid.split('+').map(item => {
-            if(item != sender) setReceiver(item);
+            if(item != sender) setReceiver(String(item));
         })
     }, []);
     // console.log("sender : " + sender);
     // console.log("receiver : " + receiver);
 
+    const [allmessage, setAllmessage] = useState([]);
+    const [allmessage2, setAllmessage2] = useState([]);
+    useEffect(() => {
+        db.collection('messages')
+            .where('sender', 'in', [String(sender), String(receiver)])
+            // .where('receiver', 'in', [String(sender), String(receiver)])
+            // .where('guestid', '==', guestid)
+            // .orderBy('timestamp', 'desc')
+            .get()
+            .then((res) => {
+                // console.log(querySnapshot);
+                // querySnapshot.forEach((doc) => {
+                //     console.log(doc.id, " => ", doc.data());
+                // });
+                // setMessages(res.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
+                // console.log(res)
+                // res.docs.map(item => {
+                //     // console.log(item.data());
+                //     setAllmessage([...allmessage, {id: item.data().sender, message: item.data().message}]);
+                // })
+                setAllmessage(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message })))
+            })
+            .catch((error) =>{
+                console.log("Error getting documents: ", error);
+            });
+        db.collection('messages')
+            // .where('sender', 'in', [String(sender), String(receiver)])
+            .where('receiver', 'in', [String(sender), String(receiver)])
+            // .where('guestid', '==', guestid)
+            // .orderBy('timestamp', 'desc')
+            .get()
+            .then((res) => {
+                // console.log(res);
+                // res.forEach((doc) => {
+                //     console.log(doc.id, " => ", doc.data());
+                // });
+                // setMessages(res.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
+                // res.docs.map(item => {
+                //     // console.log(item.data());
+                //     setAllmessage([...allmessage, {id: item.data().sender, message: item.data().message}]);
+                // })
+                setAllmessage2(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message })))
+            })
+            .catch((error) =>{
+                console.log("Error getting documents: ", error);
+            });
+    }, [sender]);
+    
+    useEffect(() => {
+        // 이부분에 allmessage를 중복제거 (distinct) 하고,
+        // timestamp순으로 정렬한 다음에
+        // messages 배열에 넣어주면 된다
+        // console.log(allmessage);
+        // window.setTimeout(console.log(allmessage), 10000);
+    }, [allmessage])
+    // console.log(allmessage);
+    // window.setTimeout(console.log(allmessage), 10000);
     // 메세지 전송
     const [input, setInput] = useState("");
     const sendMessage = (e) => {
         e.preventDefault();
         db.collection('messages').add({
             message: input,
-            hostid: hostid,
-            guestid: guestid,
-            myid: myid,
+            // hostid: hostid,
+            // guestid: guestid,
+            // myid: myid,
+            sender: sender,
+            receiver: receiver,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         // 메세지 화면에 세팅
-        setMessages([...messages, {id: myid, message: input}]);
+        // setMessages([...messages, {id: myid, message: input}]);
+        setMessages([...messages, {id: sender, message: input}]);
         setInput("");
     }
-    
+    // console.log("my id" + sender)
     const Message = forwardRef(({username, message }, ref) => {
         // const isUser = username === message.username;
         const isUser = username === hostid;
@@ -173,6 +236,26 @@ function ChatPage(props){
         {/* 두개의 id값으로 채팅 주고받으면 된다 */}
         <div>test</div>
         <div>hi</div>
+        {
+            allmessage.map(item => {
+                return(
+                    <>
+                    <div>{item.id}</div>
+                    <div>{item.message}</div>
+                    </>
+                )
+            })
+        }
+        {
+            allmessage2.map(item => {
+                return(
+                    <>
+                    <div>{item.id}</div>
+                    <div>{item.message}</div>
+                    </>
+                )
+            })
+        }
         </>
     )
 }
