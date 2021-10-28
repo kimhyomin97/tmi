@@ -45,6 +45,48 @@ function ChatPage(props){
         // })
     }, []);
 
+    // sender, receiver로 해본 테스트
+    const [sender, setSender] = useState();
+    const [receiver, setReceiver] = useState();
+
+    useEffect(() => {
+        window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res){
+                setSender(String(res.id));
+            }
+        })
+    }, []);
+    useEffect(() => {
+        props.match.params.hostid.split('+').map(item => {
+            if(item != String(sender)) setReceiver(String(item));
+        })
+    }, [sender])
+    console.log("sender + " + sender);
+    console.log("receiver + " + receiver);
+    const [sendermsg, setSendermsg] = useState([]);
+    const [receivermsg, setReceivermsg] = useState([]);
+    useEffect(() => {
+        db.collection('messages')
+            .where('sender', '==', String(sender))
+            .where('receiver', '==', String(receiver))
+            // .where('sender', 'in', [String(sender), String(receiver)])
+            // .orderBy('timestamp', 'desc')
+            .onSnapshot((res) => {
+                setSendermsg(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message, timestamp: doc.data().timestamp })));
+            })
+    }, [receiver])
+    useEffect(() => {
+        db.collection('messages')
+            .where('sender', '==', String(receiver))
+            .where('receiver', '==', String(sender))
+            // .where('sender', 'in', [String(sender), String(receiver)])
+            // .orderBy('timestamp', 'desc')
+            .onSnapshot((res) => {
+                setReceivermsg(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message, timestamp: doc.data().timestamp })));
+            })
+    }, [receiver])
+
     // useEffect(() => {
     //     if(hostid != undefined){
     //     db.collection('messages')
@@ -95,21 +137,7 @@ function ChatPage(props){
 
 
     
-    // sender, receiver로 해본 테스트
-    const [sender, setSender] = useState();
-    const [receiver, setReceiver] = useState();
-
-    useEffect(() => {
-        window.Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(res){
-                setSender(String(res.id));
-            }
-        })
-        props.match.params.hostid.split('+').map(item => {
-            if(item != sender) setReceiver(String(item));
-        })
-    }, []);
+    
     // console.log("sender : " + sender);
     // console.log("receiver : " + receiver);
 
@@ -133,7 +161,7 @@ function ChatPage(props){
                 //     // console.log(item.data());
                 //     setAllmessage([...allmessage, {id: item.data().sender, message: item.data().message}]);
                 // })
-                setAllmessage(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message })))
+                setAllmessage(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message, timestamp: doc.data().timestamp })))
             })
             .catch((error) =>{
                 console.log("Error getting documents: ", error);
@@ -150,17 +178,77 @@ function ChatPage(props){
                 //     console.log(doc.id, " => ", doc.data());
                 // });
                 // setMessages(res.docs.map(doc => ({id: doc.data().myid, message: doc.data().message })))
+
                 // res.docs.map(item => {
-                //     // console.log(item.data());
-                //     setAllmessage([...allmessage, {id: item.data().sender, message: item.data().message}]);
+                //     // var flag = true;
+                //     // const check_msg = () => {
+                //     //     allmessage.map(element => {
+                //     //         console.log(element);
+                //     //         console.log(item.data());
+                //     //         if((item.data().sender == element.id) && (item.data().message == element.message) && (item.data().timestamp.seconds == element.timestamp.seconds)) {
+                //     //             console.log("HELLO");
+                //     //             flag = false;
+                //     //         }
+                //     //     })
+                //     // }
+                //     // const merge_msg = () => {
+                //     //     if(flag == true) setAllmessage(allmessage => [...allmessage, {id: item.data().sender, message: item.data().message, timestamp: item.data().timestamp }]);   
+                //     // }
+                //     // check_msg(merge_msg());
+
+                //     setAllmessage(allmessage => [...allmessage, {id: item.data().sender, message: item.data().message, timestamp: item.data().timestamp }]);
                 // })
-                setAllmessage2(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message })))
+                
+                // const newArr = [];
+                // const handleUpdateAllmessage = (list) => {
+                //     // console.log(list);
+                //     list.map(item => {
+                //         setAllmessage(allmessage => [...allmessage, {id: item.id, message: item.message, timestamp: item.timestamp }])
+                //     })
+                // }
+                // res.docs.forEach(element => {
+                //     const sender = element.data().sender;
+                //     const timestamp = element.data().timestamp;
+                //     let before = allmessage.findIndex(i => i.id === sender && i.timestamp === timestamp);
+                //     if(before === -1){
+                //         newArr.push({id: element.data().sender, message: element.data().message, timestamp: element.data().timestamp });
+                //     }
+                //     // allmessage.map(element => {
+                //     //     if(element.sender == sender && element.timestamp == timestamp){
+                //     //         // 중복제거
+                //     //     }
+                //     //     else{
+                //     //         setAllmessage(allmessage => [...allmessage, {id: item.data().sender, message: item.data().message, timestamp: item.data().timestamp }])
+                //     //     }
+                //     // })
+                // })
+                // handleUpdateAllmessage(newArr);
+
+                // setAllmessage2(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message, timestamp: doc.data().timestamp })))
             })
             .catch((error) =>{
                 console.log("Error getting documents: ", error);
             });
     }, [sender]);
-    
+    // const concat_msg = () => {
+    //     setAllmessage(allmessage => [...allmessage, allmessage2]);
+    // }
+    const distinct_msg = () => {
+        // allmessage.reduce(function(acc, current) {
+        //     if (acc.findIndex(({ timestamp }) => timestamp === current.timestamp) === -1) {
+        //       acc.push(current);
+        //     }
+        //     return acc;
+        //   }, []);
+
+        // allmessage.filter((item, i) => {
+        //     return (
+        //         allmessage.findIndex((item2, j) => {
+        //         return item.timestamp.seconds === item2.timestamp.seconds;
+        //         }) === i
+        //     );
+        // });
+    }
     useEffect(() => {
         // 이부분에 allmessage를 중복제거 (distinct) 하고,
         // timestamp순으로 정렬한 다음에
@@ -211,6 +299,8 @@ function ChatPage(props){
     // 채팅이 실시간 적용이 안된다...
     return(
         <>
+        {distinct_msg()}
+        {distinct_msg}
         {hostid}
         <br/>
         {/* {myid} */}
@@ -236,22 +326,48 @@ function ChatPage(props){
         {/* 두개의 id값으로 채팅 주고받으면 된다 */}
         <div>test</div>
         <div>hi</div>
+        
         {
             allmessage.map(item => {
                 return(
                     <>
-                    <div>{item.id}</div>
+                    <div>{item.id}, {item.message}, {item.timestamp.seconds}</div>
+                    {/* <div>{item.id}</div>
                     <div>{item.message}</div>
+                    <div>{item.time</div> */}
                     </>
                 )
             })
         }
+        <div>구분선</div>
         {
             allmessage2.map(item => {
                 return(
                     <>
-                    <div>{item.id}</div>
-                    <div>{item.message}</div>
+                    <div>{item.id}, {item.message}, {item.timestamp.seconds}</div>
+                    {/* <div>{item.id, item.message, item.timestamp}</div> */}
+                    </>
+                )
+            })
+        }
+        <div>sender 테스트</div>
+        {
+            sendermsg.map(item => {
+                return(
+                    <>
+                    {/* <div>{item.id}, {item.message}, {item.timestamp.seconds}</div> */}
+                    <div>{item.id}, {item.message}</div>
+                    </>
+                )
+            })
+        }
+        <div>receiver 테스트 구분선</div>
+        {
+            receivermsg.map(item => {
+                return(
+                    <>
+                    {/* <div>{item.id}, {item.message}, {item.timestamp.seconds}</div> */}
+                    <div>{item.id}, {item.message}</div>
                     </>
                 )
             })
