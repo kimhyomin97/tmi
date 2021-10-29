@@ -54,18 +54,21 @@ function ChatPage(props){
             url: '/v2/user/me',
             success: function(res){
                 setSender(String(res.id));
+                props.match.params.hostid.split('+').map(item => {
+                    if(item != String(res.id)) setReceiver(String(item));
+                })
             }
         })
     }, []);
     useEffect(() => {
-        props.match.params.hostid.split('+').map(item => {
-            if(item != String(sender)) setReceiver(String(item));
-        })
+        // props.match.params.hostid.split('+').map(item => {
+        //     if(item != String(sender)) setReceiver(String(item));
+        // })
     }, [sender])
-    console.log("sender + " + sender);
-    console.log("receiver + " + receiver);
     const [sendermsg, setSendermsg] = useState([]);
     const [receivermsg, setReceivermsg] = useState([]);
+    const [mergemsg, setMergemsg] = useState([]);
+    const [allmessage1, setAllmessage1] = useState([]);
     useEffect(() => {
         db.collection('messages')
             .where('sender', '==', String(sender))
@@ -86,6 +89,23 @@ function ChatPage(props){
                 setReceivermsg(res.docs.map(doc => ({id: doc.data().sender, message: doc.data().message, timestamp: doc.data().timestamp })));
             })
     }, [receiver])
+    
+    useEffect(() => {
+        // 메시지 병합
+        // setMergemsg(sendermsg);
+        setMergemsg(mergemsg => [...sendermsg, ...receivermsg]);
+    }, [receivermsg])
+
+    
+    useEffect(() => {
+        // 메시지 정렬
+        var temparr = [...mergemsg];
+        temparr = temparr.sort(function (a, b){
+            return a.timestamp.seconds - b.timestamp.seconds;
+        });
+        // setMergemsg(temparr);
+        setAllmessage1(temparr);
+    }, [mergemsg])
 
     // useEffect(() => {
     //     if(hostid != undefined){
@@ -295,7 +315,6 @@ function ChatPage(props){
             </div>
         )
     })
-
     // 채팅이 실시간 적용이 안된다...
     return(
         <>
@@ -318,57 +337,40 @@ function ChatPage(props){
         </form>
         <ul>
             {
+                // 이부분 messages를 allmessage1으로 변경해야된다
                 messages.map(({id, message}) => (
-                    <Message key={id} username={myid} message={message} />
+                    <Message key={id} username={receiver} message={message} />
                 ))
             }
         </ul>
-        {/* 두개의 id값으로 채팅 주고받으면 된다 */}
-        <div>test</div>
-        <div>hi</div>
-        
         {
-            allmessage.map(item => {
+            mergemsg.map(item => {
                 return(
-                    <>
-                    <div>{item.id}, {item.message}, {item.timestamp.seconds}</div>
-                    {/* <div>{item.id}</div>
                     <div>{item.message}</div>
-                    <div>{item.time</div> */}
-                    </>
                 )
             })
         }
         <div>구분선</div>
         {
-            allmessage2.map(item => {
+            allmessage1.map(item => {
                 return(
-                    <>
-                    <div>{item.id}, {item.message}, {item.timestamp.seconds}</div>
-                    {/* <div>{item.id, item.message, item.timestamp}</div> */}
-                    </>
+                    <div>{item.message}</div>
                 )
             })
         }
-        <div>sender 테스트</div>
+        <div>구분선</div>
         {
             sendermsg.map(item => {
                 return(
-                    <>
-                    {/* <div>{item.id}, {item.message}, {item.timestamp.seconds}</div> */}
-                    <div>{item.id}, {item.message}</div>
-                    </>
+                    <div>{item.message}</div>
                 )
             })
         }
-        <div>receiver 테스트 구분선</div>
+        <div>구분선</div>
         {
             receivermsg.map(item => {
                 return(
-                    <>
-                    {/* <div>{item.id}, {item.message}, {item.timestamp.seconds}</div> */}
-                    <div>{item.id}, {item.message}</div>
-                    </>
+                    <div>{item.message}</div>
                 )
             })
         }

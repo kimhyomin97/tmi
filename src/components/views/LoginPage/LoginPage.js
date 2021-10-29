@@ -4,6 +4,8 @@ import Login from "./Login";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { CssBaseline } from '@material-ui/core';
+import db from "../../firebase";
+import firebase from 'firebase';
 
 const { kakao } = window;
 
@@ -140,6 +142,7 @@ function LoginPage(props, {history}){
                     // }
                     localStorage.setItem("Kakao_token", res.access_token);
                     if(res.access_token){
+                        
                         alert("로그인 성공");
                         history.push("/list");
                     }
@@ -157,8 +160,27 @@ function LoginPage(props, {history}){
                 // if(res.token){
                 //     history.push("/list");
                 // }
+                console.log(res);
                 localStorage.setItem("Kakao_token", res.access_token);
                 if(res.access_token){
+                    window.Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: function(res){
+                            var nickname;
+                            var kakaoid = String(res.id);
+                            db.collection('login')
+                                .where('kakaoid', '==', String(res.id))
+                                .onSnapshot((res) => {
+                                    if(res.empty) {
+                                        nickname = prompt("닉네임을 입력하세요");
+                                        db.collection('login').add({
+                                            kakaoid: kakaoid,
+                                            nickname: nickname==null ? "noname" : nickname 
+                                        })
+                                    }
+                                })
+                        }
+                    })
                     alert("로그인 성공");
                     props.setLogin(true);
                     // history.push("/");

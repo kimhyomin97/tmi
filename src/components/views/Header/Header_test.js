@@ -172,7 +172,7 @@ function Header_test({history}) {
               <a href="/study">Study</a>
             </div>
             <div className="header_item">
-              <a href="/chat">Chat</a>
+              <a href="/chatlist">Chat</a>
             </div>
             <div className="header_item">
               <a href="/list">List</a>

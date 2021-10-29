@@ -18,6 +18,7 @@ import UploadPage from './views/UploadPage/UploadPage.js';
 import DetailPage from './views/DetailPage/DetailPage.js';
 import LoginPage from './views/LoginPage/LoginPage.js';
 import ChatPage_old from './views/ChatPage/old_files/ChatPage_old.js';
+import ChatList from './views/ChatList/ChatList.js';
 
 function App() {
   // console.log(firebase);
@@ -36,6 +37,7 @@ function App() {
         <Route exact path ="/study" component = {StudyPage} />
         <Route exact path ="/chat/:hostid" component = {ChatPage} />
         <Route exact path ="/oldchat" component = {ChatPage_old} />
+        <Route exact path ="/chatlist" component = {ChatList} />
         <Route exact path ="/list" component = {ListPage} />
         <Route exact path ="/upload" component = {UploadPage} />
         <Route exact path ="/detail/:foodid" component = {DetailPage} />
