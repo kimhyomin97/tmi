@@ -14,15 +14,60 @@ function ChatList(){
         })
     }, []);
     const [chatlist, setChatlist] = useState([]);
+    // const [chatlist, setChatlist] = useState();
     const [nicknamelist, setNicknamelist] = useState([]);
     const [hostlist, setHostlist] = useState([]);
     const [guestlist, setGuestlist] = useState([]);
+    const [getmsg, setGetmsg] = useState(0);
 
+    // const loadMessage = () => {
+    //     db.collection('messages')
+    //         .where('sender', '==', String(myid))
+    //         .onSnapshot((res) => {
+    //             res.docs.map(item => {
+    //                 setChatlist(chatlist => [...chatlist, item.data().receiver]);
+    //                 // setHostlist(hostlist => [...hostlist, String(item.data().receiver)]);
+    //                 // tempHost.push(String(item.data().receiver));
+    //             })
+    //         })
+    //     db.collection('messages')
+    //         .where('receiver', '==', String(myid))
+    //         .onSnapshot((res) => {
+    //             res.docs.map(item => {
+    //                 setChatlist(chatlist => [...chatlist, item.data().sender]);
+    //                 // setGuestlist(guestlist => [...guestlist, String(item.data().sender)]);
+    //                 tempGuest.push(String(item.data().sender));
+    //             })
+    //         })
+    // }
+    // function fetchMessage(){
+    //     return new Promise(function(resolve, reject){
+    //         resolve(loadMessage);
+    //     })
+    // }
+    const fetchMsg = () => {
+        hostlist.map(item => {
+            if(!chatlist.includes(String(item))){
+                setChatlist(chatlist => [...chatlist, String(item)]);
+            }
+        })
+        guestlist.map(item => {
+            if(!chatlist.includes(String(item))){
+                setChatlist(chatlist => [...chatlist, String(item)]);
+            }  
+        })
+    }
     useEffect(() => {
+        // async function test(){
+        //     var resulttest = await fetchMessage();
+        //     // console.log(resulttest);
+        // }
+        // test();
         db.collection('messages')
             .where('sender', '==', String(myid))
             .onSnapshot((res) => {
                 res.docs.map(item => {
+                    // if(!chatlist.includes(item.data().receiver)) setChatlist(chatlist => [...chatlist, item.data().receiver]);
                     // setChatlist(chatlist => [...chatlist, item.data().receiver]);
                     setHostlist(hostlist => [...hostlist, String(item.data().receiver)]);
                 })
@@ -31,11 +76,52 @@ function ChatList(){
             .where('receiver', '==', String(myid))
             .onSnapshot((res) => {
                 res.docs.map(item => {
+                    // if(!chatlist.includes(item.data().sender)) setChatlist(chatlist => [...chatlist, item.data().sender]);
+                    // setChatlist(item.data().sender);
                     // setChatlist(chatlist => [...chatlist, item.data().sender]);
                     setGuestlist(guestlist => [...guestlist, String(item.data().sender)]);
                 })
             })
     }, [myid])
+
+    useEffect(() => {
+        var len = chatlist.length - 1;
+        db.collection('login')
+            .where('kakaoid', '==', String(chatlist[len]))
+            .onSnapshot((res) => {
+                res.docs.map(item => {
+                    // console.log(item.data());
+                    setNicknamelist(nicknamelist => [...nicknamelist, item.data()]);
+                })
+                // console.log(res.docs[0]?.data());
+                // setNicknamelist(nicknamelist => [...nicknamelist, res.docs[0]?.data()]);
+                // setNicknamelist(nicknamelist => [...nicknamelist, {nickname: res.docs[0]?.data().nnickname, kakaoid: res.docs[0]?.data().kakaoid}]);
+                // setNicknamelist(res.docs[0]?.data());
+            })
+    }, [chatlist])
+    useEffect(() => {
+        // var tempHost = [];
+        // var tempGuest = [];
+        // db.collection('messages')
+        //     .where('sender', '==', String(myid))
+        //     .onSnapshot((res) => {
+        //         res.docs.map(item => {
+        //             // setChatlist(chatlist => [...chatlist, item.data().receiver]);
+        //             setHostlist(hostlist => [...hostlist, String(item.data().receiver)]);
+        //             // tempHost.push(String(item.data().receiver));
+        //         })
+        //     })
+        // db.collection('messages')
+        //     .where('receiver', '==', String(myid))
+        //     .onSnapshot((res) => {
+        //         res.docs.map(item => {
+        //             // setChatlist(chatlist => [...chatlist, item.data().sender]);
+        //             setGuestlist(guestlist => [...guestlist, String(item.data().sender)]);
+        //             // tempGuest.push(String(item.data().sender));
+        //         })
+        //     })
+    }, [myid])
+
     // useEffect(() => {
     //     db.collection('login')
     //         .where('kakaoid', '==', String(myid))
@@ -58,44 +144,10 @@ function ChatList(){
                     // 즉, 내가 호스트인지, 게스트인지 구분을 해야된다...
                         // 화면을 이분할해서 왼쪽은 내가 게스트인 채팅방 오른쪽은 내가 호스트인 채팅방 이런식으로 나누자
                             // 내가 게스트인쪽은 내 id가 뒤에가면 되니깐...
-
-    useEffect(() => {
-        if(chatlist.length == 0){
-            // guestlist가 변경될때 마다 아래 코드들이 실행되면
-            // chatlist가 6번 (여러번) 호출되어서
-            // 중복되는 닉네임이 6번 (여러번) 들어가기 때문에 조건문을 생성함
-            // 정확히는 위에있는 useEffect가 끝나고 동기적으로 실행되도록 바꿔야 된다
-            var temparr = [];
-            hostlist.map(item => {
-                if(!temparr.includes(item)) temparr.push(item);
-            })
-            guestlist.map(item => {
-                if(!temparr.includes(item)) temparr.push(item);
-            })
-            setChatlist(temparr);
-        }
-    }, [guestlist])
-    useEffect(() => {
-        chatlist.map((item) => {
-            db.collection('login')
-                .where('kakaoid', '==', String(item))
-                .onSnapshot((res) => {
-                    var temparr = nicknamelist;
-                    // 이부분 nicknamelist에 lgs김효민이 5번 중복되서 들어간다
-                    // 이부분을 고쳐야 된다
-                    // 원인이 뭘까?
-                    console.log(res);
-                    if(nicknamelist.includes({nickname: "lgs김효민"})) console.log("ERROR");
-                    if(!nicknamelist.includes({nickname: res.docs[0].data().nickname, kakaoid: res.docs[0].data().kakaoid})){
-                        // console.log("HELLO");
-                        setNicknamelist(nicknamelist => [...nicknamelist, {nickname: res.docs[0].data().nickname, kakaoid: res.docs[0].data().kakaoid}])
-                    } 
-                })  
-        })
-    }, [chatlist])
-
+    
     return(
         <>
+        {fetchMsg()}
         채팅리스트
         {/* {chatlist.map(item =>{
             return(
@@ -105,6 +157,7 @@ function ChatList(){
         {nicknamelist.map(item => {
             return(
                 <a href={`/chat/${myid}+${item.kakaoid}`}><div>{item.nickname}</div></a>
+                // <div>{item.nickname}</div>
             )
         })}
         {/* {nicknamelist.nickname} */}
