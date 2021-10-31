@@ -14,7 +14,7 @@ function LandingPage(){
         const len = target.children.length;
         target.style.cssText = `width:calc(100% * ${len});display:flex;transition:1s`;
         
-        Array.from(target.children)
+        Array.from(target.children) 
         .forEach(ele => ele.style.cssText = `width:calc(100% / ${len});`)
         let pos = 0;
         setInterval(() => {
@@ -48,25 +48,25 @@ function LandingPage(){
     return(
         <>
         <div className="slide_wrap">
-                <ul className="slide_box">
-                    {/* <li className="slide_content">slide1</li>
-                    <li className="slide_content">slide2</li>
-                    <li className="slide_content">slide3</li>
-                    <li className="slide_content">slide4</li> */}
-                    {/* <li className="slide_content"><img src={require("./public/"+imglist[0]+".jpg").default} class="food_img"/></li>
-                    <li className="slide_content"><img src={require("./public/"+imglist[1]+".jpg").default} class="food_img"/></li>
-                    <li className="slide_content"><img src={require("./public/"+imglist[2]+".jpg").default} class="food_img"/></li>
-                    <li className="slide_content"><img src={require("./public/"+imglist[3]+".jpg").default} class="food_img"/></li> */}
-                    <img src={require("./public/"+imglist[0]+".jpg").default} className="food_img"/>
-                    <img src={require("./public/"+imglist[1]+".jpg").default} className="food_img"/>
-                    <img src={require("./public/"+imglist[2]+".jpg").default} className="food_img"/>
-                    <img src={require("./public/"+imglist[3]+".jpg").default} className="food_img"/>
-                </ul>
-                {/* <div calssName="slide_content">slide1</div>
-                <div calssName="slide_content">slide2</div>
-                <div calssName="slide_content">slide3</div>
-                <div calssName="slide_content">slide4</div> */}
-            </div>
+            <ul className="slide_box">
+                {/* <li className="slide_content">slide1</li>
+                <li className="slide_content">slide2</li>
+                <li className="slide_content">slide3</li>
+                <li className="slide_content">slide4</li> */}
+                {/* <li className="slide_content"><img src={require("./public/"+imglist[0]+".jpg").default} class="food_img"/></li>
+                <li className="slide_content"><img src={require("./public/"+imglist[1]+".jpg").default} class="food_img"/></li>
+                <li className="slide_content"><img src={require("./public/"+imglist[2]+".jpg").default} class="food_img"/></li>
+                <li className="slide_content"><img src={require("./public/"+imglist[3]+".jpg").default} class="food_img"/></li> */}
+                <img src={require("./public/"+imglist[0]+".jpg").default} className="slide_content"/>
+                <img src={require("./public/"+imglist[1]+".jpg").default} className="slide_content"/>
+                <img src={require("./public/"+imglist[2]+".jpg").default} className="slide_content"/>
+                <img src={require("./public/"+imglist[3]+".jpg").default} className="slide_content"/>
+            </ul>
+            {/* <div calssName="slide_content">slide1</div>
+            <div calssName="slide_content">slide2</div>
+            <div calssName="slide_content">slide3</div>
+            <div calssName="slide_content">slide4</div> */}
+        </div>
         </>
     )
 }
