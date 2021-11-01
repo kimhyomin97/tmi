@@ -9,7 +9,7 @@ function LandingPage(){
     // const imglist = ['피자', '피자', '피자', '피자'];
     const all = ele => document.querySelectorAll(ele);
     const one = ele => document.querySelector(ele);
-    const [userAccount, setUserAccount] = useState({});
+    const [userAccount, setUserAccount] = useState(null);
     useEffect(() => {
         window.Kakao.API.request({
           url: '/v2/user/me',
@@ -20,10 +20,6 @@ function LandingPage(){
         })
     // }, [login]);
     }, []);
-    useEffect(() => {
-
-        console.log(userAccount?.profile?.nickname);
-    }, [userAccount])
 
     const [loginModal, setLoginModal] = useState(false);
     const [login, setLogin] = useState(false);
@@ -98,9 +94,16 @@ function LandingPage(){
                 </>
                 :
                 <>
-                <a href="/list">
-                    <div className="msg_box_content">Join</div>
-                </a>
+                {
+                !userAccount ?
+                    <a onClick={() => setLoginModal(true)}>
+                        <div className="msg_box_content login_box">로그인</div>
+                    </a>
+                    :
+                    <a href="/list">
+                        <div className="msg_box_content">Join</div>
+                    </a>
+                }
                 </>
             }
             {loginModal ?

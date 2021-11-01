@@ -66,7 +66,7 @@ function Header_test({history}) {
       <LoginPage></LoginPage>
     // )
   }
-  const [user_account, setUser_account] = useState({});
+  const [user_account, setUser_account] = useState(null);
   useEffect(() => {
     window.Kakao.API.request({
       url: '/v2/user/me',
@@ -209,12 +209,31 @@ function Header_test({history}) {
               }
             </List>
             :
-            <List>
-              <div className="header_item">{user_account?.profile?.nickname} 님 안녕하세요</div>
-              <div className="header_item">
-                <a onClick={kakao_logout}>로그아웃</a>
-              </div>
-            </List>
+            <>
+            {
+            !user_account ?
+              <List>
+                <div className="header_item">
+                  <a onClick={() => setLoginModal(true)}>로그인</a>
+                </div>
+                {loginModal ?
+                  <LoginPage
+                    login={login}
+                    setLogin={setLogin}
+                  ></LoginPage>
+                  :
+                  <></>
+                }
+              </List>
+              :
+              <List>
+                <div className="header_item">{user_account?.profile?.nickname} 님 안녕하세요</div>
+                <div className="header_item">
+                  <a onClick={kakao_logout}>로그아웃</a>
+                </div>
+              </List>
+            }
+            </>
           }
           <List>
           </List>
