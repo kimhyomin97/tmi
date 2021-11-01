@@ -120,7 +120,7 @@ function Header_test({history}) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              <a href="/">TMI</a>
+              <a href="/">Join-delivery</a>
             </Typography>
               {/* Homepage
               MapPage

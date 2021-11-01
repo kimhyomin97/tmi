@@ -175,7 +175,7 @@ function LoginPage(props, {history}){
                                         nickname = prompt("닉네임을 입력하세요");
                                         db.collection('login').add({
                                             kakaoid: kakaoid,
-                                            nickname: nickname==null ? "noname" : nickname 
+                                            nickname: nickname==null ? "이름없음" : nickname 
                                         })
                                     }
                                 })
@@ -184,6 +184,7 @@ function LoginPage(props, {history}){
                     alert("로그인 성공");
                     props.setLogin(true);
                     // history.push("/");
+                    window.location.replace("/");
                 }
             },
             fail: err =>{
