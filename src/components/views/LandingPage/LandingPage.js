@@ -77,43 +77,47 @@ function LandingPage(){
                 <img src={require("./public/"+imglist[3]+".png").default} className="slide_content"/>
             </ul>
         </div> */}
-        <div className="img_contaier">
-            <img src={require("./public/"+imglist[0]+".png").default} className="img_item"/>
-            <img src={require("./public/"+imglist[1]+".png").default} className="img_item"/>
-            <img src={require("./public/"+imglist[2]+".png").default} className="img_item"/>
-            <img src={require("./public/"+imglist[3]+".png").default} className="img_item"/>
-        </div>
-        <div className="msg_box">
-            {
-                !localStorage.Kakao_token ?
-                <>
-                {/* <div className="login_box">로그인</div><br/> */}
-                <a onClick={() => setLoginModal(true)}>
-                    <div className="msg_box_content login_box">로그인</div>
-                </a>
-                </>
-                :
-                <>
-                {
-                !userAccount ?
-                    <a onClick={() => setLoginModal(true)}>
-                        <div className="msg_box_content login_box">로그인</div>
-                    </a>
-                    :
-                    <a href="/list">
-                        <div className="msg_box_content">Join</div>
-                    </a>
-                }
-                </>
-            }
-            {loginModal ?
-                <LoginPage
-                    login={login}
-                    setLogin={setLogin}
-                ></LoginPage>
-                :
-                <></>
-            }
+        <div className="landingpage_wraaper">
+            <div className="landingpage_item_wrapper">
+                <div className="img_contaier">
+                    <img src={require("./public/"+imglist[0]+".png").default} className="img_item"/>
+                    <img src={require("./public/"+imglist[1]+".png").default} className="img_item"/>
+                    <img src={require("./public/"+imglist[2]+".png").default} className="img_item"/>
+                    <img src={require("./public/"+imglist[3]+".png").default} className="img_item"/>
+                </div>
+                <div className="msg_box">
+                    {
+                        !localStorage.Kakao_token ?
+                        <>
+                        {/* <div className="login_box">로그인</div><br/> */}
+                        <a onClick={() => setLoginModal(true)}>
+                            <div className="msg_box_content login_box">로그인</div>
+                        </a>
+                        </>
+                        :
+                        <>
+                        {
+                        !userAccount ?
+                            <a onClick={() => setLoginModal(true)}>
+                                <div className="msg_box_content login_box">로그인</div>
+                            </a>
+                            :
+                            <a href="/list">
+                                <div className="msg_box_content">Join</div>
+                            </a>
+                        }
+                        </>
+                    }
+                    {loginModal ?
+                        <LoginPage
+                            login={login}
+                            setLogin={setLogin}
+                        ></LoginPage>
+                        :
+                        <></>
+                    }
+                </div>
+            </div>
         </div>
         </>
     )

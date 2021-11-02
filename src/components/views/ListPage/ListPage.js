@@ -8,7 +8,7 @@ import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
 // import bibimbap from "./public/bibimbap.png"
 import {한식, 패스트푸드, 중식, 치킨, 일식, 피자, 분식} from './public/image_export';
 import { MarkEmailReadSharp } from "@mui/icons-material";
-
+import { TextField, Button, ButtonGroup} from "@mui/material";
 // import LunchDiningIcon from '@mui/icons-material/LunchDining';
 // import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 // import List from '@material-ui/core/List';
@@ -101,24 +101,26 @@ function ListPage(){
     }
     const setMarker = () => {
         foods.map(item => {
-            // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-            var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
-            // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
-            var iwRemoveable = true;
-            var infowindow = new kakao.maps.InfoWindow({
-                content : iwContent,
-                removable : iwRemoveable
-            });
-            var marker = new kakao.maps.Marker({
-                // map: map,
-                position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
-            })
-            marker.setMap(map);
-            // isVisible && marker.setMap(map);
-            setMarkers([...markers, marker]);
-            kakao.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map, marker);
-            })
+            if(item.data.type == type){
+                // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+                // var iwContent = <a href={`/detail/${item.id}`}><div style="padding:5px;">'+item.data.name+'</div></a>;
+                var iwRemoveable = true;
+                var infowindow = new kakao.maps.InfoWindow({
+                    content : iwContent,
+                    removable : iwRemoveable
+                });
+                var marker = new kakao.maps.Marker({
+                    // map: map,
+                    position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
+                })
+                marker.setMap(map);
+                // isVisible && marker.setMap(map);
+                setMarkers([...markers, marker]);
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open(map, marker);
+                })
+            }
         })
 
         // console.log(markers);
@@ -133,18 +135,18 @@ function ListPage(){
         
         // 이부분 마커를 state에 저장해놓고, 출력하고 지우는 기능부터 하면 된다
     }
-    const test = () => {
-        setIsVisible(true);
-        // markers.map(item => {
-        //     item.setMap(map);
-        //     // console.log(item);
-        //     // console.log(map);
-        // })
-    }
-    const test2 = () => {
-        setIsVisible(false);
-        console.log(isVisible);
-    }
+    // const test = () => {
+    //     setIsVisible(true);
+    //     // markers.map(item => {
+    //     //     item.setMap(map);
+    //     //     // console.log(item);
+    //     //     // console.log(map);
+    //     // })
+    // }
+    // const test2 = () => {
+    //     setIsVisible(false);
+    //     console.log(isVisible);
+    // }
 
     useEffect(() => {
         // var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -240,28 +242,38 @@ function ListPage(){
     // 피자, 분식 다운받아야 된다
     return(
         <>
-        <div>test</div>
-        <a href="/upload"><button>만들기</button></a>
-        <a href="/detail"><button>목록</button></a>
-        <List className="list_types">
-        {types.map(item => {
-            return(
-                <>
-                <ListItem button onClick={() => setType(item)}>
-                    <ListItemText primary={item} />
-                    {/* <a onClick={() => setType(item)}> {item} </a> */}
-                </ListItem>
-                </>
-            )
-        })}
-        </List>
-        <label>위치 입력 : </label><input type = "text" value = {curlocation} onChange={inputCurlocation} />
-        <button onClick={() => setSearch(search+1)}>입력</button>
-        <button onClick={() => setCenter()}>이동</button>
-        <button onClick={() => setMarker()}>마커표시</button>
-        <button onClick={() => test()}>테스트</button>
-        <button onClick={() => test2()}>테스트2</button>
-        <div id="map" style={{width:"600px", height:"400px"}}></div>
+        <ButtonGroup class="typebt_wrap" size="large" aria-label="large button group">
+            {types.map(item => {
+                return(
+                    <Button variant="contained" style={{marginRight: "2px"}} onClick={() => setType(item)}>
+                        {item}
+                    </Button>
+                )
+            })}
+        </ButtonGroup>
+        <br/>
+        {/* <label>위치 입력 : </label><input type = "text" value = {curlocation} onChange={inputCurlocation} /> */}
+        <TextField 
+            class="search_text"
+            variant="standard"
+            // label="위치 입력"
+            placeholder="위치 입력"
+            value={curlocation}
+            onChange={inputCurlocation}
+            />
+        {/* <button onClick={() => setSearch(search+1)}>입력</button> */}
+        {/* <button onClick={() => setCenter()}>이동</button> */}
+        <Button style={{margin: "0 10px 0 0"}} variant="contained" onClick={()=>setCenter()}>이동</Button>
+        {/* <button onClick={() => setMarker()}>마커표시</button> */}
+        <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker()}>마커표시</Button>
+        {/* <button onClick={() => test()}>테스트</button>
+        <button onClick={() => test2()}>테스트2</button> */}
+        <a href="/upload">
+            <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained">
+                글 작성하기
+            </Button>
+        </a>
+        <div id="map" className="kakao_map"></div>
         <List sx={style} component="nav" aria-label="mailbox folders">
         {
             type=="전체" ? 
@@ -269,16 +281,16 @@ function ListPage(){
                 console.log(item.data.type);
                 return(
                     <>
-                    <ListItem>
-                        <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
-                        {/* <img src={한식} class="food_img"/> */}
-                        <ListItemText>
-                            <a href={`/detail/${item.id}`}>
+                    <a href={`/detail/${item.id}`}>
+                        <ListItem>
+                            <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
+                            {/* <img src={한식} class="food_img"/> */}
+                            <ListItemText>
                                 <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
-                            </a>
-                        </ListItemText>
-                    </ListItem>
-                    <Divider />
+                            </ListItemText>
+                        </ListItem>
+                        <Divider />
+                    </a>
                     </>
                 )
             })
@@ -287,17 +299,22 @@ function ListPage(){
                 if(item.data.type == type){
                     return(
                         <>
-                        <div>{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                        <a href={`/detail/${item.id}`}>
+                            <ListItem>
+                                <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
+                                {/* <img src={한식} class="food_img"/> */}
+                                <ListItemText>
+                                    <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                                </ListItemText>
+                            </ListItem>
+                        </a>
+                        <Divider />
                         </>
                     )
                 }
             })
         }
         </List>
-        계획 <br/>
-        1. <br/>
-        2. <br/>
-        
         </>
     )
 }

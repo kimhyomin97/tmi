@@ -7,7 +7,29 @@
     padding-left: 10px;
 }
 
-.list_types{
+/* .list_types{
     display: flex;
-    /* flex-direction: row; */
+} */
+.typebt_wrap{
+    margin: 10px 0 0 10px;
+}
+.typebt_item{
+    margin-right: 2px;
+}
+
+.search_text{
+    margin: 0 10px;
+    display: inline-block;
+}
+
+.search_bt{
+    display: none;
+}
+
+.kakao_map{
+    /* width: 1000px;
+    height: 500px; */
+    width: 100vw;
+    height: 60vh;
+    margin: 10px 0;
 }
