@@ -226,4 +226,8 @@
   transition: all 0.4s;
   transform: translateX(-100px);
 }
-
+.header_logo{
+  width: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}

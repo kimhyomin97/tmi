@@ -44,7 +44,6 @@ function App() {
       </Switch>
       <Footer />
     </BrowserRouter>
-    <div>this is app</div>h
     </>
   );
 }

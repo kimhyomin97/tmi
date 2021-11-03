@@ -24,6 +24,7 @@ import { AlignHorizontalLeftRounded } from '@mui/icons-material';
 
 import { withRouter } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
+import logo from './public/logo.png';
 
 function Header_test({history}) {
   const classes = useStyles();
@@ -120,7 +121,7 @@ function Header_test({history}) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              <a href="/">Join-delivery</a>
+              <a href="/"><img className = "header_logo" src={logo}/>Join-delivery</a>
             </Typography>
               {/* Homepage
               MapPage
