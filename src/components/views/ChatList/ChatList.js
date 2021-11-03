@@ -89,6 +89,7 @@ function ChatList(){
         db.collection('login')
             .where('kakaoid', '==', String(chatlist[len]))
             .onSnapshot((res) => {
+                // console.log(res);
                 res.docs.map(item => {
                     // console.log(item.data());
                     setNicknamelist(nicknamelist => [...nicknamelist, item.data()]);

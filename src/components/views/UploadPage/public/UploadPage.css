@@ -1,0 +1,18 @@
+.upload_wrapper{
+    display: flex;
+}
+
+.upload_kakao_map{
+    width: 50vw;
+    height: 0;
+    padding-top:100%;
+    /* 가로 세로 1:1비율 유지 */
+    margin: 6px;
+}
+
+.upload_wrapper_item:nth-child(2){
+    margin-top: 12px;
+}
+.upload_wrapper_item{
+    margin-top: 10px;
+}
