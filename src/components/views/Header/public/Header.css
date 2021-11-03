@@ -212,7 +212,7 @@
 .header_menu_close{
   /* display: none; */
   /* opacity: 0; */
-  visibility: hidden;
+  visibility: hidden; 
   transition: all 0.4s;
 }
 

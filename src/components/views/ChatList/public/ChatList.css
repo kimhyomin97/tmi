@@ -1,0 +1,13 @@
+.chat_wrapper{
+    display: flex;
+    align-items: center;
+}
+.chat_icon{
+    width: 16vw;
+    margin: 10px;
+}
+.chat_text{
+    font-size: 24px;
+    /* display: inline-block; */
+    margin: 0 0 0 20px;
+}

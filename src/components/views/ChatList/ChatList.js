@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
 import firebase from 'firebase';
+import chat_icon from './public/chat_icon.png';
+import './public/ChatList.css';
 
 function ChatList(){
     const [myid, setMyid] = useState();
@@ -149,7 +151,7 @@ function ChatList(){
     return(
         <>
         {fetchMsg()}
-        채팅리스트
+        <br/>
         {/* {chatlist.map(item =>{
             return(
                 <div>{item}</div>
@@ -157,14 +159,19 @@ function ChatList(){
         })} */}
         {nicknamelist.map(item => {
             return(
-                <a href={`/chat/${myid}+${item.kakaoid}`}><div>{item.nickname}</div></a>
+                <>
+                <a className ="chat_wrapper" href={`/chat/${myid}+${item.kakaoid}`}>
+                    <img className="chat_icon" src={chat_icon}/>
+                    <div className="chat_text">{item.nickname}</div>
+                </a>
+                <hr/>
+                </>
                 // <div>{item.nickname}</div>
             )
         })}
         {/* {nicknamelist.nickname} */}
         </>
     )
-
 }
 
 export default ChatList;

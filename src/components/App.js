@@ -42,7 +42,7 @@ function App() {
         <Route exact path ="/upload" component = {UploadPage} />
         <Route exact path ="/detail/:foodid" component = {DetailPage} />
       </Switch>
-      <Footer />
+      {window.location.pathname != "/chatlist" && <Footer />}
     </BrowserRouter>
     </>
   );

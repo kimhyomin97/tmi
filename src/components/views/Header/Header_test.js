@@ -109,6 +109,7 @@ function Header_test({history}) {
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
+          // style={{background:"#1877F2"}}
         >
           <Toolbar variant="dense">
             <IconButton
@@ -116,12 +117,15 @@ function Header_test({history}) {
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
-              className={clsx(classes.menuButton, open && classes.hide)}
+              className={clsx(classes.menuButton, open && classes.hide)} 
             >
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              <a href="/"><img className = "header_logo" src={logo}/>Join-delivery</a>
+              <a href="/">
+                {/* <img className = "header_logo" src={logo}/> */}
+                Join-delivery
+              </a>
             </Typography>
               {/* Homepage
               MapPage
