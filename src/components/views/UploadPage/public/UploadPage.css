@@ -16,3 +16,7 @@
 .upload_wrapper_item{
     margin-top: 10px;
 }
+
+.upload_wrapper_item td{
+    /* width: 10vw; */
+}

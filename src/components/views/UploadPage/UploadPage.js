@@ -4,6 +4,8 @@ import db from "../../firebase";
 import firebase from 'firebase';
 import { ContactsOutlined } from "@material-ui/icons";
 import "./public/UploadPage.css";
+import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { fontSize } from "@mui/system";
 // import firebase from '../../firebase';
 
 const {kakao} = window;
@@ -220,37 +222,54 @@ function UploadPage(){
                 <div id="map" className="upload_kakao_map"></div>
             </div>
             <div className="upload_wrapper_item">
-                <label>음식 이름 : </label><input type = "text" value={name} onChange={inputName} />
-                <div>변경 : {name}</div>
-                <div>종류 : (한식, 양식, 중식, 일식) 선택형</div>
-                <input type="radio" value="한식" name = "foodtype" onClick={() => setFoodtype("한식")}/>한식
-                <input type="radio" value="중식" name = "foodtype" onClick={() => setFoodtype("중식")}/>중식
-                <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("일식")}/>일식
-                <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("치킨")}/>치킨
-                <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("피자")}/>피자
-                <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("패스트푸드")}/>패스트푸드
-                <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
-                <div>변경 : {foodtype}</div>
-                <label>가격 : </label><input type = "text" value={price} onChange={inputPrice} />
-                <div>변경 : {price}</div>
-                <label>위치 : </label><input type = "text" value={location} onChange={inputLocation} />
-                <div>변경 : {location}</div>
-                <label>세부위치 : </label><input type = "text" />
-                {/* 세부위치는 DetailPage에서 노출되지 않도록 한다 */}
-                <button onClick={() => setSearch(search+1)}>검색</button>
-                <div>## 이부분은 지도에서 마커찍어가지고 해당 좌표값 가져오도록 수정해야된다</div>
-                <div>수령장소 : </div> ## 이부분도 마찬가지로 마커찍어야되지만 위치와 수령장소 하나로 통일가능할듯
-                <div>인원??</div> ## 숫자만 입력할 수 있도록 제한해야되나?
-                <div>.</div>
-                <div>뭐있을까 고민해봐야겠다</div>
-                <div>여기서 입력하면 데이터베이스에 등록</div>
-                {/* <button onClick={() => setSend(send+1)}>입력</button> */}
-                <button onClick={sendInfo}>전송</button>
-                {/* <button onClick={() => setTest(test+1)}>테스트</button> */}
-                {/* <button onClick={markertest}>테스트</button> */}
-                맵 뿌려놓고 마크찍으면 해당 좌표 리턴해주는 로직 만들면 될듯
-                <div>좌표 : {position.x}</div>
-                <div>좌표 : {position.y}</div>
+                <table>
+                    <tr>
+                        <td><label>음식 이름 : </label></td>
+                        <td><input type = "text" value={name} onChange={inputName} /></td>
+                    </tr>
+                    <div>변경 : {name}</div>
+                    {/* <FormControl component="fieldset" className="upload_checkbox">
+                        <FormLabel component="legend" style={{color:'black'}}>Gender</FormLabel>
+                        <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+                            <FormControlLabel value="female" control={<Radio />} label="Female" />
+                            <FormControlLabel value="male" control={<Radio />} label="Male" />
+                            <FormControlLabel value="other" control={<Radio />} label="Other" />
+                        </RadioGroup>
+                    </FormControl> */}
+                    <tr>
+                        <td><div>종류 </div></td>
+                        <td>
+                            <input type="radio" value="한식" name = "foodtype" onClick={() => setFoodtype("한식")}/>한식
+                            <input type="radio" value="중식" name = "foodtype" onClick={() => setFoodtype("중식")}/>중식
+                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("일식")}/>일식
+                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("치킨")}/>치킨
+                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("피자")}/>피자
+                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("패스트푸드")}/>패스트푸드
+                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
+                        </td>
+                    </tr>
+                    <div>변경 : {foodtype}</div>
+                    <label>가격 : </label><input type = "text" value={price} onChange={inputPrice} />
+                    <div>변경 : {price}</div>
+                    <label>위치 : </label><input type = "text" value={location} onChange={inputLocation} />
+                    <div>변경 : {location}</div>
+                    <label>세부위치 : </label><input type = "text" />
+                    {/* 세부위치는 DetailPage에서 노출되지 않도록 한다 */}
+                    <button onClick={() => setSearch(search+1)}>검색</button>
+                    <div>## 이부분은 지도에서 마커찍어가지고 해당 좌표값 가져오도록 수정해야된다</div>
+                    <div>수령장소 : </div> ## 이부분도 마찬가지로 마커찍어야되지만 위치와 수령장소 하나로 통일가능할듯
+                    <div>인원??</div> ## 숫자만 입력할 수 있도록 제한해야되나?
+                    <div>.</div>
+                    <div>뭐있을까 고민해봐야겠다</div>
+                    <div>여기서 입력하면 데이터베이스에 등록</div>
+                    {/* <button onClick={() => setSend(send+1)}>입력</button> */}
+                    <button onClick={sendInfo}>전송</button>
+                    {/* <button onClick={() => setTest(test+1)}>테스트</button> */}
+                    {/* <button onClick={markertest}>테스트</button> */}
+                    맵 뿌려놓고 마크찍으면 해당 좌표 리턴해주는 로직 만들면 될듯
+                    <div>좌표 : {position.x}</div>
+                    <div>좌표 : {position.y}</div>
+                </table>
             </div>
         </div>
         </>
