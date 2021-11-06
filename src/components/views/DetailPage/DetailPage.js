@@ -92,11 +92,17 @@ function DetailPage(props){
                 <div>실시간 채팅?</div>
                 {/* <a href={`/chat/${food?.data.kakaoid}`}>채팅하기</a> */}
                 {/* <a href={`/chat/${idinfo}`}>채팅하기</a> */}
-                <a href={`/chat/${idinfo}`}>
-                    <Button variant="contained" style={{margin: "0 2px 2px 0"}}>
-                        채팅하기
-                    </Button>
-                </a>
+                {
+                    localStorage.Kakao_token ?
+                        <a href={`/chat/${idinfo}`}>
+                            <Button variant="contained" style={{margin: "0 2px 2px 0"}}>
+                                채팅하기
+                            </Button>
+                        </a>
+                        :
+                        <>
+                        </>
+                }
                 {/* 버튼 클릭으로 url을 변경해서 이동하는 방법으로 해야될듯
                     + props를 어떻게 넘겨주는지 고민해봐야 된다
                 */}
