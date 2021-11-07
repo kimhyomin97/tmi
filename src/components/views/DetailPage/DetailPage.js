@@ -35,6 +35,15 @@ function DetailPage(props){
             })
         })
     }, [])
+    const [user_account, setUser_account] = useState(null);
+    useEffect(() => {
+        window.Kakao.API.request({
+        url: '/v2/user/me',
+        success: function({ kakao_account }){
+            setUser_account(kakao_account);
+        }
+        })
+    }, []);
     useEffect(() => {
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션
@@ -93,7 +102,7 @@ function DetailPage(props){
                 {/* <a href={`/chat/${food?.data.kakaoid}`}>채팅하기</a> */}
                 {/* <a href={`/chat/${idinfo}`}>채팅하기</a> */}
                 {
-                    localStorage.Kakao_token ?
+                    user_account ?
                         <a href={`/chat/${idinfo}`}>
                             <Button variant="contained" style={{margin: "0 2px 2px 0"}}>
                                 채팅하기

@@ -224,10 +224,13 @@ function UploadPage(){
             <div className="upload_wrapper_item">
                 <table>
                     <tr>
-                        <td><label>음식 이름 : </label></td>
+                        <td><label>이름 </label></td>
                         <td><input type = "text" value={name} onChange={inputName} /></td>
                     </tr>
-                    <div>변경 : {name}</div>
+                    <tr>
+                        <td><div>변경</div></td>
+                        <td><div>{name}</div></td>
+                    </tr>
                     {/* <FormControl component="fieldset" className="upload_checkbox">
                         <FormLabel component="legend" style={{color:'black'}}>Gender</FormLabel>
                         <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
@@ -248,27 +251,79 @@ function UploadPage(){
                             <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
                         </td>
                     </tr>
-                    <div>변경 : {foodtype}</div>
-                    <label>가격 : </label><input type = "text" value={price} onChange={inputPrice} />
-                    <div>변경 : {price}</div>
-                    <label>위치 : </label><input type = "text" value={location} onChange={inputLocation} />
-                    <div>변경 : {location}</div>
-                    <label>세부위치 : </label><input type = "text" />
+                    <tr>
+                        <td>
+                            <div>변경</div>
+                        </td>
+                        <td>
+                            <div>{foodtype}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>가격</label>
+                        </td>
+                        <td>
+                            <input type = "text" value={price} onChange={inputPrice} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>변경</div>
+                        </td>
+                        <td>
+                            <div>{price}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>위치 </label>
+                        </td>
+                        <td>
+                            <input type = "text" value={location} onChange={inputLocation} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button className="upload_box" onClick={() => setSearch(search+1)}>검색</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>변경</div>
+                        </td>
+                        <td>
+                            {location}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>세부위치 </label>
+                        </td>
+                        <td>
+                            <input type = "text" />
+                        </td>
+                    </tr>
                     {/* 세부위치는 DetailPage에서 노출되지 않도록 한다 */}
-                    <button onClick={() => setSearch(search+1)}>검색</button>
-                    <div>## 이부분은 지도에서 마커찍어가지고 해당 좌표값 가져오도록 수정해야된다</div>
+                    <tr>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button className="upload_box" onClick={sendInfo}>전송</button>
+                        </td>
+                    </tr>
+                    {/* <div>## 이부분은 지도에서 마커찍어가지고 해당 좌표값 가져오도록 수정해야된다</div>
                     <div>수령장소 : </div> ## 이부분도 마찬가지로 마커찍어야되지만 위치와 수령장소 하나로 통일가능할듯
                     <div>인원??</div> ## 숫자만 입력할 수 있도록 제한해야되나?
                     <div>.</div>
                     <div>뭐있을까 고민해봐야겠다</div>
                     <div>여기서 입력하면 데이터베이스에 등록</div>
-                    {/* <button onClick={() => setSend(send+1)}>입력</button> */}
-                    <button onClick={sendInfo}>전송</button>
-                    {/* <button onClick={() => setTest(test+1)}>테스트</button> */}
-                    {/* <button onClick={markertest}>테스트</button> */}
                     맵 뿌려놓고 마크찍으면 해당 좌표 리턴해주는 로직 만들면 될듯
                     <div>좌표 : {position.x}</div>
-                    <div>좌표 : {position.y}</div>
+                    <div>좌표 : {position.y}</div> */}
                 </table>
             </div>
         </div>

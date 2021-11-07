@@ -20,3 +20,23 @@
 .upload_wrapper_item td{
     /* width: 10vw; */
 }
+
+.upload_wrapper_item td:nth-child(1){
+    width: 10vw;
+    
+    padding-right: 10px;
+    text-align: right;
+}
+
+.upload_box{
+    
+}
+
+
+
+@media screen and (min-width:900px)
+{
+    .upload_wrapper_item td:nth-child(1){
+        font-size: 20px;
+    }
+}

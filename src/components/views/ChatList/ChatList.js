@@ -157,19 +157,25 @@ function ChatList(){
                 <div>{item}</div>
             )
         })} */}
-        {nicknamelist.map(item => {
-            return(
-                <>
-                <a className ="chat_wrapper" href={`/chat/${myid}+${item.kakaoid}`}>
-                    <img className="chat_icon" src={chat_icon}/>
-                    <div className="chat_text">{item.nickname}</div>
-                </a>
-                <hr/>
-                </>
-                // <div>{item.nickname}</div>
-            )
-        })}
-        {/* {nicknamelist.nickname} */}
+        {nicknamelist.length != 0 ?
+            nicknamelist.map(item => {
+                return(
+                    <>
+                    <a className ="chat_wrapper" href={`/chat/${myid}+${item.kakaoid}`}>
+                        <img className="chat_icon" src={chat_icon}/>
+                        <div className="chat_text">{item.nickname}</div>
+                    </a>
+                    <hr/>
+                    </>
+                    // <div>{item.nickname}</div>
+                )
+            })
+            :
+            <>
+            {console.log("HELLO")}
+            <div>there is no chatlist</div>
+            </>
+        }
         </>
     )
 }

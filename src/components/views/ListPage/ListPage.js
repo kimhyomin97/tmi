@@ -97,7 +97,15 @@ function ListPage(){
         }
         geocoder.addressSearch(curlocation, callback);
     }
-
+    const [user_account, setUser_account] = useState(null);
+    useEffect(() => {
+        window.Kakao.API.request({
+        url: '/v2/user/me',
+        success: function({ kakao_account }){
+            setUser_account(kakao_account);
+        }
+        })
+    }, []);
     // const setMarker = () => {
     //     foods.map(item => {
     //         if(item.data.type == type || type == "전체"){
@@ -331,7 +339,7 @@ function ListPage(){
         {/* <button onClick={() => test()}>테스트</button>
         <button onClick={() => test2()}>테스트2</button> */}
         {
-            localStorage.Kakao_token ?
+            user_account ?
                 <a href="/upload">
                     <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained">
                         글 작성하기
