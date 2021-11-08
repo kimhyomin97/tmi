@@ -107,52 +107,52 @@ function LoginPage(props, {history}){
         };
         console.log(props);
     }, []);
-    const kakao_login_button = () => {
-                // window.Kakao.init("%REACT_APP_KAKAOMAP_API%");
-        // kakao.inInitialized();
+    // const kakao_login_button = () => {
+    //             // window.Kakao.init("%REACT_APP_KAKAOMAP_API%");
+    //     // kakao.inInitialized();
 
-        // kakao sdk import
-        const kakao_script = document.createElement("script");
-        kakao_script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-        document.head.appendChild(kakao_script);
+    //     // kakao sdk import
+    //     const kakao_script = document.createElement("script");
+    //     kakao_script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    //     document.head.appendChild(kakao_script);
 
-        // kakao sdk script load complete
-        kakao_script.onload = () => {
-            window.Kakao.init(process.env.REACT_APP_KAKAOMAP_API);
-            window.Kakao.Auth.createLoginButton({
-                container: "#kakao_login_bt",
-                success: (auth) => {
-                    // history.push("/list");
-                    kakao.API.request({
-                        url: "/",
-                        fail: (err) => {
-                            console.log(err);
-                        },
-                    });
-                },
-                fail: (err) => {
-                    console.log(err);
-                },
-            });
-            window.Kakao.Auth.login({
-                success: res => {
-                    // localStorage.setItem('token', res.token);
-                    // if(res.token){
-                    //     history.push("/list");
-                    // }
-                    localStorage.setItem("Kakao_token", res.access_token);
-                    if(res.access_token){
+    //     // kakao sdk script load complete
+    //     kakao_script.onload = () => {
+    //         window.Kakao.init(process.env.REACT_APP_KAKAOMAP_API);
+    //         window.Kakao.Auth.createLoginButton({
+    //             container: "#kakao_login_bt",
+    //             success: (auth) => {
+    //                 // history.push("/list");
+    //                 kakao.API.request({
+    //                     url: "/",
+    //                     fail: (err) => {
+    //                         console.log(err);
+    //                     },
+    //                 });
+    //             },
+    //             fail: (err) => {
+    //                 console.log(err);
+    //             },
+    //         });
+    //         window.Kakao.Auth.login({
+    //             success: res => {
+    //                 // localStorage.setItem('token', res.token);
+    //                 // if(res.token){
+    //                 //     history.push("/list");
+    //                 // }
+    //                 localStorage.setItem("Kakao_token", res.access_token);
+    //                 if(res.access_token){
                         
-                        alert("로그인 성공");
-                        history.push("/list");
-                    }
-                },
-                fail: err =>{
-                    console.error(err);
-                },
-            });
-        };
-    }
+    //                     alert("로그인 성공");
+    //                     history.push("/list");
+    //                 }
+    //             },
+    //             fail: err =>{
+    //                 console.error(err);
+    //             },
+    //         });
+    //     };
+    // }
     const login_bt = () => {
         window.Kakao.Auth.login({
             success: res => {
@@ -160,7 +160,7 @@ function LoginPage(props, {history}){
                 // if(res.token){
                 //     history.push("/list");
                 // }
-                console.log(res);
+                // console.log(res);
                 localStorage.setItem("Kakao_token", res.access_token);
                 if(res.access_token){
                     window.Kakao.API.request({
