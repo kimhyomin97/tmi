@@ -305,7 +305,7 @@ function ListPage(){
         <ButtonGroup class="typebt_wrap" size="large" aria-label="large button group">
             {types.map(item => {
                 return(
-                    <Button variant="contained" style={{margin: "0 2px 2px 0"}} onClick={() => typeHandler(item)}>
+                    <Button variant="contained" style={{margin: "0 8px 8px 0"}} onClick={() => typeHandler(item)}>
                         {item}
                     </Button>
                 )
@@ -323,16 +323,16 @@ function ListPage(){
             />
         {/* <button onClick={() => setSearch(search+1)}>입력</button> */}
         {/* <button onClick={() => setCenter()}>이동</button> */}
-        <Button style={{margin: "0 10px 0 0"}} variant="contained" onClick={()=>setCenter()}>이동</Button>
+        <Button style={{margin: "0 0 8px 8px"}} variant="contained" onClick={()=>setCenter()}>이동</Button>
         {/* <button onClick={() => setMarker()}>마커표시</button> */}
         {/* <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker()}>마커표시</Button> */}
-        <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker(map)}>마커표시</Button>
-        <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker(null)}>마커지우기</Button>
+        <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker(map)}>마커표시</Button>
+        <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker(null)}>마커지우기</Button>
 
         {/* <button onClick={() => test()}>테스트</button>
         <button onClick={() => test2()}>테스트2</button> */}
         <a href="/upload">
-            <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained">
+            <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained">
                 글 작성하기
             </Button>
         </a>

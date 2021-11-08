@@ -141,3 +141,9 @@ a:visited {
         display: inline-block;
     }
 }
+
+@media screen and (max-width: 768px){
+    .msg_box_content{
+        font-size: 20px;
+    }
+}

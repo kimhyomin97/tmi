@@ -13,9 +13,6 @@
 .typebt_wrap{
     margin: 10px 0 0 10px;
 }
-.typebt_item{
-    margin-right: 2px;
-}
 
 .search_text{
     margin: 0 10px;
@@ -32,4 +29,8 @@
     width: 100vw;
     height: 60vh;
     margin: 10px 0;
+}
+
+@media screen and (max-width: 768px){
+
 }
