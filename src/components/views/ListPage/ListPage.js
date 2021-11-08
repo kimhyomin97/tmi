@@ -338,24 +338,16 @@ function ListPage(){
 
         {/* <button onClick={() => test()}>테스트</button>
         <button onClick={() => test2()}>테스트2</button> */}
-<<<<<<< HEAD
-        <a href="/upload">
-            <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained">
-                글 작성하기
-            </Button>
-        </a>
-=======
         {
             user_account ?
                 <a href="/upload">
-                    <Button style={{margin: "0 10px 0 0"}} className ={"search_bt"} variant="contained">
+                    <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained">
                         글 작성하기
                     </Button>
                 </a>
                 :
                 <></>
         }
->>>>>>> c42e32e9ff5822b04c1ae250564dbafb0247c77e
         <div id="map" className="kakao_map"></div>
         <List sx={style} component="nav" aria-label="mailbox folders">
         {
