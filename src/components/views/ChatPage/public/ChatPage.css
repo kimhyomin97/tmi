@@ -1,0 +1,20 @@
+.message_title{
+    margin: 10px 0 10px 10px;
+    font-size: 24px;
+}
+
+.app_from{
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.chat_message_receiver{
+    width: 80vw;
+    margin: 0 0 4px 10px;
+}
+
+.chat_message_sender{
+    width: 80vw;
+    margin: 0 0 4px auto;
+    text-align: right;
+}

@@ -183,8 +183,8 @@ function LoginPage(props, {history}){
                     })
                     alert("로그인 성공");
                     props.setLogin(true);
-                    history.push("/");
-                    // window.location.replace("/");
+                    // history.push("/");
+                    window.location.replace("/");
                 }
             },
             fail: err =>{

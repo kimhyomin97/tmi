@@ -18,31 +18,10 @@ function ChatPage(props){
     useEffect(() => {
         window.Kakao.API.request({
             url: '/v2/user/me',
-            // success: function({ kakao_account }){
-            // // const { age_range, profile } = kakao_account;
-            // setUser_account(kakao_account);
-            // }
             success: function(res){
-                // console.log(res);
-                // console.log(res.id);
-                // console.log(res.kakao_account.profile.nickname);
-                // setKakaoid(res.id);
-                // setUsername(res.kakao_account.profile.nickname);
                 setMyid(res.id);
-                // setMyname(res.kakao_account.profile.nickname);
             }
         })
-        // setHostid(props.match.params.hostid);
-        // const loadData = async () => {
-        //     // setHostid(props.match.params.hostid); 
-            
-        // }
-        // db.collection('messages')
-        // .orderBy('timestamp', 'desc')
-        // .onSnapshot(data => {
-        //     setMessages(data.docs.map(doc => ({id: doc.id, message: doc.data() })))
-        //     console.log(data);
-        // })
     }, []);
 
     // sender, receiver로 해본 테스트
@@ -65,6 +44,14 @@ function ChatPage(props){
         //     if(item != String(sender)) setReceiver(String(item));
         // })
     }, [sender])
+    const [receiver_nickname, setReceiver_nickname] = useState();
+    useEffect(() => {
+        db.collection('login')
+            .where('kakaoid', '==', String(receiver))
+            .onSnapshot((res) => {
+                setReceiver_nickname(res.docs[0]?.data().nickname);
+            })
+    }, [receiver])
     const [sendermsg, setSendermsg] = useState([]);
     const [receivermsg, setReceivermsg] = useState([]);
     const [mergemsg, setMergemsg] = useState([]);
@@ -293,21 +280,23 @@ function ChatPage(props){
         })
         // 메세지 화면에 세팅
         // setMessages([...messages, {id: myid, message: input}]);
-        setMessages([...messages, {id: sender, message: input}]);
+        // setMessages([...messages, {id: sender, message: input}]);
+        setAllmessage1(allmessage1 => [...allmessage1, ({ message: input, sender: sender, receiver: receiver, timestamp: firebase.firestore.FieldValue.serverTimestamp() })])
         setInput("");
     }
     // console.log("my id" + sender)
     const Message = forwardRef(({username, message }, ref) => {
         // const isUser = username === message.username;
-        const isUser = username === hostid;
-
+        const isUser = username == myid;
         return (
             // <div ref={ref} className={`message ${isUser && 'msg_user'}`}>
-            <div ref={ref} className="TEST">
+            <div ref={ref} className={!isUser ? "chat_message_receiver" : "chat_message_sender"}>
                 <Card className = {"msg_user_card"}>
                     <CardContent>
                         <Typography color="white" variant="h5" component="h2" >
-                            {!isUser && `${message.username || '작성자'}: `} {message}
+                            {/* {!isUser && `${receiver_nickname || '작성자'}: `} {message} */}
+                            {/* {!isUser ? '상대방' : '작성자'} : {message} */}
+                            {message}
                             {/* {message.message} */}
                         </Typography>
                     </CardContent>
@@ -320,30 +309,30 @@ function ChatPage(props){
         <>
         {distinct_msg()}
         {distinct_msg}
-        {hostid}
+        {/* {hostid}
         <br/>
-        {/* {myid} */}
         {guestid}
-        <br/>
-
+        <br/> */}
+        <div className="message_title">{receiver_nickname}님과의 대화</div>
+        <hr/>
+        {
+            // 이부분 messages를 allmessage1으로 변경해야된다
+            allmessage1.map(({id, message}) => (
+                <Message key={id} username={id} message={message} />
+            ))
+        }
         <form className="app_from">
-            <FormControl>
-                <InputLabel> 메세지를 입력하세요.</InputLabel>
-                <Input value={input} onChange={e => {setInput(e.target.value)}} />
-                <Button disabled = {!input} variant="contained" color="primary" type="submit" onClick={sendMessage} >
-                    전송
-                </Button>
+            <FormControl className="message_input">
+                <div>
+                    <InputLabel> 메세지를 입력하세요.</InputLabel>
+                    <Input style={{width: "50vw"}} value={input} onChange={e => {setInput(e.target.value)}} />
+                    <Button style={{margin:"0 0 0 10px"}} disabled = {!input} variant="contained" color="primary" type="submit" onClick={sendMessage} >
+                        전송
+                    </Button>
+                </div>
             </FormControl>
         </form>
-        <ul>
-            {
-                // 이부분 messages를 allmessage1으로 변경해야된다
-                messages.map(({id, message}) => (
-                    <Message key={id} username={receiver} message={message} />
-                ))
-            }
-        </ul>
-        {
+        {/* {
             mergemsg.map(item => {
                 return(
                     <div>{item.message}</div>
@@ -359,6 +348,7 @@ function ChatPage(props){
             })
         }
         <div>구분선</div>
+        {console.log(sendermsg)}
         {
             sendermsg.map(item => {
                 return(
@@ -367,13 +357,14 @@ function ChatPage(props){
             })
         }
         <div>구분선</div>
+        {console.log(receivermsg)}
         {
             receivermsg.map(item => {
                 return(
                     <div>{item.message}</div>
                 )
             })
-        }
+        } */}
         </>
     )
 }
