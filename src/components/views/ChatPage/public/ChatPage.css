@@ -15,6 +15,23 @@
 
 .chat_message_sender{
     width: 80vw;
-    margin: 0 0 4px auto;
+    margin: 0 10px 4px auto;
     text-align: right;
+}
+
+@media screen and (min-width: 1200px){
+    .message_title{
+        width: 50vw;
+        margin: 10px auto 10px auto;
+    }
+    .chat_message_receiver{
+        width: 30vw;
+    }
+    .chat_message_sender{
+        width: 30vw;
+    }
+    .message_wrapper{
+        width: 50vw;
+        margin: 0 auto;
+    }
 }

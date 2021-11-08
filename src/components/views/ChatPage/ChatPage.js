@@ -315,12 +315,14 @@ function ChatPage(props){
         <br/> */}
         <div className="message_title">{receiver_nickname}님과의 대화</div>
         <hr/>
-        {
-            // 이부분 messages를 allmessage1으로 변경해야된다
-            allmessage1.map(({id, message}) => (
-                <Message key={id} username={id} message={message} />
-            ))
-        }
+        <div className="message_wrapper">
+            {
+                // 이부분 messages를 allmessage1으로 변경해야된다
+                allmessage1.map(({id, message}) => (
+                    <Message key={id} username={id} message={message} />
+                ))
+            }
+        </div>
         <form className="app_from">
             <FormControl className="message_input">
                 <div>
