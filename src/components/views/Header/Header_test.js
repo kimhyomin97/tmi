@@ -157,25 +157,25 @@ function Header_test({history}) {
               </ListItem>
             ))} */}
             <div className="header_item">
-              <a href="/homepage">Homepage</a>
+              <a href="/">Homepage</a>
             </div>
             {/* <a href="/mappage">
               <div className="header_item">
                   MapPage
               </div>
             </a> */}
-            <div className="header_item">
+            {/* <div className="header_item">
               <a href="/mappage">MapPage</a>
-            </div>
-            <div className="header_item">
+            </div> */}
+            {/* <div className="header_item">
               <a href="/word">Word</a>
-            </div>
-            <div className="header_item">
+            </div> */}
+            {/* <div className="header_item">
               <a href="/trend">Trend</a>
-            </div>
-            <div className="header_item">
+            </div> */}
+            {/* <div className="header_item">
               <a href="/study">Study</a>
-            </div>
+            </div> */}
             <div className="header_item">
               <a href="/chatlist">Chat</a>
             </div>
@@ -183,15 +183,19 @@ function Header_test({history}) {
               <a href="/list">List</a>
             </div>
           </List>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
           {/* 이부분 페이지 이동시 초기화되는 문제가 발생... 
               페이지 이동시에도 카카오 로그인 유지되는 방안 생각해야됨
               토큰을 활용한 방법을 생각해봐야 될듯

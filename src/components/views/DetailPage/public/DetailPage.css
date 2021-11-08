@@ -16,3 +16,14 @@
 .detail_wrapper_item{
     margin-top: 10px;
 }
+
+.detail_wrapper_table td:nth-child(1){
+    /* width: 10vw; */
+    width: 70px;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.detail_wrapper_table td {
+    font-size: 20px;
+}

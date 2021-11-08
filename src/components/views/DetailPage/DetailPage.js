@@ -89,22 +89,37 @@ function DetailPage(props){
                 <Typography variant="h3" component="h2">
                     {food?.data.name}
                 </Typography>
-                <div>종류 : {food?.data.type}</div>
+                <div className="detail_wrapper_table">
+                    <table>
+                        <tr>
+                            <td>종류 </td>
+                            <td>{food?.data.type}</td>
+                        </tr>
+                        <tr>
+                            <td>가격 </td>
+                            <td>{food?.data.price} 원</td>
+                        </tr>
+                        <tr>
+                            <td>위치 </td>
+                            <td>{food?.data.location}</td>
+                        </tr>
+                    </table>
+                </div>
+                {/* <div>종류 : {food?.data.type}</div>
                 <div>가격 : {food?.data.price}</div>
-                <div>위치 : {food?.data.location}</div>
-                <div>신청하기 버튼</div>
+                <div>위치 : {food?.data.location}</div> */}
                 <br/>
-                <div>DetailPage</div>
+                {/* <div>DetailPage</div>
                 <div>데이터베이스에 등록된 음식들 가져와서 뿌려준다</div>
                 <div>음식 종류별로 카테고리 만들어서 클릭하면 해당 음식들만 쭉 나오게 하면 좋을듯</div>
                 <div>지도에 뿌려주는 방법은 조금 나중에 생각해보자</div>
-                <div>실시간 채팅?</div>
+                <div>실시간 채팅?</div> */}
                 {/* <a href={`/chat/${food?.data.kakaoid}`}>채팅하기</a> */}
                 {/* <a href={`/chat/${idinfo}`}>채팅하기</a> */}
                 {
                     user_account ?
                         <a href={`/chat/${idinfo}`}>
-                            <Button variant="contained" style={{margin: "0 2px 2px 0"}}>
+                            <Button variant="contained" style={{margin: "0 2px 2px 20px"}}>
                                 채팅하기
                             </Button>
                         </a>
@@ -115,7 +130,7 @@ function DetailPage(props){
                 {/* 버튼 클릭으로 url을 변경해서 이동하는 방법으로 해야될듯
                     + props를 어떻게 넘겨주는지 고민해봐야 된다
                 */}
-                <p>
+                {/* <p>
                     채팅방 입장 버튼 생성<br/>
                     kakaoid 조회한 다음 상황에 맞는 채팅 불러오기<br/>
                     이때 채팅방에 대한 아이디값을 설정한다?<br/>
@@ -130,7 +145,7 @@ function DetailPage(props){
                     +<br/>
                     애초에 카카오아이디값을 저장할때 보내는사람 + 받는사람으로 저장하면<br/>
                     더 빠를것같다<br/>
-                </p>
+                </p> */}
             </div>
         </div>
         </>

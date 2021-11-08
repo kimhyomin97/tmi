@@ -10,7 +10,7 @@ import { fontSize } from "@mui/system";
 
 const {kakao} = window;
 
-function UploadPage(){
+function UploadPage({history}){
     const [name, setName] = useState("");
     const [foodtype, setFoodtype] = useState("");
     const [price, setPrice] = useState("");
@@ -170,6 +170,7 @@ function UploadPage(){
         console.log(price);
         console.log(location);
         alert("전송완료");
+        history.push("/list");
     }
     const [user_account, setUser_account] = useState({});
     useEffect(() => {
@@ -227,10 +228,10 @@ function UploadPage(){
                         <td><label>이름 </label></td>
                         <td><input type = "text" value={name} onChange={inputName} /></td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td><div>변경</div></td>
                         <td><div>{name}</div></td>
-                    </tr>
+                    </tr> */}
                     {/* <FormControl component="fieldset" className="upload_checkbox">
                         <FormLabel component="legend" style={{color:'black'}}>Gender</FormLabel>
                         <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
@@ -251,14 +252,14 @@ function UploadPage(){
                             <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
                         </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>
                             <div>변경</div>
                         </td>
                         <td>
                             <div>{foodtype}</div>
                         </td>
-                    </tr>
+                    </tr> */}
                     <tr>
                         <td>
                             <label>가격</label>
@@ -267,14 +268,14 @@ function UploadPage(){
                             <input type = "text" value={price} onChange={inputPrice} />
                         </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>
                             <div>변경</div>
                         </td>
                         <td>
                             <div>{price}</div>
                         </td>
-                    </tr>
+                    </tr> */}
                     <tr>
                         <td>
                             <label>위치 </label>
@@ -282,20 +283,18 @@ function UploadPage(){
                         <td>
                             <input type = "text" value={location} onChange={inputLocation} />
                         </td>
-                    </tr>
-                    <tr>
                         <td>
                             <button className="upload_box" onClick={() => setSearch(search+1)}>검색</button>
                         </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>
                             <div>변경</div>
                         </td>
                         <td>
                             {location}
                         </td>
-                    </tr>
+                    </tr> */}
                     <tr>
                         <td>
                             <label>세부위치 </label>
@@ -310,7 +309,10 @@ function UploadPage(){
                             
                         </td>
                     </tr>
+                    <br/>
                     <tr>
+                        <td>
+                        </td>
                         <td>
                             <button className="upload_box" onClick={sendInfo}>전송</button>
                         </td>
@@ -327,6 +329,9 @@ function UploadPage(){
                 </table>
             </div>
         </div>
+        &nbsp;마커를 움직여서 세부위치를 설정하세요
+        <br/>
+        <br/>
         </>
     )
 }
