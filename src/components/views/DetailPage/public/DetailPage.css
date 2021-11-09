@@ -1,5 +1,6 @@
 .detail_wrapper{
     display: flex;
+    background: linear-gradient(90deg, #CCB78D 51%, #EDECD5 49% );
 }
 
 .detail_kakao_map{

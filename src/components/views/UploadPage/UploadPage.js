@@ -33,6 +33,16 @@ function UploadPage({history}){
         setLocation(e.target.value);
     }
     
+    const [myid, setMyid] = useState();
+    useEffect(() => {
+        window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res){
+                setMyid(res.id);
+            }
+        })
+    }, []);
+
     const [test, setTest] = useState(0);
     
     useEffect(() => {
@@ -163,7 +173,8 @@ function UploadPage({history}){
             kakaoid: kakaoid,
             // message: input,
             // username: username,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            hostid: myid,
         })
         console.log(name);
         console.log(foodtype);

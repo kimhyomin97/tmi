@@ -75,6 +75,17 @@ function DetailPage(props){
         // y: "37.5663795479871"
     }, [])
 
+    const delete_item = () => {
+        db.collection('food').doc("9OM2FX9x0NijpIHkOzQm").delete()
+        .then(() => {
+            alert("삭제 완료");
+            
+        })
+        .catch((error) => {
+            console.error("Error removing document: ", error);
+        })
+    }
+
     // console.log(food);
     // console.log(food.data);
     const idinfo = food?.data.kakaoid + '+' + myid;
@@ -126,6 +137,16 @@ function DetailPage(props){
                         :
                         <>
                         </>
+                }
+                {
+                    myid == food.data?.hostid ?
+                    <div>
+                        <Button variant="contained" style={{margin: "0 2px 2px 20px"}}>
+                            채팅하기
+                        </Button>
+                    </div>
+                    :
+                    <></>
                 }
                 {/* 버튼 클릭으로 url을 변경해서 이동하는 방법으로 해야될듯
                     + props를 어떻게 넘겨주는지 고민해봐야 된다
