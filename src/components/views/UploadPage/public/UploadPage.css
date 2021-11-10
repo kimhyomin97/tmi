@@ -17,10 +17,6 @@
     margin-top: 10px;
 }
 
-.upload_wrapper_item td{
-    /* width: 10vw; */
-}
-
 .upload_wrapper_item td:nth-child(1){
     /* width: 10vw; */
     width: 70px;

@@ -76,14 +76,15 @@ function DetailPage(props){
     }, [])
 
     const delete_item = () => {
-        db.collection('food').doc("9OM2FX9x0NijpIHkOzQm").delete()
-        .then(() => {
-            alert("삭제 완료");
+        console.log("HELLO");
+        // db.collection('food').doc("9OM2FX9x0NijpIHkOzQm").delete()
+        // .then(() => {
+        //     alert("삭제 완료");
             
-        })
-        .catch((error) => {
-            console.error("Error removing document: ", error);
-        })
+        // })
+        // .catch((error) => {
+        //     console.error("Error removing document: ", error);
+        // })
     }
 
     // console.log(food);
@@ -97,7 +98,7 @@ function DetailPage(props){
             </div>
             <div className="detail_wrapper_item">
                 {/* <div>이름 : {food?.data.name}</div> */}
-                <Typography variant="h3" component="h2">
+                <Typography variant="h3" component="h2" style={{marginLeft: "10px"}}>
                     {food?.data.name}
                 </Typography>
                 <div className="detail_wrapper_table">
@@ -139,10 +140,10 @@ function DetailPage(props){
                         </>
                 }
                 {
-                    myid == food.data?.hostid ?
+                    myid == food?.data?.hostid ?
                     <div>
-                        <Button variant="contained" style={{margin: "0 2px 2px 20px"}}>
-                            채팅하기
+                        <Button variant="contained" style={{margin: "10px 2px 2px 20px"}} onClick={delete_item}>
+                            삭제하기
                         </Button>
                     </div>
                     :

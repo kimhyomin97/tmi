@@ -6,6 +6,7 @@ import { ContactsOutlined } from "@material-ui/icons";
 import "./public/UploadPage.css";
 import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 import { fontSize } from "@mui/system";
+import { Button } from "@material-ui/core";
 // import firebase from '../../firebase';
 
 const {kakao} = window;
@@ -234,6 +235,7 @@ function UploadPage({history}){
                 <div id="map" className="upload_kakao_map"></div>
             </div>
             <div className="upload_wrapper_item">
+                <br/>
                 <table>
                     <tr>
                         <td><label>이름 </label></td>
@@ -243,24 +245,26 @@ function UploadPage({history}){
                         <td><div>변경</div></td>
                         <td><div>{name}</div></td>
                     </tr> */}
-                    {/* <FormControl component="fieldset" className="upload_checkbox">
-                        <FormLabel component="legend" style={{color:'black'}}>Gender</FormLabel>
-                        <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+                    {/* <FormControl component="fieldset">
+                        <FormLabel component="legend">Gender</FormLabel>
+                        <RadioGroup row aria-label="gender" name="row-radio-buttons-group" style={{ width: 'auto', display: 'flex'}}>
                             <FormControlLabel value="female" control={<Radio />} label="Female" />
                             <FormControlLabel value="male" control={<Radio />} label="Male" />
                             <FormControlLabel value="other" control={<Radio />} label="Other" />
                         </RadioGroup>
                     </FormControl> */}
-                    <tr>
+                    <tr className="upload_type">
                         <td><div>종류 </div></td>
                         <td>
                             <input type="radio" value="한식" name = "foodtype" onClick={() => setFoodtype("한식")}/>한식
                             <input type="radio" value="중식" name = "foodtype" onClick={() => setFoodtype("중식")}/>중식
                             <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("일식")}/>일식
-                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("치킨")}/>치킨
-                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("피자")}/>피자
-                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("패스트푸드")}/>패스트푸드
-                            <input type="radio" value="일식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
+                            <br/>
+                            <input type="radio" value="치킨" name = "foodtype" onClick={() => setFoodtype("치킨")}/>치킨
+                            <input type="radio" value="피자" name = "foodtype" onClick={() => setFoodtype("피자")}/>피자
+                            <br/>
+                            <input type="radio" value="패스트푸드" name = "foodtype" onClick={() => setFoodtype("패스트푸드")}/>패스트푸드
+                            <input type="radio" value="분식" name = "foodtype" onClick={() => setFoodtype("분식")}/>분식
                         </td>
                     </tr>
                     {/* <tr>
@@ -295,7 +299,10 @@ function UploadPage({history}){
                             <input type = "text" value={location} onChange={inputLocation} />
                         </td>
                         <td>
-                            <button className="upload_box" onClick={() => setSearch(search+1)}>검색</button>
+                            {/* <button className="upload_box" onClick={() => setSearch(search+1)}>검색</button> */}
+                            <Button variant="contained" style={{margin: "0 2px 2px 20px"}} onClick={() => setSearch(search+1)}>
+                                검색
+                            </Button>
                         </td>
                     </tr>
                     {/* <tr>
@@ -325,7 +332,10 @@ function UploadPage({history}){
                         <td>
                         </td>
                         <td>
-                            <button className="upload_box" onClick={sendInfo}>전송</button>
+                            {/* <button className="upload_box" onClick={sendInfo}>전송</button> */}
+                            <Button variant="contained" style={{margin: "0 2px 2px 20px"}} onClick={sendInfo}>
+                                전송
+                            </Button>
                         </td>
                     </tr>
                     {/* <div>## 이부분은 지도에서 마커찍어가지고 해당 좌표값 가져오도록 수정해야된다</div>
