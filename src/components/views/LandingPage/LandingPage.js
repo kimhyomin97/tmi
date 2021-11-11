@@ -6,7 +6,6 @@ import LoginPage from '../LoginPage/LoginPage.js';
 
 function LandingPage(){
     const imglist = ['한식', '중식', '일식', '피자'];
-    // const imglist = ['피자', '피자', '피자', '피자'];
     const all = ele => document.querySelectorAll(ele);
     const one = ele => document.querySelector(ele);
     const [userAccount, setUserAccount] = useState(null);
@@ -14,11 +13,9 @@ function LandingPage(){
         window.Kakao.API.request({
           url: '/v2/user/me',
           success: function({ kakao_account }){
-            // const { age_range, profile } = kakao_account;
             setUserAccount(kakao_account);
           }
         })
-    // }, [login]);
     }, []);
 
     const [loginModal, setLoginModal] = useState(false);

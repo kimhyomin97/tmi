@@ -17,19 +17,13 @@ function DetailPage(props){
             }
         })
     }, []);
-    // console.log(props.match.params.foodid);
     const [food, setFood] = useState();
     useEffect(() => {
         db.collection('food')
         .orderBy('name', 'desc')
         .onSnapshot(data => {
-            // setMessages(data.docs.map(doc => ({id: doc.id, message: doc.data() })))
-            // setFoods(data.docs.map(doc => ({name: doc.name, location: doc.location, price: doc.price, type: doc.type})))
-            // setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })))
             data.docs.map(item => {
-                // console.log(item);
                 if(item.id == props.match.params.foodid){
-                    // console.log(item.data());
                     setFood({id: item.id, data: item.data() });
                 }
             })
@@ -57,10 +51,7 @@ function DetailPage(props){
 
         var callback = function(result, status){
             if(status === kakao.maps.services.Status.OK){
-                // console.log(result[0].y);
-                // console.log(result[0].x);
                 var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
-                // var markerPosition = new kakao.maps.LatLng(37.5663795479871, 127.045325760782);
                 var marker = new kakao.maps.Marker({
                     position: markerPosition
                 });
