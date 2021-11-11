@@ -105,7 +105,6 @@ function LoginPage(props, {history}){
             //     },
             // });
         };
-        console.log(props);
     }, []);
     // const kakao_login_button = () => {
     //             // window.Kakao.init("%REACT_APP_KAKAOMAP_API%");
@@ -153,6 +152,7 @@ function LoginPage(props, {history}){
     //         });
     //     };
     // }
+    
     const login_bt = () => {
         window.Kakao.Auth.login({
             success: res => {
@@ -162,6 +162,7 @@ function LoginPage(props, {history}){
                 // }
                 // console.log(res);
                 localStorage.setItem("Kakao_token", res.access_token);
+                // console.log(res.access_token);
                 if(res.access_token){
                     window.Kakao.API.request({
                         url: '/v2/user/me',
