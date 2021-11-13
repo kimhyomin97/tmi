@@ -2,53 +2,9 @@ import './public/Footer.css';
 function Footer(){
     return(
         <>
-        {/* <footer className = "footer_wrap">
-            <div>This is Footer</div>
-            <ul>
-                <li>
-                    <span>
-                        김효민<br/>
-                        github.com/kimhyomin97
-                    </span>
-                </li>
-            </ul>
-        </footer> */}
         <footer class="site-footer">
-            {/* <div class="footer_container">
-                <div class="row footer_article_wrap">
-                    <div class="col-sm-12 col-md-6 footer_item">
-                        <h6>About</h6>
-                        <p>Join-delivery</p>
-                        <p>김효민</p>
-                        <a href="https://github.com/kimhyomin97"><p>https://github.com/kimhyomin97</p></a>
-                    </div>
-                    <div class="col-xs-6 col-md-3 footer_item">
-                        <h6>stack</h6>
-                        <ul class="footer-links">
-                        <li>React</li>
-                        <li>firebase</li>
-                        <li>kakao api</li>
-
-                        </ul>
-                    </div>
-                    <div class="col-xs-6 col-md-3 footer_item">
-                        <h6>page</h6>
-                        <ul class="footer-links">
-                            <li>Home</li>
-                            <li>List</li>
-                            <li>chat</li>
-                        </ul>
-                    </div>
-                </div>
-                <hr />
-            </div> */}
             <div class="container">
                 <div class="row">
-                    {/* <div class="col-md-8 col-sm-6 col-xs-12">
-                        <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
-                    <a href="#">김효민</a>.
-                        </p>
-                    </div> */}
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <ul class="social-icons">
                             <li>

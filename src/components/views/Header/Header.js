@@ -1,114 +1,200 @@
-// import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
-// import MenuIcon from '@material-ui/icons/Menu';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+
+import { useStyles } from './public/styles';
 import './public/Header.css';
-// import { useStyles } from "./public/styles";
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     flexGrow: 1,
-//   },
-// }));
+import { AlignHorizontalLeftRounded } from '@mui/icons-material';
 
+import { withRouter } from 'react-router-dom';
+import LoginPage from '../LoginPage/LoginPage';
+import logo from './public/logo.png';
 
-function Header() {
-  const [trigger, setTrigger] = useState(true);
+function Header({history}) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
 
-  // const menuTrigger = document.querySelector('.header_menu_trigger');
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-  // menuTrigger.addEventListener('click', (e) => {
-  //   e.currentTarget.classList.toggle('active-1');
-  // });
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-  // useEffect(() => {
-    
-  // }, trigger);
-  
-  const triggerClick = () => {
-    setTrigger(!trigger);
+  const kakao_logout = () => {
+    if(window.Kakao.Auth.getAccessToken()){
+      window.Kakao.Auth.logout(() => {
+        setLogin(false);
+        alert("로그아웃 성공");
+        localStorage.clear();
+        history.push("/");
+      })
+    }
+    else{
+      alert("로그아웃 상황");
+    }
   }
-
-  // const classes = useStyles();
-
+  const [login, setLogin] = useState(false);
+  const move_login = () => {
+    // return(
+      <LoginPage></LoginPage>
+    // )
+  }
+  const [user_account, setUser_account] = useState(null);
+  useEffect(() => {
+    window.Kakao.API.request({
+      url: '/v2/user/me',
+      success: function({ kakao_account }){
+        // const { age_range, profile } = kakao_account;
+        setUser_account(kakao_account);
+      }
+    })
+  // }, [login]);
+  }, []);
+  
+  const view_info = () => {
+    window.Kakao.API.request({
+      url: '/v2/user/me',
+      success: function({ kakao_account }){
+        const { age_range, profile } = kakao_account;
+      },
+      fail: function(error){
+        console.log("실패");
+        console.log(error);
+      }
+    })
+  }
+  const [loginModal, setLoginModal] = useState(false);
+  
   return (
-    // <>
-    // <AppBar position="static">
-    //   <Toolbar variant="dense">
-    //     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-    //       <MenuIcon />
-    //     </IconButton>
-    //     <Typography variant="h6" className={classes.title}>
-    //       TMI
-    //     </Typography>
-    //     <Button color="inherit">Login</Button>
-    //   </Toolbar>
-    // </AppBar>
-    // </>
       <>
-        <header className="header_wrap">
-          {/* 헤더 선택적으로 나오게 수정 */}
-          <a className="header_logo" href="/">TMI</a>
-          <div className="header_item_wrap">
-            <div className="header_item">
-                <a href="/homepage">Homepage</a>
-            </div>
-            {/* <a href="/mappage">
-              <div className="header_item">
-                  MapPage
-              </div>
-            </a> */}
-            <div className="header_item">
-                <a href="/mappage">MapPage</a>
-            </div>
-            <div className="header_item">
-                <a href="/word">Word</a>
-            </div>
-            <div className="header_item">
-                <a href="/trend">Trend</a>
-            </div>
-            <div className="header_item">
-                <a href="/study">Study</a>
-            </div>
-            {trigger ? 
-              <div className="header_item header_icon">
-                <a className="header_menu_trigger" href="#" onClick={() => triggerClick()}>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </a>
-              </div> :
-                <div className="header_item header_icon">
-                  <a className="header_menu_trigger active-1" href="#" onClick={() => triggerClick()}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </a>
-                </div>
-            }
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="static"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+          // style={{background:"#1877F2"}}
+        >
+          <Toolbar variant="dense">
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)} 
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              <a href="/">
+                {/* <img className = "header_logo" src={logo}/> */}
+                Join-delivery
+              </a>
+            </Typography>
+              {/* Homepage
+              MapPage
+              Word
+              Trend
+              Study */}
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
           </div>
-          {/* <input class="burger-check" type="checkbox" id="burger-check" />
-          <label class="burger-icon" for="burger-check"><span class="burger-sticks"></span></label>
-          <div class="menu">
-            <div style="width: 200px"></div>
-          </div> */}
-        {/* </header> */}
-        {trigger ?
-          <div className="header_menu header_menu_close"></div>
-          :
-          <div className="header_menu header_menu_open">menu_open</div>
-        }
-        {/* <div className = {trigger ? "header_menu header_menu_close" : "header_menu header_menu_open"}>
-          menu_open
-        </div> */}
-        {/* menu_open의 길이가 짧은것은 페이지내의 컨텐츠가 적어서 body가 짧아졌기 때문 */}
-        </header>
+          <Divider />
+          <List>
+            <div className="header_item">
+              <a href="/">Homepage</a>
+            </div>
+            <div className="header_item">
+              <a href="/chatlist">Chat</a>
+            </div>
+            <div className="header_item">
+              <a href="/list">List</a>
+            </div>
+          </List>
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <Divider />
+          
+          {
+            !localStorage.Kakao_token ? 
+            <List>
+              <div className="header_item">
+                <a onClick={() => setLoginModal(true)}>로그인</a>
+              </div>
+              {loginModal ?
+                <LoginPage
+                  login={login}
+                  setLogin={setLogin}
+                ></LoginPage>
+                :
+                <></>
+              }
+            </List>
+            :
+            <>
+            {
+            !user_account ?
+              <List>
+                <div className="header_item">
+                  <a onClick={() => setLoginModal(true)}>로그인</a>
+                </div>
+                {loginModal ?
+                  <LoginPage
+                    login={login}
+                    setLogin={setLogin}
+                  ></LoginPage>
+                  :
+                  <></>
+                }
+              </List>
+              :
+              <List>
+                <div className="header_item">{user_account?.profile?.nickname} 님 안녕하세요</div>
+                <div className="header_item">
+                  <a onClick={kakao_logout}>로그아웃</a>
+                </div>
+              </List>
+            }
+            </>
+          }
+          <List>
+          </List>
+        </Drawer>
+      </div>
       </>
   );
 }
 
-export default Header;
+export default withRouter(Header);

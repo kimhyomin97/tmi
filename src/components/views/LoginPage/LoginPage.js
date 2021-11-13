@@ -1,6 +1,5 @@
 import { Modal, Box } from '@mui/material';
 import "./public/LoginPage.css";
-import Login from "./Login";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { CssBaseline } from '@material-ui/core';
@@ -20,43 +19,6 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
-const move_login = () => {
-    // console.log("HELLO");
-    console.log(kakao.inInitialized());
-    // <Login></Login>
-    kakao.Auth.authorize({
-        redirectUri: 'http://localhost:3000/'
-    });
-    if(!kakao.Auth.getAccessToken()){
-        console.log("Not logged in.");
-        return;
-    }
-    kakao.Auth.logout(function() {
-        console.log(kakao.auth.getAccessToken());
-    })
-    // try {
-    //     return new Promise((resolve, reject) => {
-    //         if (!kakao) {
-    //         reject('인스턴스 없음');
-    //         }
-    //         kakao.Auth.login({
-    //         success: res => {
-    //             localStorage.setItem('token', res.token);
-    //             this.setState({
-    //             isLogin: true,
-    //             });
-    //             this.props.history.push('/signup');
-    //         },
-    //         fail: err => {
-    //             console.error(err);
-    //         },
-    //         });
-    //     });
-    //     } catch (err) {
-    //     console.error(err);
-    // }
-}
 
 function LoginPage(props, {history}){
     const [modalOpen, setModalOpen] = useState(true);
@@ -88,81 +50,14 @@ function LoginPage(props, {history}){
                     console.log(err);
                 },
             });
-            // window.Kakao.Auth.login({
-            //     success: res => {
-            //         // localStorage.setItem('token', res.token);
-            //         // if(res.token){
-            //         //     history.push("/list");
-            //         // }
-            //         localStorage.setItem("Kakao_token", res.access_token);
-            //         if(res.access_token){
-            //             alert("로그인 성공");
-            //             history.push("/list");
-            //         }
-            //     },
-            //     fail: err =>{
-            //         console.error(err);
-            //     },
-            // });
         };
     }, []);
-    // const kakao_login_button = () => {
-    //             // window.Kakao.init("%REACT_APP_KAKAOMAP_API%");
-    //     // kakao.inInitialized();
-
-    //     // kakao sdk import
-    //     const kakao_script = document.createElement("script");
-    //     kakao_script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-    //     document.head.appendChild(kakao_script);
-
-    //     // kakao sdk script load complete
-    //     kakao_script.onload = () => {
-    //         window.Kakao.init(process.env.REACT_APP_KAKAOMAP_API);
-    //         window.Kakao.Auth.createLoginButton({
-    //             container: "#kakao_login_bt",
-    //             success: (auth) => {
-    //                 // history.push("/list");
-    //                 kakao.API.request({
-    //                     url: "/",
-    //                     fail: (err) => {
-    //                         console.log(err);
-    //                     },
-    //                 });
-    //             },
-    //             fail: (err) => {
-    //                 console.log(err);
-    //             },
-    //         });
-    //         window.Kakao.Auth.login({
-    //             success: res => {
-    //                 // localStorage.setItem('token', res.token);
-    //                 // if(res.token){
-    //                 //     history.push("/list");
-    //                 // }
-    //                 localStorage.setItem("Kakao_token", res.access_token);
-    //                 if(res.access_token){
-                        
-    //                     alert("로그인 성공");
-    //                     history.push("/list");
-    //                 }
-    //             },
-    //             fail: err =>{
-    //                 console.error(err);
-    //             },
-    //         });
-    //     };
-    // }
     
     const login_bt = () => {
         window.Kakao.Auth.login({
             success: res => {
-                // localStorage.setItem('token', res.token);
-                // if(res.token){
-                //     history.push("/list");
-                // }
-                // console.log(res);
                 localStorage.setItem("Kakao_token", res.access_token);
-                // console.log(res.access_token);
+                
                 if(res.access_token){
                     window.Kakao.API.request({
                         url: '/v2/user/me',
@@ -195,7 +90,6 @@ function LoginPage(props, {history}){
     }
     return(
         <>
-        {/* <button type="button" id="kakao_login_bt">버튼</button> */}
         <Modal
             open={modalOpen}
             onClose={handleClose}
@@ -210,7 +104,5 @@ function LoginPage(props, {history}){
         </Modal>
         </>
     )
-    // 이부분 카카오 로그인 하는법부터 하면 된다
-    // 
 }
 export default LoginPage;
