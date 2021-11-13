@@ -146,7 +146,7 @@ function ListPage(){
                             <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
                             {/* <img src={한식} class="food_img"/> */}
                             <ListItemText>
-                                <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                                <div className="list_item_text">{item.data.name} {item.data.price}원 ({item.data.location})</div>
                             </ListItemText>
                         </ListItem>
                         <Divider />
@@ -164,7 +164,7 @@ function ListPage(){
                                 <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
                                 {/* <img src={한식} class="food_img"/> */}
                                 <ListItemText>
-                                    <div className="list_item_text">{item.data.name} {item.data.location} {item.data.price} {item.data.type}</div>
+                                    <div className="list_item_text">{item.data.name} {item.data.price}원 ({item.data.location})</div>
                                 </ListItemText>
                             </ListItem>
                         </a>
