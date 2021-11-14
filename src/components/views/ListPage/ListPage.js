@@ -3,9 +3,9 @@ import db from "../../firebase";
 import firebase from 'firebase';
 import "./public/ListPage.css";
 import { List, ListItem, ListItemText, ListItemIcon, Divider, ListItemSecondaryAction } from "@material-ui/core";
-import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
+// import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
 import {한식, 패스트푸드, 중식, 치킨, 일식, 피자, 분식} from './public/image_export';
-import { MarkEmailReadSharp } from "@mui/icons-material";
+// import { MarkEmailReadSharp } from "@mui/icons-material";
 import { TextField, Button, ButtonGroup} from "@mui/material";
 const { kakao } = window;
 

@@ -1,5 +1,5 @@
 import Map from './Map';
-import MapMarker from './MapMarker';
+// import MapMarker from './MapMarker';
 import './public/MapPage.css';
 
 function MapPage(){
@@ -25,7 +25,7 @@ function MapPage(){
             )
         })}
         <div>temp</div>
-        <MapMarker></MapMarker>
+        {/* <MapMarker></MapMarker> */}
         </div>
         </>
     )

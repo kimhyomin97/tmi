@@ -1,8 +1,8 @@
 import { Modal, Box } from '@mui/material';
 import "./public/LoginPage.css";
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { CssBaseline } from '@material-ui/core';
+// import { CssBaseline } from '@material-ui/core';
 import db from "../../firebase";
 import firebase from 'firebase';
 
@@ -24,9 +24,6 @@ function LoginPage(props, {history}){
     const [modalOpen, setModalOpen] = useState(true);
     const handleClose = () => setModalOpen(false);
     useEffect(() => {
-        // window.Kakao.init("%REACT_APP_KAKAOMAP_API%");
-        // kakao.inInitialized();
-
         // kakao sdk import
         const kakao_script = document.createElement("script");
         kakao_script.src = "https://developers.kakao.com/sdk/js/kakao.js";
@@ -93,8 +90,6 @@ function LoginPage(props, {history}){
         <Modal
             open={modalOpen}
             onClose={handleClose}
-            // aria-labelledby="modal-modal-title"
-            // aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
                 <div className="kakao_login_bt_wrap">

@@ -6,8 +6,6 @@ const { kakao } = window;
 
 function Map(props){
     console.log(props);
-    // props로 리스트를 전달받아서 마커를 띄우는 방법 해보자
-    
     useEffect(() => {
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션
@@ -31,12 +29,10 @@ function Map(props){
         // y: "37.5663795479871"
     }, [])
     
-
     // 카카오 지도 라이브러리
     // clusterer : 마커를 클러스터링 할 수 있다
     // services : 장소 검색과 주소-좌표 변환을 할 수 있는 services 라이브러리
     // drawing : 지도 위에 마커와 그래픽스 객체를 쉽게 그릴 수 있게 그리기 모드를 지원하는 drawing 라이브러리
-
 
     return(
         <>

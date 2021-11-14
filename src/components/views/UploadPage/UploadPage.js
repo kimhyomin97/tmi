@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 // import db from "../../firebase";
 import db from "../../firebase";
 import firebase from 'firebase';
-import { ContactsOutlined } from "@material-ui/icons";
+// import { ContactsOutlined } from "@material-ui/icons";
 import "./public/UploadPage.css";
-import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
-import { fontSize } from "@mui/system";
+// import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+// import { fontSize } from "@mui/system";
 import { Button } from "@material-ui/core";
 // import firebase from '../../firebase';
 
@@ -86,8 +86,6 @@ function UploadPage({history}){
             position: position,
             username: username,
             kakaoid: kakaoid,
-            // message: input,
-            // username: username,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             hostid: myid,
         })
