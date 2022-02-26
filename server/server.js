@@ -21,6 +21,18 @@ var client_secret = process.env.NAVER_TREND_API_CLIENT_SECRET;
 // var client_secret = 'REACT_APP_NAVER_TREND_API_CLIENT_SECRET';
 var api_url = 'https://openapi.naver.com/v1/datalab/search';
 
+const food_api_url = 'https://api.odcloud.kr/api/15035732/v1/uddi:ba47232a-68fb-4252-93e8-fef2699919cc_201909091317?';
+const food_api_key = process.env.FOOD_API_KEY_DECODING;
+
+app.get('/foodlist', (req, res) => {
+    request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
+        if(error) console.log(error);
+        var obj = JSON.parse(body)
+        console.log(obj);
+        res.send(obj)
+    })
+})
+
 
 app.get('/api/trend', (req, res) => {
     console.log("TEST");
