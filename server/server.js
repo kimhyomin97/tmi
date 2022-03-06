@@ -23,7 +23,6 @@ app.listen(PORT, () => {
     console.log(`SERVER ON : http://localhost:${PORT}/`);
 })
 
-var request = require('request');
 var client_id = process.env.NAVER_TREND_API_CLIENT_ID;
 var client_secret = process.env.NAVER_TREND_API_CLIENT_SECRET;
 // var client_id = '%REACT_APP_NAVER_TREND_API_CLIENT_ID%';
@@ -33,27 +32,78 @@ var api_url = 'https://openapi.naver.com/v1/datalab/search';
 const food_api_url = 'https://api.odcloud.kr/api/15035732/v1/uddi:ba47232a-68fb-4252-93e8-fef2699919cc_201909091317?';
 const food_api_key = process.env.FOOD_API_KEY_DECODING;
 
-app.get('/foodlist', async (req, res) => {
-    // 이부분 async await로 비동기 처리를 해줘야 된다
-    // 그 다음 푸드리스트를 불러오는 부분 함수화해서 model 폴더에 구현해주자
-    let page=1;
-    let perPage=100;
-    let offset;
-    const req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
-    // request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
-    request(req_url, (error, respond, body) => {
+var request = require('request');
+// const foodlist = require('./models/foodlist'); // foodlist를 불러와서 db에 저장하는 로직 함수화
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// certificate has expired 오류 해결하는 코드
+// SSL인증 오류가 있기 때문에 발생하는 오류
+
+app.get('/foodlist', (req, res) => {
+    // api 변경
+    const food_api_url = 'http://openapi.seoul.go.kr:8088/'+process.env.FOOD_API_KEY_SEOUL+'/json/CrtfcUpsoInfo/1/1/'
+    request(food_api_url, (error, respond, body) => {
         if(error) console.log(error);
-        var obj = JSON.parse(body)
-        console.log(obj);
-        offset = obj.totalCount;
-        res.send(obj)
+        console.log(body);
     })
-    .then(() => {
-        page++;
-        console.log(page+" and "+offset);
-    })
-    
 })
+
+// app.get('/foodlist', (req, res) => {
+
+    
+//     // 넘겨줘야될 파라미터 : api_url, api_key, ...
+//     // page, perPage 계산은 함수 넘어가서 해줘도 될듯
+
+//     // 이부분 async await로 비동기 처리를 해줘야 된다
+//     // 그 다음 푸드리스트를 불러오는 부분 함수화해서 model 폴더에 구현해주자
+//     let page=1;
+//     let perPage=10;
+//     let offset;
+//     let req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
+//     // foodlist(req_url, res)
+//     //     .then(() => {
+
+//     //     });
+//     // request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
+//     // for(let i=0; i<10; i++){
+//     console.log('before');
+//     const getfoodlist = async (url, page) => {
+//         console.log("in : " + page);
+//         request(url, (error, respond, body) => {
+//             if(error) console.log(error);
+//             console.log(url);
+//             var obj = JSON.parse(body);
+//             console.log(obj.page);
+//             // res.send(obj);
+//         })
+//     }
+//     for(var i=0; i<3; i++){
+//         req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
+//         getfoodlist(req_url, page)
+//         .then(() => {
+//             page++;
+//             console.log("test : "+page);
+//         })
+//         // request(req_url, (error, respond, body) => {
+//         //     if(error) console.log(error);
+//         //     // console.log("TEST:"+body)
+//         //     var obj = JSON.parse(body)
+//         //     console.log(obj);
+//         //     console.log(req_url)
+//         //     offset = obj.totalCount;
+//         //     // res.send(obj)
+//         // })
+//         // page++;
+//     }
+
+//     // request(req_url, (error, respond, body) => {
+//     //     if(error) console.log(error);
+//     //     console.log("TEST:"+body)
+//     //     var obj = JSON.parse(body)
+//     //     console.log(obj);
+//     //     offset = obj.totalCount;
+//     //     res.send(obj)
+//     // })
+// })
 
 
 app.get('/api/trend', (req, res) => {
