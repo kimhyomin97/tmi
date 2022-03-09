@@ -33,77 +33,95 @@ const food_api_url = 'https://api.odcloud.kr/api/15035732/v1/uddi:ba47232a-68fb-
 const food_api_key = process.env.FOOD_API_KEY_DECODING;
 
 var request = require('request');
-// const foodlist = require('./models/foodlist'); // foodlist를 불러와서 db에 저장하는 로직 함수화
+const foodlist = require('./models/foodlist'); // foodlist를 불러와서 db에 저장하는 로직 함수화
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // certificate has expired 오류 해결하는 코드
 // SSL인증 오류가 있기 때문에 발생하는 오류
-
+// http://openapi.seoul.go.kr:8088/52616f4e73726c6139345853615451/json/LOCALDATA_072404_SD/1/10/
 app.get('/foodlist', (req, res) => {
     // api 변경
-    const food_api_url = 'http://openapi.seoul.go.kr:8088/'+process.env.FOOD_API_KEY_SEOUL+'/json/CrtfcUpsoInfo/1/1/'
-    request(food_api_url, (error, respond, body) => {
-        if(error) console.log(error);
-        console.log(body);
-    })
+    // const food_api_url = 'http://openapi.seoul.go.kr:8088/'+process.env.FOOD_API_KEY_SEOUL+'/json/CrtfcUpsoInfo/1/1/'
+    // const food_api_url = 'http://openapi.seoul.go.kr:8088/'+process.env.FOOD_API_KEY_SEOUL+'/json/CrtfcUpsoInfo/1/1000/'
+    // request(food_api_url, (error, respond, body) => {
+    //     if(error) console.log(error);
+    //     var obj = JSON.parse(body);
+    //     obj.CrtfcUpsoInfo.row.map(item => {
+    //         // console.log(item);
+    //         // 이부분에 DB저장하는 코드 작성하면 된다
+    //         console.log("X : "+item.X_CNTS);
+    //         console.log("Y : "+item.Y_DNTS);
+    //     })
+    //     res.send(obj.CrtfcUpsoInfo.row[0]);
+    //     res.send("HELLO")
+        
+    //     // body.row.map(item => {
+    //     //     console.log("TEST START : "+item);
+    //     //     console.log("END")
+    //     // })
+    // })
+    foodlist(res);
 })
 
-// app.get('/foodlist', (req, res) => {
+
+
+
+app.get('/foodlist2', (req, res) => {
 
     
-//     // 넘겨줘야될 파라미터 : api_url, api_key, ...
-//     // page, perPage 계산은 함수 넘어가서 해줘도 될듯
+    // 넘겨줘야될 파라미터 : api_url, api_key, ...
+    // page, perPage 계산은 함수 넘어가서 해줘도 될듯
 
-//     // 이부분 async await로 비동기 처리를 해줘야 된다
-//     // 그 다음 푸드리스트를 불러오는 부분 함수화해서 model 폴더에 구현해주자
-//     let page=1;
-//     let perPage=10;
-//     let offset;
-//     let req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
-//     // foodlist(req_url, res)
-//     //     .then(() => {
+    // 이부분 async await로 비동기 처리를 해줘야 된다
+    // 그 다음 푸드리스트를 불러오는 부분 함수화해서 model 폴더에 구현해주자
+    let page=1;
+    let perPage=4000;
+    let offset;
+    let req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
+    // foodlist(req_url, res)
+    //     .then(() => {
 
-//     //     });
-//     // request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
-//     // for(let i=0; i<10; i++){
-//     console.log('before');
-//     const getfoodlist = async (url, page) => {
-//         console.log("in : " + page);
-//         request(url, (error, respond, body) => {
-//             if(error) console.log(error);
-//             console.log(url);
-//             var obj = JSON.parse(body);
-//             console.log(obj.page);
-//             // res.send(obj);
-//         })
-//     }
-//     for(var i=0; i<3; i++){
-//         req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
-//         getfoodlist(req_url, page)
-//         .then(() => {
-//             page++;
-//             console.log("test : "+page);
-//         })
-//         // request(req_url, (error, respond, body) => {
-//         //     if(error) console.log(error);
-//         //     // console.log("TEST:"+body)
-//         //     var obj = JSON.parse(body)
-//         //     console.log(obj);
-//         //     console.log(req_url)
-//         //     offset = obj.totalCount;
-//         //     // res.send(obj)
-//         // })
-//         // page++;
-//     }
+    // //     });
+    // // request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
+    // // for(let i=0; i<10; i++){
+    // console.log('before');
+    // const getfoodlist = async (url, page) => {
+    //     console.log("in : " + page);
+    //     request(url, (error, respond, body) => {
+    //         if(error) console.log(error);
+    //         console.log(url);
+    //         var obj = JSON.parse(body);
+    //         console.log(obj.page);
+    //         // res.send(obj);
+    //     })
+    // }
+    // for(var i=0; i<3; i++){
+    //     req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
+    //     getfoodlist(req_url, page)
+    //     .then(() => {
+    //         page++;
+    //         console.log("test : "+page);
+    //     })
+    //     // request(req_url, (error, respond, body) => {
+    //     //     if(error) console.log(error);
+    //     //     // console.log("TEST:"+body)
+    //     //     var obj = JSON.parse(body)
+    //     //     console.log(obj);
+    //     //     console.log(req_url)
+    //     //     offset = obj.totalCount;
+    //     //     // res.send(obj)
+    //     // })
+    //     // page++;
+    // }
 
-//     // request(req_url, (error, respond, body) => {
-//     //     if(error) console.log(error);
-//     //     console.log("TEST:"+body)
-//     //     var obj = JSON.parse(body)
-//     //     console.log(obj);
-//     //     offset = obj.totalCount;
-//     //     res.send(obj)
-//     // })
-// })
+    request(req_url, (error, respond, body) => {
+        if(error) console.log(error);
+        console.log("TEST:"+body)
+        var obj = JSON.parse(body)
+        console.log(obj);
+        offset = obj.totalCount;
+        res.send(obj)
+    })
+})
 
 
 app.get('/api/trend', (req, res) => {
