@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const router = express.Router();
 
 // // server test
 // const path = require('path');
@@ -34,6 +35,7 @@ const food_api_key = process.env.FOOD_API_KEY_DECODING;
 
 var request = require('request');
 const foodlist = require('./models/foodlist'); // foodlist를 불러와서 db에 저장하는 로직 함수화
+const { consoleOrigin } = require('firebase-tools/lib/api');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // certificate has expired 오류 해결하는 코드
 // SSL인증 오류가 있기 때문에 발생하는 오류
@@ -62,7 +64,79 @@ app.get('/foodlist', (req, res) => {
     foodlist(res);
 })
 
-
+app.get('/getfood', async (req, res) => {
+    try{
+        const base_url = `http://openapi.seoul.go.kr:8088/${process.env.FOOD_API_KEY_SEOUL}/json/LOCALDATA_072404_`;
+        const region_list = ['SP',// 송파
+                            'YC', // 양천
+                            'GD', // 강동
+                            'SM', // 서대문
+                            'GR', // 구로
+                            'GS', // 강서
+                            'SC', // 서초
+                            'SD', // 성동
+                            'NW', // 노원
+                            'YD', // 영등포
+                            'GC', // 금천
+                            'SB', // 성북
+                            'JR', // 중랑
+                            'GN', // 강남
+                            'YS', // 용산
+                            'JG', // 중구
+                            'EP', // 은평
+                            'DB', // 도봉
+                            'MP', // 마포
+                            'GA', // 관악
+                            'GB', // 강북
+                            'DJ', // 동작
+                            'GJ', // 광진
+                            'DD', // 동대문
+                            'JN', // 종로
+                        ];
+                        console.log(base_url+'JN'+'1/10');
+        var foodInfo = [];
+        region_list.map(region_code => {
+            // console.log(region_code);
+            // request를 여러번 반복해서 보내면 에러발생
+            // request를 여러번 보내는게아니라, res.send()를 여러번 반복하면 에러 발생
+            // 아무래도 웹페이지상에 json코드들을 띄워주는데, 여러개가 발생해서 그런듯
+            const now = `LOCALDATA_072404_${region_code}`;
+            request(base_url+region_code+'/1/10', (error, respond, body) => {
+                if(error) console.log(error);
+                var obj = JSON.parse(body);
+                // console.log(obj);
+                foodInfo.push(obj);
+            })
+            // axios
+            //     .get(base_url+region_code+'/1/10') // api에서 읽어오는 데이터가 많아지면 성능에 문제가 발생한다
+            //     .then((response) => {
+            //         // console.log(response.data[Object.keys(response.data)].row);
+            //         response.data[Object.keys(response.data)].row.map(item => {
+            //             // console.log(item.X);
+            //             // console.log(item.Y);
+            //             var geocoder = new kakao.maps.services.Geocoder(), wtmX = item.X, wtmY = item.Y;
+            //             geocoder.transCoord(wtmX, wtmY, transCoordCB, {
+            //                 input_coord: kakao.maps.services.Coords.WTM,
+            //                 output_coord: kakao.maps.services.Coords.WGS84
+            //             });
+            //             function transCoordCB(result, status){
+            //                 if(status ===kakao.maps.services.Status.OK){
+            //                     var marker = new kakao.maps.Marker({
+            //                         position: new kakao.maps.LatLng(result[0].y, result[0].x),
+            //                     })
+            //                     setFoodlist(foodlist => [...foodlist, {marker: marker}]);
+            //                 }
+            //             }
+            //         })
+            //     })
+        })
+        setTimeout(() => res.send(foodInfo), 1000);
+        // res.send(foodInfo);
+        // return res.status(200).json({success: true, foodInfo});
+    } catch(e){
+        console.log(e);
+    }
+});
 
 
 app.get('/foodlist2', (req, res) => {
