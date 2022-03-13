@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const router = express.Router();
+const request = require('request');
 
 // // server test
 // const path = require('path');
@@ -33,7 +34,6 @@ var api_url = 'https://openapi.naver.com/v1/datalab/search';
 const food_api_url = 'https://api.odcloud.kr/api/15035732/v1/uddi:ba47232a-68fb-4252-93e8-fef2699919cc_201909091317?';
 const food_api_key = process.env.FOOD_API_KEY_DECODING;
 
-var request = require('request');
 const foodlist = require('./models/foodlist'); // foodlist를 불러와서 db에 저장하는 로직 함수화
 const { consoleOrigin } = require('firebase-tools/lib/api');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -93,7 +93,6 @@ app.get('/getfood', async (req, res) => {
                             'DD', // 동대문
                             'JN', // 종로
                         ];
-                        console.log(base_url+'JN'+'1/10');
         var foodInfo = [];
         region_list.map(region_code => {
             // console.log(region_code);
@@ -133,6 +132,8 @@ app.get('/getfood', async (req, res) => {
         setTimeout(() => res.send(foodInfo), 1000);
         // res.send(foodInfo);
         // return res.status(200).json({success: true, foodInfo});
+        const foodList = await foodlist;
+        return foodList;
     } catch(e){
         console.log(e);
     }

@@ -50,29 +50,30 @@ const region_list = ['SP',// 송파
                     'JN', // 종로
                 ];
 module.exports = (res) => {
-    const temp_arr = [];
+    var foodlist = [];
     region_list.map(region_code => {
         // console.log(region_code);
         // request를 여러번 반복해서 보내면 에러발생
         // request를 여러번 보내는게아니라, res.send()를 여러번 반복하면 에러 발생
         // 아무래도 웹페이지상에 json코드들을 띄워주는데, 여러개가 발생해서 그런듯
         request(base_url+region_code+'/1/5', (error, respond, body) => {
-            // if(error) console.log(error);
+            if(error) console.log(error);
             var obj = JSON.parse(body)
             // console.log(obj);
             const temp = obj[Object.keys(obj)[0]].row[0];
             // console.log(obj[Object.keys(obj)[0]].row);
             // console.log(temp);
-            temp_arr.push(temp);
+            foodlist.push(obj);
             // console.log(obj[Object.keys(obj)[0]].row.length);
             // console.log(obj[Object.keys(obj)[0]].row);
-            obj[Object.keys(obj)[0]].row.map(item => {
-                console.log(item.SITEWHLADDR);
-            })
+            // obj[Object.keys(obj)[0]].row.map(item => {
+            //     console.log(item.SITEWHLADDR);
+            // })
             // console.log("TEST : "+temp_arr);
             // res.send(obj)
         })
     })
-    if(temp_arr.length != 0) console.log(temp_arr);
-    else console.log("EMPTY");
+    // if(temp_arr.length != 0) console.log(temp_arr);
+    // else console.log("EMPTY");
+    return "TEST";
 }

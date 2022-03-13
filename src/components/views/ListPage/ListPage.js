@@ -36,7 +36,7 @@ function ListPage(){
         axios
             .get('http://localhost:5000/getfood')
             .then((response) => {
-                console.log(response.data);
+                console.log(response);
                 response?.data.map(item => {
                     item[Object.keys(item)]?.row.map(element => {
                         var geocoder = new kakao.maps.services.Geocoder(), wthX = element.X, wthY = element.Y;
