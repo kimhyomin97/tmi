@@ -49,8 +49,21 @@ const region_list = ['SP',// 송파
                     'DD', // 동대문
                     'JN', // 종로
                 ];
-module.exports = (res) => {
+module.exports = async (res) => {
     var foodlist = [];
+    // console.log(1);
+    // const prom = new Promise((resolve) => {
+    //     // setTimeout(() => {
+    //     //     console.log("timeout");
+    //     //     resolve("result view");
+    //     // }, 1000);
+    //     // // console.log("in promise");
+    //     // // resolve("resulit view");
+    // })
+    // // const result = await prom;
+    // // console.log(result);
+    // console.log(2);
+
     region_list.map(region_code => {
         // console.log(region_code);
         // request를 여러번 반복해서 보내면 에러발생
@@ -70,10 +83,10 @@ module.exports = (res) => {
             //     console.log(item.SITEWHLADDR);
             // })
             // console.log("TEST : "+temp_arr);
-            // res.send(obj)
+            // res.send(obj)\
         })
     })
     // if(temp_arr.length != 0) console.log(temp_arr);
     // else console.log("EMPTY");
-    return "TEST";
+    console.log(foodlist);
 }
