@@ -214,8 +214,7 @@ function ListPage(){
                     <>
                     <a href={`/detail/${item.id}`}>
                         <ListItem>
-                            <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
-                            {/* <img src={한식} class="food_img"/> */}
+                            <img src={require("./public/"+item.data.type+".png")} class="food_img"/>
                             <ListItemText>
                                 <div className="list_item_text">{item.data.name} {item.data.price}원 ({item.data.location})</div>
                             </ListItemText>
@@ -232,8 +231,7 @@ function ListPage(){
                         <>
                         <a href={`/detail/${item.id}`}>
                             <ListItem>
-                                <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
-                                {/* <img src={한식} class="food_img"/> */}
+                                <img src={require("./public/"+item.data.type+".png")} class="food_img"/>
                                 <ListItemText>
                                     <div className="list_item_text">{item.data.name} {item.data.price}원 ({item.data.location})</div>
                                 </ListItemText>

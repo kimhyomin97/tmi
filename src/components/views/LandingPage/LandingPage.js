@@ -59,10 +59,10 @@ function LandingPage(){
         <div className="landingpage_wraaper">
             <div className="landingpage_item_wrapper">
                 <div className="img_contaier">
-                    <img src={require("./public/"+imglist[0]+".png").default} className="img_item"/>
-                    <img src={require("./public/"+imglist[1]+".png").default} className="img_item"/>
-                    <img src={require("./public/"+imglist[2]+".png").default} className="img_item"/>
-                    <img src={require("./public/"+imglist[3]+".png").default} className="img_item"/>
+                    <img src={require("./public/"+imglist[0]+".png")} className="img_item" alt='음식이미지'/>
+                    <img src={require("./public/"+imglist[1]+".png")} className="img_item"/>
+                    <img src={require("./public/"+imglist[2]+".png")} className="img_item"/>
+                    <img src={require("./public/"+imglist[3]+".png")} className="img_item"/>
                 </div>
                 <div className="msg_box">
                     {
