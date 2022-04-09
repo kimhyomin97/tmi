@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const router = express.Router();
 const request = require('request');
+const fetch = require("node-fetch");
 
 // // server test
 // const path = require('path');
@@ -63,6 +64,97 @@ app.get('/foodlist', (req, res) => {
     // })
     foodlist(res);
 })
+app.get('/apitest', (req, res) => {
+    const base_url = `http://openapi.seoul.go.kr:8088/${process.env.FOOD_API_KEY_SEOUL}/json/LOCALDATA_072404_`;
+    const region_list = ['SP',// 송파
+                        'YC', // 양천
+                        'GD', // 강동
+                        'SM', // 서대문
+                        'GR', // 구로
+                        'GS', // 강서
+                        'SC', // 서초
+                        'SD', // 성동
+                        'NW', // 노원
+                        'YD', // 영등포
+                        'GC', // 금천
+                        'SB', // 성북
+                        'JR', // 중랑
+                        'GN', // 강남
+                        'YS', // 용산
+                        'JG', // 중구
+                        'EP', // 은평
+                        'DB', // 도봉
+                        'MP', // 마포
+                        'GA', // 관악
+                        'GB', // 강북
+                        'DJ', // 동작
+                        'GJ', // 광진
+                        'DD', // 동대문
+                        'JN', // 종로
+                    ];
+    var foodInfo = [];
+
+    async function getData(region){
+        return fetch(base_url+region+'1/10');
+    }
+    // async function getData(){
+    //     return fetch(base_url+'SP'+'1/10');
+    // }
+
+    async function getApi(){
+        // var list = [];
+        // region_list.map(region => {
+        //     const getDataFromApi = getData(region);
+        //     const Data = await getDataFromApi;
+        //     list.push(Data);
+        // })
+        const getSP = getData();
+        const SP = await getSP;
+        return SP;
+    }
+
+    return getApi();
+
+    // async function getApi() {
+    //     // region_list.map(region_code => {
+    //     //     // console.log(region_code);
+    //     //     // request를 여러번 반복해서 보내면 에러발생
+    //     //     // request를 여러번 보내는게아니라, res.send()를 여러번 반복하면 에러 발생
+    //     //     // 아무래도 웹페이지상에 json코드들을 띄워주는데, 여러개가 발생해서 그런듯
+    //     //     const now = `LOCALDATA_072404_${region_code}`;
+    //     //     request(base_url+region_code+'/1/10', (error, respond, body) => {
+    //     //         if(error) console.log(error);
+    //     //         var obj = JSON.parse(body);
+    //     //         foodInfo.push(obj);
+    //     //     })
+    //     // })
+        
+    //     const temp_data = fetch(base_url+'SP'+'/1/10')
+    //         .then((response) => (foodInfo.push(response)));
+            
+    //         request(base_url+'SP'+'/1/10', (error, respond, body) => {
+    //             if(error) console.log(error);
+    //             var obj = JSON.parse(body);
+    //             // foodInfo.push(obj);
+    //             return obj;
+    //         })
+    //     console.log(temp_data);
+    //     // return foodInfo;
+    // }
+    // async function getFoodList() {
+    //     const getTest = getApi();
+    //     const temp2 = await getTest;
+    //     return temp2;
+        
+
+    //     // getApiTest();
+    //     // return foodInfo;
+    //     // return 'test';
+    // }
+    // getFoodList().then(console.log);
+    // console.log(foodInfo);
+})
+
 
 app.get('/getfood', async (req, res) => {
     try{

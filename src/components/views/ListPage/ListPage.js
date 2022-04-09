@@ -33,6 +33,12 @@ function ListPage(){
             level: 4 //지도의 레벨(확대, 축소 정도)
         };
         setMaps(new kakao.maps.Map(container, option));
+        
+        axios.get('http://localhost:5000/apitest')
+            .then((response) => {
+                console.log(response);
+            })
+        
         axios
             .get('http://localhost:5000/getfood')
             .then((response) => {
