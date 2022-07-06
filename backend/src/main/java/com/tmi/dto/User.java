@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Entity // 테이블과 링크될 클래스임을 나타낸다
 // 기본값으로 카멜케이스 이름을 언더 스키어 네이밍으로 매칭
 // ex) UserService.java -> user_service table
+@Table(name = "user")
 public class User {
     
     @Id // PK 필드
