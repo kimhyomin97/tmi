@@ -13,26 +13,26 @@ import javax.persistence.*;
 @Entity // 테이블과 링크될 클래스임을 나타낸다
 // 기본값으로 카멜케이스 이름을 언더 스키어 네이밍으로 매칭
 // ex) UserService.java -> user_service table
-@Table(name = "user")
-public class User {
-    
+@Table(name = "member")
+public class Member {
+
     @Id // PK 필드
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK 생성 규칙, IDENTITY : auto_increment
-    private Long myidx;
-    
+    private Long idx;
+
     @Column(length = 45, nullable = false) // 필수는 아님
-    private String userid;
+    private String memberid;
 
     @Column(length = 45, nullable = false)
-    private String userpw;
+    private String memberpw;
 
     @Column(length = 45, nullable = false)
     private String email;
 
     @Builder // 해당 클래스의 빌더 패턴 클래스를 생성
-    public User(String userid, String userpw, String email){
-        this.userid = userid;
-        this.userpw = userpw;
+    public Member(String memberid, String memberpw, String email){
+        this.memberid = memberid;
+        this.memberpw = memberpw;
         this.email = email;
     }
 }
