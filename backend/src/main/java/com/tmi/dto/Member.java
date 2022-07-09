@@ -26,13 +26,13 @@ public class Member {
     @Column(length = 45, nullable = false)
     private String memberpw;
 
-    @Column(length = 45, nullable = false)
-    private String email;
+//    @Column(length = 45, nullable = false)
+//    private String email;
 
     @Builder // 해당 클래스의 빌더 패턴 클래스를 생성
-    public Member(String memberid, String memberpw, String email){
+    public Member(String memberid, String memberpw){
         this.memberid = memberid;
         this.memberpw = memberpw;
-        this.email = email;
+//        this.email = email;
     }
 }
