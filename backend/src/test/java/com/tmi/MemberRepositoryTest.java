@@ -36,8 +36,14 @@ public class MemberRepositoryTest {
 
     @Test
     public void crud_test() throws Exception {
-        Member test_member = new Member("1234", "1234");
-        memberService.signUp(test_member);
+        Member test_member1 = new Member("12345", "1234");
+        memberService.signUp(test_member1);
+        memberService.login(test_member1);
+
+        Member test_member2 = new Member("1234", "1234");
+        memberService.signUp(test_member2);
+        memberService.login(test_member2);
+
     }
 
 //    @Test
