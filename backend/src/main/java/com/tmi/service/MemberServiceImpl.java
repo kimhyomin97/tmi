@@ -12,17 +12,13 @@ public class MemberServiceImpl implements MemberService{
     MemberRepository memberRepository;
 
     @Override
-    public Member signUp(Member member) throws Exception {
-        boolean temp = memberRepository.existsByMemberid(member.getMemberid());
-        System.out.println(temp);
-        return null;
+    public boolean signUp(Member member) throws Exception {
+        return memberRepository.existsByMemberid(member.getMemberid());
     }
 
     @Override
-    public Member login(Member member) throws Exception {
-        boolean temp = memberRepository.existsByMemberidAndMemberpw(member.getMemberid(), member.getMemberpw());
-        System.out.println("login test : " + temp);
-        return null;
+    public boolean login(Member member) throws Exception {
+        return memberRepository.existsByMemberidAndMemberpw(member.getMemberid(), member.getMemberpw());
     }
 
     @Override

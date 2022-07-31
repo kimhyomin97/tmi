@@ -1,10 +1,16 @@
 package com.tmi.controller;
 
 
+import com.tmi.dto.Member;
+import com.tmi.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -12,10 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MemberController {
 
-//    private final UserService userService;
+    @Autowired
+    private MemberService memberService;
 
-//    @PostMapping("/login")
-//    public User userLogin(@RequestBody User userDto, HttpSession httpSession){
-//
-//    }
+    @PostMapping("/signup")
+    public ResponseEntity<Map<String, Object>> signup(@RequestBody Member member){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Member member){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+//    @PostMapping("/logout")
+
+    @PostMapping("/deleteid")
+    public ResponseEntity<Map<String, Object>> deleteid(@RequestBody Member member){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }

@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useState } from 'react';
 // import socketio from 'socket.io-client';
 // import db from "../../firebase";
 import db from "../../../firebase";
-import firebase from 'firebase';
+import firebase from '../../../firebase';
 import { FormControl, Button, Input, InputLabel, Card, CardContent, Typography} from '@material-ui/core';
 // import { Message, TextRotationDownSharp } from '@material-ui/icons';
 // import Message from "./Message"

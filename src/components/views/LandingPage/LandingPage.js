@@ -4,7 +4,7 @@ import './public/LandingPage.css';
 import {한식, 중식, 일식, 피자} from './public/image_export';
 import LoginPage from '../LoginPage/LoginPage.js';
 import db from "../../firebase";
-import firebase from 'firebase';
+import firebase from '../../firebase';
 
 function LandingPage(){
     const imglist = ['한식', '중식', '일식', '피자'];

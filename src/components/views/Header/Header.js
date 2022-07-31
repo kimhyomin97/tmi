@@ -22,7 +22,7 @@ import { useStyles } from './public/styles';
 import './public/Header.css';
 // import { AlignHorizontalLeftRounded } from '@mui/icons-material';
 
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
 // import logo from './public/logo.png';
 
@@ -197,4 +197,5 @@ function Header({history}) {
   );
 }
 
-export default withRouter(Header);
+// export default withRouter(Header);
+export default Header;

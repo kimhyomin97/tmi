@@ -5,10 +5,10 @@ import com.tmi.dto.Member;
 public interface MemberService {
 
     // member create : 회원가입
-    public Member signUp(Member member) throws Exception;
+    public boolean signUp(Member member) throws Exception;
 
     // member read : 로그인
-    public Member login(Member member) throws Exception;
+    public boolean login(Member member) throws Exception;
 
     // member update : 정보 수정
     public Member updateMember(Member member) throws Exception;

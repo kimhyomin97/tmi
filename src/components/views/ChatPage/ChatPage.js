@@ -1,6 +1,6 @@
 import {forwardRef, useEffect, useState } from "react";
 import db from "../../firebase";
-import firebase from 'firebase';
+import firebase from '../../firebase';
 import { FormControl, Button, Input, InputLabel, Card, CardContent, Typography} from '@material-ui/core';
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
-import firebase from 'firebase';
+import firebase from '../../firebase';
 // import ChatPage from "../ChatPage/ChatPage";
 import "./public/DetailPage.css";
 import { Typography, Button } from "@material-ui/core";

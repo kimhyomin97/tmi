@@ -4,7 +4,7 @@ import "./public/LoginPage.css";
 import { useEffect, useState } from 'react';
 // import { CssBaseline } from '@material-ui/core';
 import db from "../../firebase";
-import firebase from 'firebase';
+import firebase from '../../firebase';
 
 const { kakao } = window;
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
-import firebase from 'firebase';
+import firebase from '../../firebase';
 import chat_icon from './public/chat_icon.png';
 import './public/ChatList.css';
 import Map from "../MapPage/Map";

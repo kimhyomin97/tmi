@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import db from "../../firebase";
-import firebase from 'firebase';
+import firebase from '../../firebase';
 import "./public/ListPage.css";
 import { List, ListItem, ListItemText, ListItemIcon, Divider, ListItemSecondaryAction } from "@material-ui/core";
 // import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
