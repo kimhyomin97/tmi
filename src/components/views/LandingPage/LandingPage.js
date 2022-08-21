@@ -32,16 +32,16 @@ function LandingPage(){
     const [login, setLogin] = useState(false);
 
     useEffect(() => {
-        if(kakaoid != null){
-            db.collection('login')
-                .where('kakaoid', '==', String(kakaoid))
-                .onSnapshot((res) => {
-                    console.log(res.empty)
-                    if(res.empty) {
-                        nickname_check2(true);
-                    }
-                })
-        }
+        // if(kakaoid != null){
+        //     db.collection('login')
+        //         .where('kakaoid', '==', String(kakaoid))
+        //         .onSnapshot((res) => {
+        //             console.log(res.empty)
+        //             if(res.empty) {
+        //                 nickname_check2(true);
+        //             }
+        //         })
+        // }
     }, [kakaoid])
     const nickname_check2 = (flag) => {
         var nickname;

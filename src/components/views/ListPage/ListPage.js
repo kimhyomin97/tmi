@@ -22,11 +22,11 @@ function ListPage(){
     var temps = [];
 
     useEffect(() => {
-        db.collection('food')
-        .orderBy('name', 'desc')
-        .onSnapshot(data => {
-            setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })));
-        })
+        // db.collection('food')
+        // .orderBy('name', 'desc')
+        // .onSnapshot(data => {
+        //     setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })));
+        // })
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var option = { //지도를 생성할 때 필요한 기본 옵션
             center: new kakao.maps.LatLng(36.6116946201537, 127.291002698042),
@@ -70,6 +70,8 @@ function ListPage(){
                 //     console.log(item);
                 // })
             })
+        
+        
         // axios
             //     .get(base_url+region_code+'/1/10') // api에서 읽어오는 데이터가 많아지면 성능에 문제가 발생한다
             //     .then((response) => {
