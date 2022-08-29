@@ -13,7 +13,7 @@ const { kakao } = window;
 
 function ListPage(){
     const [curlocation, setCurlocation] = useState();
-    const [foods, setFoods] = useState([]);
+    const [foods, setFoods] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
     const [search, setSearch] = useState(0);
     const [map, setMaps] = useState(null);
     const [markers, setMarkers] = useState([]); // 게시글 리스트 (마커)
@@ -97,22 +97,22 @@ function ListPage(){
     }, [])
 
     useEffect(() => {
-        foods.map(item => {
-            var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
-            var iwRemoveable = true;
-            var infowindow = new kakao.maps.InfoWindow({
-                content : iwContent,
-                removable : iwRemoveable
-            });
-            var marker = new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
-            })
-            setMarkers(markers => [...markers, {marker: marker, type:item.data.type}]);
-            temps.push(marker);
-            kakao.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map, marker);
-            })
-        })
+        // foods.map(item => {
+        //     var iwContent = '<a href=/detail/'+item.id+'><div style="padding:5px;">'+item.data.name+'</div></a>', iwRemoveable = true;
+        //     var iwRemoveable = true;
+        //     var infowindow = new kakao.maps.InfoWindow({
+        //         content : iwContent,
+        //         removable : iwRemoveable
+        //     });
+        //     var marker = new kakao.maps.Marker({
+        //         position: new kakao.maps.LatLng(item.data.position.y, item.data.position.x)
+        //     })
+        //     setMarkers(markers => [...markers, {marker: marker, type:item.data.type}]);
+        //     temps.push(marker);
+        //     kakao.maps.event.addListener(marker, 'click', function() {
+        //         infowindow.open(map, marker);
+        //     })
+        // })
     }, [foods])
     const setCenter = () => {
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -215,7 +215,7 @@ function ListPage(){
         }
         <div id="map" className="kakao_map"></div>
         <List sx={style} component="nav" aria-label="mailbox folders">
-        {
+        {/* {
             type=="전체" ? 
             foods?.map(item => {
                 return(
@@ -250,7 +250,19 @@ function ListPage(){
                     )
                 }
             })
-        }
+        } */}
+                {foods.map(item => {
+                    return (
+                        <>
+                        <ListItem>
+                            <ListItemText>
+                                <div className="list_item_text">{item}</div>
+                            </ListItemText>
+                        </ListItem>
+                        <Divider />
+                        </>
+                    )
+                })}
         </List>
         </>
     )
