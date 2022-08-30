@@ -6,7 +6,7 @@ import { List, ListItem, ListItemText, ListItemIcon, Divider, ListItemSecondaryA
 // import { FontDownloadSharp, MarkunreadRounded } from "@material-ui/icons";
 import {한식, 패스트푸드, 중식, 치킨, 일식, 피자, 분식} from './public/image_export';
 // import { MarkEmailReadSharp } from "@mui/icons-material";
-import { TextField, Button, ButtonGroup} from "@mui/material";
+import { TextField, Button, ButtonGroup, Pagination } from "@mui/material";
 import Map from "../MapPage/Map";
 import axios from "axios";
 const { kakao } = window;
@@ -263,6 +263,13 @@ function ListPage(){
                         </>
                     )
                 })}
+                <Pagination
+                    count={Math.ceil(foods.length / 2)} // 총 페이지 개수 / 페이지에 보여줄 개수 (올림처리를 해야 전부 보여줄 수 있다)
+                    variant="outlined"
+                    // page // 현재 페이지
+                    // onChange // 변동이 감지되면 수행할 함수
+
+                />
         </List>
         </>
     )
