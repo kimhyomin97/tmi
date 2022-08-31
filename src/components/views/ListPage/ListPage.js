@@ -13,13 +13,15 @@ const { kakao } = window;
 
 function ListPage(){
     const [curlocation, setCurlocation] = useState();
-    const [foods, setFoods] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    const [foods, setFoods] = useState([11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
     const [search, setSearch] = useState(0);
     const [map, setMaps] = useState(null);
     const [markers, setMarkers] = useState([]); // 게시글 리스트 (마커)
     const [foodlist, setFoodlist] = useState([]); // 음식점 리스트
     const [isVisible, setIsVisible] = useState(false);
     var temps = [];
+    const [pages, setPages] = useState(1);;
+    const offset = 2; // 한 페이지당 출력할 게시글 개수
 
     useEffect(() => {
         // db.collection('food')
@@ -170,6 +172,11 @@ function ListPage(){
         maxWidth: 360,
         bgcolor: 'background.paper',
     };
+
+    const handlePages = (e, value) => {
+        setPages(value);
+    }
+
     return(
         <>
 
@@ -251,23 +258,32 @@ function ListPage(){
                 }
             })
         } */}
-                {foods.map(item => {
+                {foods.map((item, index) => {// 게시글 뿌려주는 부분 더 효율적으로 개선 필요
                     return (
                         <>
-                        <ListItem>
-                            <ListItemText>
-                                <div className="list_item_text">{item}</div>
-                            </ListItemText>
-                        </ListItem>
-                        <Divider />
+                            {
+                                (index >= (pages-1) * offset && index < pages * offset) ?
+                                <>
+                                    <ListItem>
+                                        <ListItemText>
+                                            <div className="list_item_text">{item}</div>
+                                        </ListItemText>
+                                    </ListItem>
+                                    <Divider />
+                                </>
+                                :
+                                <></>
+                            }
+                                
+                                <></>
                         </>
                     )
                 })}
                 <Pagination
-                    count={Math.ceil(foods.length / 2)} // 총 페이지 개수 / 페이지에 보여줄 개수 (올림처리를 해야 전부 보여줄 수 있다)
+                    count={Math.ceil(foods.length / offset)} // 총 페이지 개수 / 페이지에 보여줄 개수 (올림처리를 해야 전부 보여줄 수 있다)
                     variant="outlined"
-                    // page // 현재 페이지
-                    // onChange // 변동이 감지되면 수행할 함수
+                    page={pages}// 현재 페이지
+                    onChange = {handlePages} // 변동이 감지되면 수행할 함수
 
                 />
         </List>
