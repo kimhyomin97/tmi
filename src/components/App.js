@@ -17,6 +17,7 @@ import DetailPage from "./views/DetailPage/DetailPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import ChatPage_old from "./views/ChatPage/old_files/ChatPage_old.js";
 import ChatList from "./views/ChatList/ChatList.js";
+import FoodMapPage from "../pages/FoodMapPage/FoodMapPage.tsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/list" element={<ListPage />} />
           <Route exact path="/upload" element={<UploadPage />} />
           <Route exact path="/detail/:foodid" element={<DetailPage />} />
+          <Route exact path="/foodmap" element={<FoodMapPage />} />
         </Routes>
         {window.location.pathname !== "/chatlist" && <Footer />}
       </BrowserRouter>
