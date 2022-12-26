@@ -33,7 +33,8 @@ public class MemberController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody Member member){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
-
+        // responseEntity, status code 검색 필요
+        // back 코드 이관 필요
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
