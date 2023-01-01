@@ -2,6 +2,7 @@ package com.tmi.service;
 
 import com.tmi.dto.Member;
 import com.tmi.repository.MemberRepository;
+import com.tmi.util.Encrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    Encrypt encrypt;
 
 //    회원가입
     @Override
@@ -22,6 +26,10 @@ public class MemberServiceImpl implements MemberService{
         }
         else {
             // 아이디가 존재하지 않으면, DB에 추가
+
+//            encrypt util 적용 예시
+//            String encryptPassword = encrypt.encryptPassword(member.getMemberpw());
+
             String salt = "TEST"; // BCrtpt 추가 필요
 
             member.setSalt(salt);
