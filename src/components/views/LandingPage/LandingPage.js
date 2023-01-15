@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, createContext } from "react";
 import "./public/LandingPage.css";
 // import Slide from '../../function/Slide';
 import { 한식, 중식, 일식, 피자 } from "./public/image_export";
@@ -55,8 +55,16 @@ function LandingPage() {
     }
   };
 
-  const context = useContext(TestContext);
-  console.log(context);
+  // const context = useContext(TestContext);
+  // const { temp, setTestValue } = useContext(TestContext);
+  // console.log(temp);
+
+  // context value를 다른 컴포넌트에서 확인하고, 수정하는 과정이 필요하다
+  const MyContext = createContext();
+  const [contextValue, setContextValue] = useContext(MyContext);
+  // 이부분 []를 사용하면 에러, {}를 사용해야 에러가 나오지 않는다
+  // 하지만 {}를 사용하게 되면 undefined가 나옴
+  // context API 사용법 검색 필요
   return (
     <>
       <div className="landingpage_wraaper">
