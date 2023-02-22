@@ -13,6 +13,11 @@ const TestStore = (props) => {
 };
 
 export default TestStore;
+
+export function useTestState() {
+  const context = useContext(TestContext);
+  return context;
+}
 // function Context() {}
 
 // export default Context;

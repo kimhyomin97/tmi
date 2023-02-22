@@ -5,7 +5,7 @@ import { 한식, 중식, 일식, 피자 } from "./public/image_export";
 import LoginPage from "../LoginPage/LoginPage.js";
 import db from "../../firebase";
 import firebase from "../../firebase";
-import { TestContext } from "../../../store/Context.js";
+import { useTestState, TestContext } from "../../../store/Context.js";
 
 function LandingPage() {
   const imglist = ["한식", "중식", "일식", "피자"];
@@ -61,10 +61,15 @@ function LandingPage() {
 
   // context value를 다른 컴포넌트에서 확인하고, 수정하는 과정이 필요하다
   const MyContext = createContext();
-  const [contextValue, setContextValue] = useContext(MyContext);
+  // const [contextValue, setContextValue] = useContext(MyContext);
   // 이부분 []를 사용하면 에러, {}를 사용해야 에러가 나오지 않는다
   // 하지만 {}를 사용하게 되면 undefined가 나옴
+  // 이런 방식으로 state를 사용하는건 잘못된 방식, 변수를 사용하고자 하면 context를 선언한 컴포넌트 내부에서 변수를 사용해야됨
+  // const temp = useContext(MyContext);
+  const testStore = useTestState();
+  console.log(testStore);
   // context API 사용법 검색 필요
+
   return (
     <>
       <div className="landingpage_wraaper">

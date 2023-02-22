@@ -24,7 +24,7 @@ import {
 import { TextField, Button, ButtonGroup, Pagination } from "@mui/material";
 import Map from "../MapPage/Map";
 import axios from "axios";
-import { TestContext } from "../../../store/Context.js";
+// import { TestContext } from "../../../store/Context.js";
 
 const { kakao } = window;
 
@@ -202,8 +202,8 @@ function ListPage() {
   const handlePages = (e, value) => {
     setPages(value);
   };
-  const context = useContext(TestContext);
-  console.log(context);
+  // const context = useContext(TestContext);
+  // console.log(context);
   return (
     <>
       {/* <Map
