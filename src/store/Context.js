@@ -1,14 +1,34 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 
-export const TestContext = createContext({});
+const testReducer = (state, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1 };
+    case "DECREMENT":
+      return { count: state.count - 1 };
+    default:
+      throw new Error("Unsupported action type:", action.type);
+  }
+};
 
-const TestStore = (props) => {
+const TestContext = createContext();
+const DispatchContext = createContext();
+
+export const TestStore = (props) => {
   const temp = {
     name: "test-name",
     job: "test-job",
+    userType: "user",
+    count: 0,
   };
+  const [state, dispatch] = useReducer(testReducer, temp);
+
   return (
-    <TestContext.Provider value={temp}>{props.children}</TestContext.Provider>
+    <TestContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        {props.children}
+      </DispatchContext.Provider>
+    </TestContext.Provider>
   );
 };
 
