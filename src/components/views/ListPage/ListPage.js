@@ -204,6 +204,21 @@ function ListPage() {
   };
   // const context = useContext(TestContext);
   // console.log(context);
+  const [asyncTest, setAsyncTest] = useState();
+  useEffect(() => {
+    let tempList;
+    axios.get("https://httpbin.org/delay/5").then((res) => {
+      // 5초에 딜레이가 지난 후 응답을 주는 api
+      // async 테스트를 위한 api
+      console.log(res.data.url);
+      tempList = res.data.url;
+    });
+    setAsyncTest(tempList);
+  }, []);
+  const handleTest = () => {
+    console.log(asyncTest);
+  };
+
   return (
     <>
       {/* <Map
@@ -211,7 +226,7 @@ function ListPage() {
             center={{MA:33.450701, LA:126.570667}} // 지도 중앙위치 설정
             
         ></Map> */}
-
+      <button onClick={handleTest}>AsyncTest1</button>
       <ButtonGroup
         class="typebt_wrap"
         size="large"
