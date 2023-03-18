@@ -1,6 +1,6 @@
 import React from "react";
 
-function FoodMapPage(props) {
+function FoodMapPage() {
   return (
     <>
       <div>hello</div>;

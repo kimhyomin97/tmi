@@ -149,6 +149,9 @@ function Header({ history }) {
             <div className="header_item">
               <a href="/foodmap">foodmap</a>
             </div>
+            <div className="header_item">
+              <a href="/component">component</a>
+            </div>
           </List>
           <br />
           <br />
