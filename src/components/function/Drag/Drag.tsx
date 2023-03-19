@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import "./Drag.scss";
 
 interface Person {
   id: number;
@@ -71,23 +73,88 @@ const Drag = () => {
     },
   ];
   const [data, setData] = useState<Person[]>([]);
+  const [secondData, setSecondData] = useState<Person[]>([]);
+
   useEffect(() => {
     // data init
     setData(tempData);
   }, []);
 
+  const handleShowData = () => {
+    console.log(data);
+    console.log(secondData);
+  };
+
+  const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLDivElement;
+    event.dataTransfer.setData("text/plain", target.id);
+    setTimeout(() => {
+      target.style.display = "none";
+    }, 0);
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDragDrop = (
+    event: React.DragEvent<HTMLDivElement>,
+    targetIndex: number
+  ) => {
+    event.preventDefault();
+    const targetData = event.dataTransfer.getData("text/plain");
+    const sourceIndex = data.findIndex((div) => div.id === targetIndex);
+    const newData = [...data];
+    // const tempData = [...secondData];
+    const [removed] = newData.splice(sourceIndex, 1);
+    newData.splice(targetIndex, 0, removed);
+    // setData(newData);
+    setData([...newData, newData[sourceIndex]]);
+    // setSecondData([...tempData, newData[sourceIndex]]);
+  };
+
   return (
     <>
+      <Button variant="contained" onClick={handleShowData}>
+        데이터 출력
+      </Button>
       <div className="drag-container">
-        {data?.map((item, index) => {
-          return (
-            <>
-              <div key={index} className="">
-                {item.name}
-              </div>
-            </>
-          );
-        })}
+        <div className="drag-box">
+          {data?.map((item, index) => {
+            return (
+              <>
+                <div
+                  key={index}
+                  className="drag-content"
+                  draggable={true}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDrop={(event) => handleDragDrop(event, index)}
+                >
+                  {item?.name}
+                </div>
+              </>
+            );
+          })}
+        </div>
+        <div className="drag-box">
+          {secondData?.map((item, index) => {
+            return (
+              <>
+                <div
+                  key={index}
+                  className="drag-content"
+                  draggable={true}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDrop={(event) => handleDragDrop(event, index)}
+                >
+                  {item.name}
+                </div>
+              </>
+            );
+          })}
+        </div>
       </div>
     </>
   );
