@@ -13,67 +13,69 @@ const Drag = () => {
   const tempData = [
     {
       id: 1,
-      name: "John Doe",
+      name: "AAAA",
       email: "john.doe@example.com",
       age: 30,
     },
     {
       id: 2,
-      name: "Jane Doe",
+      name: "BBBB",
       email: "jane.doe@example.com",
       age: 28,
     },
     {
       id: 3,
-      name: "Bob Smith",
+      name: "CCCC",
       email: "bob.smith@example.com",
       age: 35,
     },
     {
       id: 4,
-      name: "Mary Johnson",
+      name: "DDDD",
       email: "mary.johnson@example.com",
       age: 42,
     },
     {
       id: 5,
-      name: "Tom Brown",
+      name: "EEEE",
       email: "tom.brown@example.com",
       age: 27,
     },
     {
       id: 6,
-      name: "Sara Lee",
+      name: "FFFF",
       email: "sara.lee@example.com",
       age: 31,
     },
     {
       id: 7,
-      name: "David Wilson",
+      name: "GGGG",
       email: "david.wilson@example.com",
       age: 39,
     },
     {
       id: 8,
-      name: "Emily Davis",
+      name: "HHHH",
       email: "emily.davis@example.com",
       age: 26,
     },
     {
       id: 9,
-      name: "Mike Smith",
+      name: "IIII",
       email: "mike.smith@example.com",
       age: 33,
     },
     {
       id: 10,
-      name: "Jessica Brown",
+      name: "JJJJ",
       email: "jessica.brown@example.com",
       age: 29,
     },
   ];
   const [data, setData] = useState<Person[]>([]);
   const [secondData, setSecondData] = useState<Person[]>([]);
+  const [endIndex, setEndIndex] = useState<number>();
+  const [startIndex, setStartIndex] = useState<number>();
 
   useEffect(() => {
     // data init
@@ -85,32 +87,31 @@ const Drag = () => {
     console.log(secondData);
   };
 
-  const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLDivElement;
-    event.dataTransfer.setData("text/plain", target.id);
-    setTimeout(() => {
-      target.style.display = "none";
-    }, 0);
-  };
-
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
-  const handleDragDrop = (
+  const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,
-    targetIndex: number
+    index: number
+  ) => {
+    setStartIndex(index);
+  };
+
+  const handleDragOver = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setEndIndex(index);
+  };
+
+  const handleDragEnd = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
   ) => {
     event.preventDefault();
-    const targetData = event.dataTransfer.getData("text/plain");
-    const sourceIndex = data.findIndex((div) => div.id === targetIndex);
-    const newData = [...data];
-    // const tempData = [...secondData];
-    const [removed] = newData.splice(sourceIndex, 1);
-    newData.splice(targetIndex, 0, removed);
-    // setData(newData);
-    setData([...newData, newData[sourceIndex]]);
-    // setSecondData([...tempData, newData[sourceIndex]]);
+    if (startIndex !== undefined && endIndex !== undefined) {
+      const list = [...data];
+      const target = list.splice(startIndex, 1)[0];
+      list.splice(endIndex, 0, target);
+      setData(list);
+    }
   };
 
   return (
@@ -127,9 +128,9 @@ const Drag = () => {
                   key={index}
                   className="drag-content"
                   draggable={true}
-                  onDragStart={handleDragStart}
-                  onDragOver={handleDragOver}
-                  onDrop={(event) => handleDragDrop(event, index)}
+                  onDragStart={(event) => handleDragStart(event, index)}
+                  onDragOver={(event) => handleDragOver(event, index)}
+                  onDragEnd={(event) => handleDragEnd(event, index)}
                 >
                   {item?.name}
                 </div>
@@ -145,9 +146,8 @@ const Drag = () => {
                   key={index}
                   className="drag-content"
                   draggable={true}
-                  onDragStart={handleDragStart}
-                  onDragOver={handleDragOver}
-                  onDrop={(event) => handleDragDrop(event, index)}
+                  // onDragStart={handleDragStart}
+                  // onDragOver={handleDragOver}
                 >
                   {item.name}
                 </div>
