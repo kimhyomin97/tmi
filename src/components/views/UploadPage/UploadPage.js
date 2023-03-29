@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 // import db from "../../firebase";
-import db from "../../firebase";
-import firebase from "../../firebase";
+import db from "../../../firebase";
+import firebase from "../../../firebase";
 // import { ContactsOutlined } from "@material-ui/icons";
 import "./public/UploadPage.css";
 // import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";

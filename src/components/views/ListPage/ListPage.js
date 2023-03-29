@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import db from "../../firebase";
-import firebase from "../../firebase";
+import db from "../../../firebase";
+import firebase from "../../../firebase";
 import "./public/ListPage.css";
 import {
   List,

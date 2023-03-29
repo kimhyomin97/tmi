@@ -1,20 +1,19 @@
 import React from "react";
 import * as ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./components/App";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
 
 // import { createRoot } from 'react-dom/client';
 // const container = document.getElementById('root');
 // const root = createRoot(container); // createRoot(container!) if you use TypeScript
 // root.render(<App tab="home" />);
 
-const rootNode = document.getElementById('root');
+const rootNode = document.getElementById("root");
 
 ReactDOM.createRoot(rootNode).render(
   // <React.StrictMode>
-    <App />
+  <App />
   // </React.StrictMode>
 );
 
