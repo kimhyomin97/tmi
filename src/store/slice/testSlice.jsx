@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  testValue: "",
+  testValue: {
+    test1: "",
+    test2: "",
+  },
 };
 
 export const testSlice = createSlice({

@@ -152,6 +152,9 @@ function Header({ history }) {
             <div className="header_item">
               <a href="/component">component</a>
             </div>
+            <div className="header_item">
+              <a href="/testpage">testpage</a>
+            </div>
           </List>
           <br />
           <br />

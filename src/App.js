@@ -20,6 +20,7 @@ import ChatList from "./components/views/ChatList/ChatList.js";
 import FoodMapPage from "./pages/FoodMapPage/FoodMapPage.tsx";
 import ComponentPage from "./pages/ComponentPage/ComponentPage.tsx";
 
+import TestPage from "./pages/TestPage/TestPage";
 import TestStore from "./store/Context.js";
 import store from "./store/store";
 import { Provider } from "react-redux";
@@ -47,6 +48,7 @@ function App() {
               <Route exact path="/detail/:foodid" element={<DetailPage />} />
               <Route exact path="/foodmap" element={<FoodMapPage />} />
               <Route exact path="/component" element={<ComponentPage />} />
+              <Route exact path="/testpage" element={<TestPage />} />
             </Routes>
             {window.location.pathname !== "/chatlist" && <Footer />}
           </BrowserRouter>
