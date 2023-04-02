@@ -27,7 +27,15 @@ import axios from "axios";
 // import { TestContext } from "../../../store/Context.js";
 
 const { kakao } = window;
-
+/**  기획내용 정리
+음식점 정보 api (ex - https://www.data.go.kr/dataset/3083288/openapi.do) 데이터를 불러와
+지도상에 음식점 정보를 출력해주어 의사결정에 도움을 줄 수 있다
+프로젝트가 고도화되면, 음식점에 대한 정보를 크롤링해서 DB에 저장하고, 활용하는 것을 목표로 한다
+api를 불러오고, 지도에 뿌려주는 과정에서 firebase의 PaaS 서비스를 사용했을 때 딜레이가 생기는 한계점 발견
+성능개선을 위한 인프라 구축의 필요성 확인
+화면을 렌더링해주는 영역과 데이터를 연산하는 영역을 분리하기 위하여
+기존의 서버리스 웹앱에서 spring boot 서버를 추가하여 Front단과 Back단을 분리한다
+*/
 function ListPage() {
   const [curlocation, setCurlocation] = useState();
   const [foods, setFoods] = useState([11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
