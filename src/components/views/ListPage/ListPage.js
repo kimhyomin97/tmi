@@ -25,10 +25,11 @@ import { TextField, Button, ButtonGroup, Pagination } from "@mui/material";
 import Map from "../MapPage/Map";
 import axios from "axios";
 // import { TestContext } from "../../../store/Context.js";
+import { getRestaurants } from "../../../api/api.jsx";
 
 const { kakao } = window;
 /**  기획내용 정리
-음식점 정보 api (ex - https://www.data.go.kr/dataset/3083288/openapi.do) 데이터를 불러와
+음식점 정보 api (ex - https://www.data.go.kr/data/15035732/fileData.do) 데이터를 불러와
 지도상에 음식점 정보를 출력해주어 의사결정에 도움을 줄 수 있다
 프로젝트가 고도화되면, 음식점에 대한 정보를 크롤링해서 DB에 저장하고, 활용하는 것을 목표로 한다
 api를 불러오고, 지도에 뿌려주는 과정에서 firebase의 PaaS 서비스를 사용했을 때 딜레이가 생기는 한계점 발견
@@ -48,79 +49,87 @@ function ListPage() {
   const [pages, setPages] = useState(1);
   const offset = 2; // 한 페이지당 출력할 게시글 개수
 
-  useEffect(() => {
-    // db.collection('food')
-    // .orderBy('name', 'desc')
-    // .onSnapshot(data => {
-    //     setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })));
-    // })
-    var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-    var option = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(36.6116946201537, 127.291002698042),
-      level: 4, //지도의 레벨(확대, 축소 정도)
-    };
-    setMaps(new kakao.maps.Map(container, option));
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getRestaurants();
+  //     console.log(data);
+  //   };
+  //   fetchData();
+  // }, []);
 
-    axios.get("http://localhost:5000/apitest").then((response) => {
-      console.log(response);
-    });
+  // useEffect(() => {
+  //   // db.collection('food')
+  //   // .orderBy('name', 'desc')
+  //   // .onSnapshot(data => {
+  //   //     setFoods(data.docs.map(doc => ({id: doc.id, data: doc.data() })));
+  //   // })
+  //   var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+  //   var option = {
+  //     //지도를 생성할 때 필요한 기본 옵션
+  //     center: new kakao.maps.LatLng(36.6116946201537, 127.291002698042),
+  //     level: 4, //지도의 레벨(확대, 축소 정도)
+  //   };
+  //   setMaps(new kakao.maps.Map(container, option));
 
-    axios.get("http://localhost:5000/getfood").then((response) => {
-      console.log(response);
-      response?.data.map((item) => {
-        item[Object.keys(item)]?.row.map((element) => {
-          var geocoder = new kakao.maps.services.Geocoder(),
-            wthX = element.X,
-            wthY = element.Y;
-          if (wthX != "") {
-            // 서버에서 리턴되는 데이터들 중
-            // 좌표값이 빈칸인 데이터들이 있다
-            // 해당 데이터의 좌표를 변환하려고 하면 Bad Request (query가 잘못된 값일때 발생) 가 발생한다
-            geocoder?.transCoord(wthX, wthY, transCoordCB, {
-              input_coord: kakao.maps.services.Coords.WTM,
-              output_coord: kakao.maps.services.Coords.WGS84,
-            });
-            function transCoordCB(result, status) {
-              if (status === kakao.maps.services.Status.OK) {
-                var marker = new kakao.maps.Marker({
-                  position: new kakao.maps.LatLng(result[0].y, result[0].x),
-                });
-                // 이부분에서 마커에 대한 정보를 더 채우면 완성될듯
-                setFoodlist((foodlist) => [...foodlist, { marker: marker }]);
-              }
-            }
-          }
-        });
-      });
-      // response?.data[Object.keys(response.data)].row.map(item => {
-      //     console.log(item);
-      // })
-    });
+  //   axios.get("http://localhost:5000/apitest").then((response) => {
+  //     console.log(response);
+  //   });
 
-    // axios
-    //     .get(base_url+region_code+'/1/10') // api에서 읽어오는 데이터가 많아지면 성능에 문제가 발생한다
-    //     .then((response) => {
-    //         // console.log(response.data[Object.keys(response.data)].row);
-    //         response.data[Object.keys(response.data)].row.map(item => {
-    //             // console.log(item.X);
-    //             // console.log(item.Y);
-    //             var geocoder = new kakao.maps.services.Geocoder(), wtmX = item.X, wtmY = item.Y;
-    //             geocoder.transCoord(wtmX, wtmY, transCoordCB, {
-    //                 input_coord: kakao.maps.services.Coords.WTM,
-    //                 output_coord: kakao.maps.services.Coords.WGS84
-    //             });
-    //             function transCoordCB(result, status){
-    //                 if(status ===kakao.maps.services.Status.OK){
-    //                     var marker = new kakao.maps.Marker({
-    //                         position: new kakao.maps.LatLng(result[0].y, result[0].x),
-    //                     })
-    //                     setFoodlist(foodlist => [...foodlist, {marker: marker}]);
-    //                 }
-    //             }
-    //         })
-    //     })
-  }, []);
+  //   axios.get("http://localhost:5000/getfood").then((response) => {
+  //     console.log(response);
+  //     response?.data.map((item) => {
+  //       item[Object.keys(item)]?.row.map((element) => {
+  //         var geocoder = new kakao.maps.services.Geocoder(),
+  //           wthX = element.X,
+  //           wthY = element.Y;
+  //         if (wthX != "") {
+  //           // 서버에서 리턴되는 데이터들 중
+  //           // 좌표값이 빈칸인 데이터들이 있다
+  //           // 해당 데이터의 좌표를 변환하려고 하면 Bad Request (query가 잘못된 값일때 발생) 가 발생한다
+  //           geocoder?.transCoord(wthX, wthY, transCoordCB, {
+  //             input_coord: kakao.maps.services.Coords.WTM,
+  //             output_coord: kakao.maps.services.Coords.WGS84,
+  //           });
+  //           function transCoordCB(result, status) {
+  //             if (status === kakao.maps.services.Status.OK) {
+  //               var marker = new kakao.maps.Marker({
+  //                 position: new kakao.maps.LatLng(result[0].y, result[0].x),
+  //               });
+  //               // 이부분에서 마커에 대한 정보를 더 채우면 완성될듯
+  //               setFoodlist((foodlist) => [...foodlist, { marker: marker }]);
+  //             }
+  //           }
+  //         }
+  //       });
+  //     });
+  //     // response?.data[Object.keys(response.data)].row.map(item => {
+  //     //     console.log(item);
+  //     // })
+  //   });
+
+  //   // axios
+  //   //     .get(base_url+region_code+'/1/10') // api에서 읽어오는 데이터가 많아지면 성능에 문제가 발생한다
+  //   //     .then((response) => {
+  //   //         // console.log(response.data[Object.keys(response.data)].row);
+  //   //         response.data[Object.keys(response.data)].row.map(item => {
+  //   //             // console.log(item.X);
+  //   //             // console.log(item.Y);
+  //   //             var geocoder = new kakao.maps.services.Geocoder(), wtmX = item.X, wtmY = item.Y;
+  //   //             geocoder.transCoord(wtmX, wtmY, transCoordCB, {
+  //   //                 input_coord: kakao.maps.services.Coords.WTM,
+  //   //                 output_coord: kakao.maps.services.Coords.WGS84
+  //   //             });
+  //   //             function transCoordCB(result, status){
+  //   //                 if(status ===kakao.maps.services.Status.OK){
+  //   //                     var marker = new kakao.maps.Marker({
+  //   //                         position: new kakao.maps.LatLng(result[0].y, result[0].x),
+  //   //                     })
+  //   //                     setFoodlist(foodlist => [...foodlist, {marker: marker}]);
+  //   //                 }
+  //   //             }
+  //   //         })
+  //   //     })
+  // }, []);
 
   useEffect(() => {
     // foods.map(item => {
