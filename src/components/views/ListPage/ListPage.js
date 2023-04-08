@@ -49,6 +49,16 @@ function ListPage() {
   const [pages, setPages] = useState(1);
   const offset = 2; // 한 페이지당 출력할 게시글 개수
 
+  useEffect(() => {
+    const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+    const options = {
+      //지도를 생성할 때 필요한 기본 옵션
+      center: new kakao.maps.LatLng(37.5632, 127.0363), //지도의 중심좌표 (성동구청)
+      level: 3, //지도의 레벨(확대, 축소 정도)
+    };
+    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+  }, []);
+
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const data = await getRestaurants();
@@ -168,14 +178,14 @@ function ListPage() {
     geocoder.addressSearch(curlocation, callback);
   };
   const [user_account, setUser_account] = useState(null);
-  useEffect(() => {
-    window.Kakao.API.request({
-      url: "/v2/user/me",
-      success: function ({ kakao_account }) {
-        setUser_account(kakao_account);
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   window.Kakao.API.request({
+  //     url: "/v2/user/me",
+  //     success: function ({ kakao_account }) {
+  //       setUser_account(kakao_account);
+  //     },
+  //   });
+  // }, []);
 
   function setMarker(element) {
     markers?.map((item, i) => {

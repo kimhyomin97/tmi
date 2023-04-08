@@ -58,16 +58,16 @@ function Header({ history }) {
     // )
   };
   const [user_account, setUser_account] = useState(null);
-  useEffect(() => {
-    window.Kakao.API.request({
-      url: "/v2/user/me",
-      success: function ({ kakao_account }) {
-        // const { age_range, profile } = kakao_account;
-        setUser_account(kakao_account);
-      },
-    });
-    // }, [login]);
-  }, []);
+  // useEffect(() => {
+  //   window.Kakao.API.request({
+  //     url: "/v2/user/me",
+  //     success: function ({ kakao_account }) {
+  //       // const { age_range, profile } = kakao_account;
+  //       setUser_account(kakao_account);
+  //     },
+  //   });
+  //   // }, [login]);
+  // }, []);
 
   const view_info = () => {
     window.Kakao.API.request({
