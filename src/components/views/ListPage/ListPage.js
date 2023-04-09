@@ -49,6 +49,8 @@ function ListPage() {
   const [pages, setPages] = useState(1);
   const offset = 2; // 한 페이지당 출력할 게시글 개수
 
+  const [restaurants, setRestaurants] = useState([]);
+
   useEffect(() => {
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     const options = {
@@ -57,15 +59,21 @@ function ListPage() {
       level: 3, //지도의 레벨(확대, 축소 정도)
     };
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    const fetchData = async () => {
+      const data = await getRestaurants();
+      setRestaurants(data.slice(0, 10));
+      return data;
+    };
+    fetchData().then((item) => {
+      const temp = item.slice(0, 10);
+      temp.map((positions) => {
+        const marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(positions.lat, positions.lon),
+        });
+        marker.setMap(map);
+      });
+    });
   }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await getRestaurants();
-  //     console.log(data);
-  //   };
-  //   fetchData();
-  // }, []);
 
   // useEffect(() => {
   //   // db.collection('food')
