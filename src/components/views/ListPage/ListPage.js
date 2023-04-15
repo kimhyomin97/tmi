@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import db from "../../../firebase";
 import firebase from "../../../firebase";
 import "./public/ListPage.css";
@@ -25,7 +25,7 @@ import { TextField, Button, ButtonGroup, Pagination } from "@mui/material";
 import Map from "../MapPage/Map";
 import axios from "axios";
 // import { TestContext } from "../../../store/Context.js";
-import { getRestaurants } from "../../../api/api.jsx";
+import { getNearestRestaurants, getRestaurants } from "../../../api/api.jsx";
 
 const { kakao } = window;
 /**  기획내용 정리
@@ -49,31 +49,72 @@ function ListPage() {
   const [pages, setPages] = useState(1);
   const offset = 2; // 한 페이지당 출력할 게시글 개수
 
+  const [kakaoMap, setKakaoMap] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
+  const [lat, setLat] = useState(33.450701);
+  const [lon, setLon] = useState(126.570667);
 
   useEffect(() => {
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(37.5632, 127.0363), //지도의 중심좌표 (성동구청)
+      center: new kakao.maps.LatLng(37.56305439223191, 127.0362870671562), //지도의 중심좌표 (성동구청)
       level: 3, //지도의 레벨(확대, 축소 정도)
     };
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    setKakaoMap(map);
+
+    kakao.maps.event.addListener(map, "dragend", function () {
+      setLat(map.getCenter().La);
+      setLon(map.getCenter().Ma);
+    });
+
     const fetchData = async () => {
-      const data = await getRestaurants();
-      setRestaurants(data.slice(0, 10));
+      const data = await getNearestRestaurants(lat, lon);
       return data;
     };
     fetchData().then((item) => {
-      const temp = item.slice(0, 10);
-      temp.map((positions) => {
+      setRestaurants(item);
+      console.log(item);
+      item.map((positions) => {
         const marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(positions.lat, positions.lon),
         });
         marker.setMap(map);
       });
     });
+
+    // const fetchData = async () => {
+    //   const data = await getRestaurants();
+    //   setRestaurants(data.slice(0, 10));
+    //   return data;
+    // };
+    // fetchData().then((item) => {
+    //   const temp = item.slice(0, 10);
+    //   temp.map((positions) => {
+    //     const marker = new kakao.maps.Marker({
+    //       position: new kakao.maps.LatLng(positions.lat, positions.lon),
+    //     });
+    //     marker.setMap(map);
+    //   });
+    // });
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getNearestRestaurants(lat, lon);
+  //     return data;
+  //   };
+  //   fetchData().then((item) => {
+  //     setRestaurants(item);
+  //     item.map((positions) => {
+  //       const marker = new kakao.maps.Marker({
+  //         position: new kakao.maps.LatLng(positions.lat, positions.lon),
+  //       });
+  //       marker.setMap(kakaoMap);
+  //     });
+  //   });
+  // }, [lat, lon]);
 
   // useEffect(() => {
   //   // db.collection('food')

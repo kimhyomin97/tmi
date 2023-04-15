@@ -13,20 +13,20 @@ function LandingPage() {
   const one = (ele) => document.querySelector(ele);
   const [userAccount, setUserAccount] = useState(null);
   const [kakaoid, setKakaoid] = useState(null);
-  useEffect(() => {
-    window.Kakao.API.request({
-      url: "/v2/user/me",
-      success: function (res) {
-        setKakaoid(res.id);
-      },
-    });
-    window.Kakao.API.request({
-      url: "/v2/user/me",
-      success: function ({ kakao_account }) {
-        setUserAccount(kakao_account);
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   window.Kakao.API.request({
+  //     url: "/v2/user/me",
+  //     success: function (res) {
+  //       setKakaoid(res.id);
+  //     },
+  //   });
+  //   window.Kakao.API.request({
+  //     url: "/v2/user/me",
+  //     success: function ({ kakao_account }) {
+  //       setUserAccount(kakao_account);
+  //     },
+  //   });
+  // }, []);
 
   const [loginModal, setLoginModal] = useState(false);
   const [login, setLogin] = useState(false);
