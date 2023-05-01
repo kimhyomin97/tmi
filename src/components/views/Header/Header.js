@@ -24,13 +24,16 @@ import "./public/Header.css";
 
 // import { withRouter } from 'react-router-dom';
 import LoginPage from "../LoginPage/LoginPage";
+import { useSelector, useDispatch } from "react-redux";
 // import logo from './public/logo.png';
 
 function Header({ history }) {
   const classes = useStyles();
   const theme = useTheme();
+  const sidemenu = useSelector((state) => state.headerChecker.sideMenu);
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-
+  console.log(sidemenu);
   const handleDrawerOpen = () => {
     setOpen(true);
   };

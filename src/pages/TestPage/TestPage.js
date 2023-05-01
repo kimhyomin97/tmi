@@ -1,15 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setTestMultipleReducer } from "../../store/slice/testMultipleSlice";
 import { setTestReducer } from "../../store/slice/testSlice";
 import ReduxTestPage1 from "../ReduxTestPage/ReduxTestPage1";
 import ReduxTestPage2 from "../ReduxTestPage/ReduxTestPage2";
 
 const TestPage = () => {
+  const headerValue = useSelector((state) => state.headerChecker.headerValue);
   const dispatch = useDispatch();
   const [asyncTest, setAsyncTest] = useState();
-
+  console.log(headerValue);
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get("https://httpbin.org/delay/5");
