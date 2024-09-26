@@ -1,6 +1,18 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const router = express.Router();
+const request = require('request');
+const fetch = require("node-fetch");
+
+// // server test
+// const path = require('path');
+// app.use(express.static(path.join(__dirname, '../build')));
+
+// app.get('/', (res, req)=>{
+//     req.sendFile(path.join(__dirname, '../build/index.html'));
+// }) // server에서 html파일을 static하게 뿌려주고 싶으면 다음과 같이 사용하면 된다.
+// //
 
 app.use(express.json());
 app.use(cors());
@@ -14,7 +26,6 @@ app.listen(PORT, () => {
     console.log(`SERVER ON : http://localhost:${PORT}/`);
 })
 
-var request = require('request');
 var client_id = process.env.NAVER_TREND_API_CLIENT_ID;
 var client_secret = process.env.NAVER_TREND_API_CLIENT_SECRET;
 // var client_id = '%REACT_APP_NAVER_TREND_API_CLIENT_ID%';
@@ -24,11 +35,257 @@ var api_url = 'https://openapi.naver.com/v1/datalab/search';
 const food_api_url = 'https://api.odcloud.kr/api/15035732/v1/uddi:ba47232a-68fb-4252-93e8-fef2699919cc_201909091317?';
 const food_api_key = process.env.FOOD_API_KEY_DECODING;
 
+const foodlist = require('./models/foodlist'); // foodlist를 불러와서 db에 저장하는 로직 함수화
+const { consoleOrigin } = require('firebase-tools/lib/api');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// certificate has expired 오류 해결하는 코드
+// SSL인증 오류가 있기 때문에 발생하는 오류
+// http://openapi.seoul.go.kr:8088/52616f4e73726c6139345853615451/json/LOCALDATA_072404_SD/1/10/
 app.get('/foodlist', (req, res) => {
-    request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
+    // api 변경
+    // const food_api_url = 'http://openapi.seoul.go.kr:8088/'+process.env.FOOD_API_KEY_SEOUL+'/json/CrtfcUpsoInfo/1/1/'
+    // const food_api_url = 'http://openapi.seoul.go.kr:8088/'+process.env.FOOD_API_KEY_SEOUL+'/json/CrtfcUpsoInfo/1/1000/'
+    // request(food_api_url, (error, respond, body) => {
+    //     if(error) console.log(error);
+    //     var obj = JSON.parse(body);
+    //     obj.CrtfcUpsoInfo.row.map(item => {
+    //         // console.log(item);
+    //         // 이부분에 DB저장하는 코드 작성하면 된다
+    //         console.log("X : "+item.X_CNTS);
+    //         console.log("Y : "+item.Y_DNTS);
+    //     })
+    //     res.send(obj.CrtfcUpsoInfo.row[0]);
+    //     res.send("HELLO")
+        
+    //     // body.row.map(item => {
+    //     //     console.log("TEST START : "+item);
+    //     //     console.log("END")
+    //     // })
+    // })
+    foodlist(res);
+})
+app.get('/apitest', (req, res) => {
+    const base_url = `http://openapi.seoul.go.kr:8088/${process.env.FOOD_API_KEY_SEOUL}/json/LOCALDATA_072404_`;
+    const region_list = ['SP',// 송파
+                        'YC', // 양천
+                        'GD', // 강동
+                        'SM', // 서대문
+                        'GR', // 구로
+                        'GS', // 강서
+                        'SC', // 서초
+                        'SD', // 성동
+                        'NW', // 노원
+                        'YD', // 영등포
+                        'GC', // 금천
+                        'SB', // 성북
+                        'JR', // 중랑
+                        'GN', // 강남
+                        'YS', // 용산
+                        'JG', // 중구
+                        'EP', // 은평
+                        'DB', // 도봉
+                        'MP', // 마포
+                        'GA', // 관악
+                        'GB', // 강북
+                        'DJ', // 동작
+                        'GJ', // 광진
+                        'DD', // 동대문
+                        'JN', // 종로
+                    ];
+    var foodInfo = [];
+
+    async function getData(region){
+        return fetch(base_url+region+'1/10');
+    }
+    // async function getData(){
+    //     return fetch(base_url+'SP'+'1/10');
+    // }
+
+    async function getApi(){
+        // var list = [];
+        // region_list.map(region => {
+        //     const getDataFromApi = getData(region);
+        //     const Data = await getDataFromApi;
+        //     list.push(Data);
+        // })
+        const getSP = getData();
+        const SP = await getSP;
+        return SP;
+    }
+
+    return getApi();
+
+    // async function getApi() {
+    //     // region_list.map(region_code => {
+    //     //     // console.log(region_code);
+    //     //     // request를 여러번 반복해서 보내면 에러발생
+    //     //     // request를 여러번 보내는게아니라, res.send()를 여러번 반복하면 에러 발생
+    //     //     // 아무래도 웹페이지상에 json코드들을 띄워주는데, 여러개가 발생해서 그런듯
+    //     //     const now = `LOCALDATA_072404_${region_code}`;
+    //     //     request(base_url+region_code+'/1/10', (error, respond, body) => {
+    //     //         if(error) console.log(error);
+    //     //         var obj = JSON.parse(body);
+    //     //         foodInfo.push(obj);
+    //     //     })
+    //     // })
+        
+    //     const temp_data = fetch(base_url+'SP'+'/1/10')
+    //         .then((response) => (foodInfo.push(response)));
+            
+    //         request(base_url+'SP'+'/1/10', (error, respond, body) => {
+    //             if(error) console.log(error);
+    //             var obj = JSON.parse(body);
+    //             // foodInfo.push(obj);
+    //             return obj;
+    //         })
+    //     console.log(temp_data);
+    //     // return foodInfo;
+    // }
+    // async function getFoodList() {
+    //     const getTest = getApi();
+    //     const temp2 = await getTest;
+    //     return temp2;
+        
+
+    //     // getApiTest();
+    //     // return foodInfo;
+    //     // return 'test';
+    // }
+    // getFoodList().then(console.log);
+    // console.log(foodInfo);
+})
+
+
+app.get('/getfood', async (req, res) => {
+    try{
+        const base_url = `http://openapi.seoul.go.kr:8088/${process.env.FOOD_API_KEY_SEOUL}/json/LOCALDATA_072404_`;
+        const region_list = ['SP',// 송파
+                            'YC', // 양천
+                            'GD', // 강동
+                            'SM', // 서대문
+                            'GR', // 구로
+                            'GS', // 강서
+                            'SC', // 서초
+                            'SD', // 성동
+                            'NW', // 노원
+                            'YD', // 영등포
+                            'GC', // 금천
+                            'SB', // 성북
+                            'JR', // 중랑
+                            'GN', // 강남
+                            'YS', // 용산
+                            'JG', // 중구
+                            'EP', // 은평
+                            'DB', // 도봉
+                            'MP', // 마포
+                            'GA', // 관악
+                            'GB', // 강북
+                            'DJ', // 동작
+                            'GJ', // 광진
+                            'DD', // 동대문
+                            'JN', // 종로
+                        ];
+        var foodInfo = [];
+        region_list.map(region_code => {
+            // console.log(region_code);
+            // request를 여러번 반복해서 보내면 에러발생
+            // request를 여러번 보내는게아니라, res.send()를 여러번 반복하면 에러 발생
+            // 아무래도 웹페이지상에 json코드들을 띄워주는데, 여러개가 발생해서 그런듯
+            const now = `LOCALDATA_072404_${region_code}`;
+            request(base_url+region_code+'/1/10', (error, respond, body) => {
+                if(error) console.log(error);
+                var obj = JSON.parse(body);
+                // console.log(obj);
+                foodInfo.push(obj);
+            })
+            // axios
+            //     .get(base_url+region_code+'/1/10') // api에서 읽어오는 데이터가 많아지면 성능에 문제가 발생한다
+            //     .then((response) => {
+            //         // console.log(response.data[Object.keys(response.data)].row);
+            //         response.data[Object.keys(response.data)].row.map(item => {
+            //             // console.log(item.X);
+            //             // console.log(item.Y);
+            //             var geocoder = new kakao.maps.services.Geocoder(), wtmX = item.X, wtmY = item.Y;
+            //             geocoder.transCoord(wtmX, wtmY, transCoordCB, {
+            //                 input_coord: kakao.maps.services.Coords.WTM,
+            //                 output_coord: kakao.maps.services.Coords.WGS84
+            //             });
+            //             function transCoordCB(result, status){
+            //                 if(status ===kakao.maps.services.Status.OK){
+            //                     var marker = new kakao.maps.Marker({
+            //                         position: new kakao.maps.LatLng(result[0].y, result[0].x),
+            //                     })
+            //                     setFoodlist(foodlist => [...foodlist, {marker: marker}]);
+            //                 }
+            //             }
+            //         })
+            //     })
+        })
+        setTimeout(() => res.send(foodInfo), 1000);
+        // res.send(foodInfo);
+        // return res.status(200).json({success: true, foodInfo});
+        const foodList = await foodlist;
+        return foodList;
+    } catch(e){
+        console.log(e);
+    }
+});
+
+
+app.get('/foodlist2', (req, res) => {
+
+    
+    // 넘겨줘야될 파라미터 : api_url, api_key, ...
+    // page, perPage 계산은 함수 넘어가서 해줘도 될듯
+
+    // 이부분 async await로 비동기 처리를 해줘야 된다
+    // 그 다음 푸드리스트를 불러오는 부분 함수화해서 model 폴더에 구현해주자
+    let page=1;
+    let perPage=4000;
+    let offset;
+    let req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
+    // foodlist(req_url, res)
+    //     .then(() => {
+
+    // //     });
+    // // request(food_api_url+'serviceKey='+food_api_key, (error, respond, body) => {
+    // // for(let i=0; i<10; i++){
+    // console.log('before');
+    // const getfoodlist = async (url, page) => {
+    //     console.log("in : " + page);
+    //     request(url, (error, respond, body) => {
+    //         if(error) console.log(error);
+    //         console.log(url);
+    //         var obj = JSON.parse(body);
+    //         console.log(obj.page);
+    //         // res.send(obj);
+    //     })
+    // }
+    // for(var i=0; i<3; i++){
+    //     req_url = food_api_url+'page='+page+'&perPage='+perPage+'&serviceKey='+food_api_key;
+    //     getfoodlist(req_url, page)
+    //     .then(() => {
+    //         page++;
+    //         console.log("test : "+page);
+    //     })
+    //     // request(req_url, (error, respond, body) => {
+    //     //     if(error) console.log(error);
+    //     //     // console.log("TEST:"+body)
+    //     //     var obj = JSON.parse(body)
+    //     //     console.log(obj);
+    //     //     console.log(req_url)
+    //     //     offset = obj.totalCount;
+    //     //     // res.send(obj)
+    //     // })
+    //     // page++;
+    // }
+
+    request(req_url, (error, respond, body) => {
         if(error) console.log(error);
+        console.log("TEST:"+body)
         var obj = JSON.parse(body)
         console.log(obj);
+        offset = obj.totalCount;
         res.send(obj)
     })
 })

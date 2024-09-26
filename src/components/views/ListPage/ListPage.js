@@ -7,6 +7,8 @@ import { List, ListItem, ListItemText, ListItemIcon, Divider, ListItemSecondaryA
 import {한식, 패스트푸드, 중식, 치킨, 일식, 피자, 분식} from './public/image_export';
 // import { MarkEmailReadSharp } from "@mui/icons-material";
 import { TextField, Button, ButtonGroup} from "@mui/material";
+import Map from "../MapPage/Map";
+import axios from "axios";
 const { kakao } = window;
 
 function ListPage(){
@@ -14,7 +16,8 @@ function ListPage(){
     const [foods, setFoods] = useState([]);
     const [search, setSearch] = useState(0);
     const [map, setMaps] = useState(null);
-    const [markers, setMarkers] = useState([]);
+    const [markers, setMarkers] = useState([]); // 게시글 리스트 (마커)
+    const [foodlist, setFoodlist] = useState([]); // 음식점 리스트
     const [isVisible, setIsVisible] = useState(false);
     var temps = [];
 
@@ -29,7 +32,66 @@ function ListPage(){
             center: new kakao.maps.LatLng(36.6116946201537, 127.291002698042),
             level: 4 //지도의 레벨(확대, 축소 정도)
         };
-        setMaps(new kakao.maps.Map(container, option));        
+        setMaps(new kakao.maps.Map(container, option));
+        
+        axios.get('http://localhost:5000/apitest')
+            .then((response) => {
+                console.log(response);
+            })
+        
+        axios
+            .get('http://localhost:5000/getfood')
+            .then((response) => {
+                console.log(response);
+                response?.data.map(item => {
+                    item[Object.keys(item)]?.row.map(element => {
+                        var geocoder = new kakao.maps.services.Geocoder(), wthX = element.X, wthY = element.Y;
+                        if(wthX!=""){
+                            // 서버에서 리턴되는 데이터들 중
+                            // 좌표값이 빈칸인 데이터들이 있다
+                            // 해당 데이터의 좌표를 변환하려고 하면 Bad Request (query가 잘못된 값일때 발생) 가 발생한다
+                            geocoder?.transCoord(wthX, wthY, transCoordCB, {
+                                input_coord: kakao.maps.services.Coords.WTM,
+                                output_coord: kakao.maps.services.Coords.WGS84
+                            });
+                            function transCoordCB(result, status){
+                                if(status ===kakao.maps.services.Status.OK){
+                                    var marker = new kakao.maps.Marker({
+                                        position: new kakao.maps.LatLng(result[0].y, result[0].x),
+                                    })
+                                    // 이부분에서 마커에 대한 정보를 더 채우면 완성될듯
+                                    setFoodlist(foodlist => [...foodlist, {marker: marker}]);
+                                }
+                            }
+                        }
+                    })
+                })
+                // response?.data[Object.keys(response.data)].row.map(item => {
+                //     console.log(item);
+                // })
+            })
+        // axios
+            //     .get(base_url+region_code+'/1/10') // api에서 읽어오는 데이터가 많아지면 성능에 문제가 발생한다
+            //     .then((response) => {
+            //         // console.log(response.data[Object.keys(response.data)].row);
+            //         response.data[Object.keys(response.data)].row.map(item => {
+            //             // console.log(item.X);
+            //             // console.log(item.Y);
+            //             var geocoder = new kakao.maps.services.Geocoder(), wtmX = item.X, wtmY = item.Y;
+            //             geocoder.transCoord(wtmX, wtmY, transCoordCB, {
+            //                 input_coord: kakao.maps.services.Coords.WTM,
+            //                 output_coord: kakao.maps.services.Coords.WGS84
+            //             });
+            //             function transCoordCB(result, status){
+            //                 if(status ===kakao.maps.services.Status.OK){
+            //                     var marker = new kakao.maps.Marker({
+            //                         position: new kakao.maps.LatLng(result[0].y, result[0].x),
+            //                     })
+            //                     setFoodlist(foodlist => [...foodlist, {marker: marker}]);
+            //                 }
+            //             }
+            //         })
+            //     })
     }, [])
 
     useEffect(() => {
@@ -83,12 +145,18 @@ function ListPage(){
             markers[i].marker.setMap(element);
         })
     }
+    function setMarker2(element){
+        foodlist?.map((item, i) => {
+            foodlist[i].marker.setMap(element);
+        })
+    }
     const [type, setType] = useState("전체");
     const types = ["전체", "한식", "중식", "일식", "치킨", "피자", "패스트푸드", "분식"];
 
     const typeHandler = (element) =>{
         setType(element);
         setMarker(null);
+        setMarker2(null); // foodlist 지우기
     }
 
     const inputCurlocation = (e) => {
@@ -102,6 +170,14 @@ function ListPage(){
     };
     return(
         <>
+
+        {/* <Map
+            // style={{width:"1200px", height:"800px"}}
+            center={{MA:33.450701, LA:126.570667}} // 지도 중앙위치 설정
+            
+        ></Map> */}
+
+
         <ButtonGroup class="typebt_wrap" size="large" aria-label="large button group">
             {types.map(item => {
                 return(
@@ -122,6 +198,7 @@ function ListPage(){
             />
         <Button style={{margin: "0 0 8px 8px"}} variant="contained" onClick={()=>setCenter()}>이동</Button>
         <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker(map)}>마커표시</Button>
+        <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker2(map)}>마커표시2</Button>
         <Button style={{margin: "0 0 8px 8px"}} className ={"search_bt"} variant="contained" onClick={()=>setMarker(null)}>마커지우기</Button>
 
         {
@@ -143,8 +220,7 @@ function ListPage(){
                     <>
                     <a href={`/detail/${item.id}`}>
                         <ListItem>
-                            <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
-                            {/* <img src={한식} class="food_img"/> */}
+                            <img src={require("./public/"+item.data.type+".png")} class="food_img"/>
                             <ListItemText>
                                 <div className="list_item_text">{item.data.name} {item.data.price}원 ({item.data.location})</div>
                             </ListItemText>
@@ -161,8 +237,7 @@ function ListPage(){
                         <>
                         <a href={`/detail/${item.id}`}>
                             <ListItem>
-                                <img src={require("./public/"+item.data.type+".png").default} class="food_img"/>
-                                {/* <img src={한식} class="food_img"/> */}
+                                <img src={require("./public/"+item.data.type+".png")} class="food_img"/>
                                 <ListItemText>
                                     <div className="list_item_text">{item.data.name} {item.data.price}원 ({item.data.location})</div>
                                 </ListItemText>
